@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://dsy86mfiku6ql"
+path="res://.godot/imported/stage_3.dialogue-896398a30a14880a76e0e80f2466165a.tres"
+
+[deps]
+
+source_file="res://Non_Entity/Dialogue/stage_3.dialogue"
+dest_files=["res://.godot/imported/stage_3.dialogue-896398a30a14880a76e0e80f2466165a.tres"]
+
+[params]
+
+defaults=true

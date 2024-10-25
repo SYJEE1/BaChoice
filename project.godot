@@ -24,6 +24,15 @@ config/icon="res://Graphics/bachoicelogo smol transparent.png"
 Global="*res://Non_Entity/Tutorial/Global.gd"
 Bgm="*res://Non_Entity/SFX/bgm.tscn"
 
+[autoload]
+
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+
+[dialogue_manager]
+
+general/custom_test_scene_path="res://Non_Entity/Dialogue/Testdialogue.tscn"
+general/balloon_path="res://Non_Entity/Dialogue/balloon.tscn"
+
 [display]
 
 window/size/viewport_width=640
@@ -33,6 +42,10 @@ window/size/resizable=false
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
 [input]
 
