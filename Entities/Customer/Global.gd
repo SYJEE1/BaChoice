@@ -41,7 +41,7 @@ func _ready () -> void:
 	get_max_customers(max_total_customers)
 	get_order(new_order)
 	send_order()
-	get_dialogue(dialogue)
+	#get_dialogue(dialogue)
 	send_dialogue()
 	
 func get_dialogue(new_dialogue: String):

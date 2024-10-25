@@ -71,17 +71,17 @@ func movement(input_direction, delta) -> void:
 			animation_player.speed_scale = (( abs(velocity.x) + abs(velocity.y)) /30)
 			
 			# moves interact_collision (purple thing) based on movement
-			if (input_direction.x > .5 or input_direction.x < -.5) or (input_direction.y > .5 or input_direction.y < -.5): 
+			if (input_direction.x > .501 or input_direction.x < -.5) or (input_direction.y > .501 or input_direction.y < -.5): 
 				interact_collision.position = lerp(interact_collision.position, Vector2(
 				input_direction.x * 6, 
 				input_direction.y * 4), 
 				delta * accel * 5)
 	else:
 		if Input.is_action_just_pressed("interact"):
-			var dialogue_path = Global.stage1_dialogue
-			DialogueManager.show_example_dialogue_balloon(load(dialogue_path), "start")
+			#var dialogue_path = Global.stage1_dialogue
+			#DialogueManager.show_example_dialogue_balloon(load(dialogue_path), "start")
 			game_running = true
-			$"../HUD".get_node("Start").hide()
+			#$"../HUD".get_node("Start").hide()
 func interact(input_direction, delta) -> void:
 	# print("detected Area:", detected_area)
 	# print("exempted Area:", exempted_area)
@@ -170,7 +170,7 @@ func interact(input_direction, delta) -> void:
 					PopSFX(.70)
 					detected_area.append(carried_item.get_child(0))
 					carried_item.putdown()
-					var distance = carried_item.global_position.distance_to(detected_area[0].global_position) * 22
+					var distance = carried_item.global_position.distance_to(detected_area[0].global_position) * 20
 					var impulse = carried_item.global_position.direction_to(detected_area[0].global_position) * distance
 					carried_item.apply_impulse(impulse, Vector2(0,0))
 					nearest.interact(carried_item)

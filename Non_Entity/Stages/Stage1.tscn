@@ -2305,6 +2305,16 @@ y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAGAAMAAAAQAAAAAAAGAAQAAAAQAAEAAAAGAAUAAAAQAAIAAAAHAAMAAAARAAAAAAAHAAQAAAARAAEAAAAHAAUAAAARAAIAAAAIAAMAAAARAAAAAAAIAAQAAAARAAEAAAAIAAUAAAARAAIAAAAJAAMAAAARAAAAAAAJAAQAAAARAAEAAAAJAAUAAAARAAIAAAAKAAMAAAARAAAAAAAKAAQAAAARAAEAAAAKAAUAAAARAAIAAAALAAMAAAASAAAAAAALAAQAAAASAAEAAAALAAUAAAASAAIAAAA=")
 tile_set = SubResource("TileSet_q5e8s")
 
+[node name="Sink" type="TileMapLayer" parent="TileMaps"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAASAAQAAAARAAMAAAASAAUAAAARAAQAAAARAAUAAAAQAAQAAAA=")
+tile_set = ExtResource("8_w0kpd")
+
+[node name="Glow" type="TileMapLayer" parent="TileMaps/Sink"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAARAAQAAAASAAMAAAARAAUAAAASAAQAAAASAAQAAAATAAMAAAASAAUAAAATAAQAAAA=")
+tile_set = SubResource("TileSet_t4dul")
+
 [node name="Item" parent="." instance=ExtResource("7_3wnng")]
 position = Vector2(217, 72)
 custom_item_type = &"pot"
@@ -2314,24 +2324,24 @@ position = Vector2(101, 71)
 custom_item_type = &"pot"
 
 [node name="Item6" parent="." instance=ExtResource("7_3wnng")]
-position = Vector2(280, 72)
+position = Vector2(280, 115)
 custom_item_type = &"pot"
 
 [node name="Item2" parent="." instance=ExtResource("7_3wnng")]
 z_index = 1
-position = Vector2(292, 87)
+position = Vector2(247, 116)
 custom_item_type = &"bowl"
-custom_frame = 128
+custom_frame = 4
 
 [node name="Item3" parent="." instance=ExtResource("7_3wnng")]
-position = Vector2(295, 80)
+position = Vector2(260, 116)
 custom_item_type = &"bowl"
 custom_frame = 128
 
 [node name="Item4" parent="." instance=ExtResource("7_3wnng")]
-position = Vector2(278, 86)
+position = Vector2(231, 115)
 custom_item_type = &"bowl"
-custom_frame = 128
+custom_frame = 4
 
 [node name="CustomerSpawning" type="Node2D" parent="."]
 script = ExtResource("9_w3k5i")
