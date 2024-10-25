@@ -13,8 +13,10 @@ func _ready() -> void:
 
 func interact(carried_item) -> void:
 	var item = carried_item.item_sprite
-	if item.animation == "bowl_regular" or item.animation == "bowl_super": item.frame = 1
-	if item.animation == "pot": carried_item.reset()
+	if item.animation == "bowl":
+		if item.frame < 69: item.frame = 1
+		if item.frame > 69: item.frame = 70
+	elif item.animation == "pot": carried_item.reset()
 	else: carried_item.dead()
 
 

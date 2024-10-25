@@ -134,6 +134,7 @@ func toggle_onstove():
 	update_pot()
 
 func update_pot() -> void:
+	print(pot_array)
 	
 	progress_bar.max_value = pot_array.size() * 10
 	
@@ -147,7 +148,7 @@ func update_pot() -> void:
 		fire.get_child(1).emitting = false
 	
 	# Cook Timer runs when on stove
-	if on_stove == true and pot_array.size() > 0: 
+	if on_stove == true and "broth" in pot_array: 
 		cook_timer.paused = false
 	else: cook_timer.paused = true
 	
@@ -178,7 +179,6 @@ func pickup() -> void:
 	update_pot()
 	item_animation.play("pickup")
 	is_carried = true
-	
 
 func putdown() -> void:
 	item_animation.play("putdown")
@@ -193,6 +193,7 @@ func reset() -> void:
 	print(possible_ingredients)
 	progress_bar.value = 0
 	progress_bar.visible = false
+	
 	set_item("pot", 1)
 	pot_array.clear()
 	$ItemSprite/Fire/Overcooked.emitting = false
@@ -214,6 +215,32 @@ func _on_cook_timer_timeout() -> void:
 		update_pot()
 	
 
+func get_soup(carried_item) -> int:
+	var soup : String
+	
+	["raw_cut_liver", "raw_cut_pork", "egg", "noodles", "broth"]
+	if carried_item.item_sprite.frame == 1: soup += "S"
+	elif carried_item.item_sprite.frame == 70: soup += "R"
+	soup += "5"
+	
+	var noodle_itemtype : String
+	if noodle_itemtype == "miswa": soup += "6"
+	elif noodle_itemtype == "bihon": soup += "7"
+	elif noodle_itemtype == "sotanghon": soup += "8" 
+	elif noodle_itemtype == "miki": soup += "9"
+	
+	print(pot_array)
+	for x in pot_array:
+		print(x)
+		if x == "egg": soup += "E"
+		if x == "pork": soup += "P"
+		if x == "liver": soup += "L"
+		if x == "chicharon": soup += "C"
+	
+	print(soup)
+	return find_bowl_algo(soup)
+	reset()
+	
 func find_bowl_algo(code:String) -> int: 
 	
 	var bowl_index := 0
@@ -262,6 +289,7 @@ func find_bowl_algo(code:String) -> int:
 	elif toppings == "EPLC": bowl_index += 15 
 	else: print("error bowl code"); breakpoint
 	
+	print(code)
 	print("final bowl index:", bowl_index)
 	
 	return bowl_index

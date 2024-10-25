@@ -251,7 +251,7 @@ position = Vector2(111, 92)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(160, 90)
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 
 [node name="FPSLabel" type="Label" parent="Camera2D"]
