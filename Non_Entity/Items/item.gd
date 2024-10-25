@@ -153,7 +153,8 @@ func update_pot() -> void:
 	# Cook Timer runs when on stove
 	if on_stove == true and "broth" in pot_array: 
 		cook_timer.paused = false
-	else: cook_timer.paused = true
+	else: 
+		cook_timer.paused = true
 		$SFX/BoiledPot.stop()
 		
 	

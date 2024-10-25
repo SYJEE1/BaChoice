@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://vyu2twerlhgs"]
+[gd_scene load_steps=32 format=4 uid="uid://vyu2twerlhgs"]
 
 [ext_resource type="Script" path="res://Non_Entity/Stages/stage_1.gd" id="1_crsol"]
 [ext_resource type="Texture2D" uid="uid://dvg4wt154im0k" path="res://Non_Entity/Main Scene/Background.png" id="1_mux3k"]
