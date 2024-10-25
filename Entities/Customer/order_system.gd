@@ -2,8 +2,8 @@ extends Node2D
 
 # Preload assets with their prices
 var bowl = {
-	"Bowl1": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-regular.png"), "price": 40, "item_type": "bowl", "bowl_index": 69},
-	"Bowl2": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-super.png"), "price": 60, "item_type": "bowl_large", "bowl_index": 0}
+	"Bowl1": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-regular.png"), "price": 40, "item_type": "bowl", "bowl_index": 69, "required" : true},
+	"Bowl2": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-super.png"), "price": 60, "item_type": "bowl", "bowl_index": 0, "required" : true}
 }
 var noodles = {
 	"NoodleType1": {"texture": preload("res://Entities/Customer/Order/ingredients/miki.png"), "price": 20, "bowl_index": 48},
@@ -18,16 +18,21 @@ var toppings = {
 	#"Topping4": {"texture": preload("res://Entities/Customer/Order/ingredients/chicharon-temp.png"), "price": 10}
 }
 var drinks = {
-	"Drink1": {"texture": preload("res://Entities/Customer/Order/ingredients/water.png"), "price": 10, "item_type": "water", "frame": 1},
-	"Drink2": {"texture": preload("res://Entities/Customer/Order/ingredients/cora.png"), "price": 20, "item_type": "cora", "frame": 1},
-	"Drink3": {"texture": preload("res://Entities/Customer/Order/ingredients/sprike.png"), "price": 20, "item_type": "sprike", "frame": 1},
-	"Drink4": {"texture": preload("res://Entities/Customer/Order/ingredients/loyal.png"), "price": 20, "item_type": "loyal", "frame": 1},
-	"Drink5": {"texture": preload("res://Entities/Customer/Order/ingredients/c3.png"), "price": 15, "item_type": "c3", "frame": 1}
+	"Drink1": {"texture": preload("res://Entities/Customer/Order/ingredients/water.png"), "price": 10, "item_type": "water", "frame": 1, "required" : true},
+	"Drink2": {"texture": preload("res://Entities/Customer/Order/ingredients/cora.png"), "price": 20, "item_type": "cora", "frame": 1, "required" : true},
+	"Drink3": {"texture": preload("res://Entities/Customer/Order/ingredients/sprike.png"), "price": 20, "item_type": "sprike", "frame": 1, "required" : true},
+	"Drink4": {"texture": preload("res://Entities/Customer/Order/ingredients/loyal.png"), "price": 20, "item_type": "loyal", "frame": 1, "required" : true},
+	"Drink5": {"texture": preload("res://Entities/Customer/Order/ingredients/c3.png"), "price": 15, "item_type": "c3", "frame": 1, "required" : true}
 }
 var sidedish = {
-	"Sidedish1": {"texture": preload("res://Entities/Customer/Order/ingredients/puto.png"), "price": 20, "item_type": "puto", "frame": 1},
-	"Sidedish2": {"texture": preload("res://Entities/Customer/Order/ingredients/pandesal.png"), "price": 20, "item_type": "pandesal", "frame": 1}
+	"Sidedish1": {"texture": preload("res://Entities/Customer/Order/ingredients/puto.png"), "price": 20, "item_type": "puto", "frame": 1, "required" : true},
+	"Sidedish2": {"texture": preload("res://Entities/Customer/Order/ingredients/pandesal.png"), "price": 20, "item_type": "pandesal", "frame": 1, "required" : true}
 }
+var combined_info = {
+		"bowl": {"item_type": "", "bowl_index": 0, "required" : false},
+		"drink": {"item_type": "", "frame": 0, "required" : false},
+		"sidedish": {"item_type": "", "frame": 0, "required" : false}
+	}
 # Nodes
 @onready var vbox_container= get_node("Control/VBoxContainer")
 var order_function_name: String = ""
@@ -37,9 +42,8 @@ func _ready():
 	var order = call(order_function_name)
 	var total_price = calculate_total_price(order)
 	var bowl_info = find_bowl_index(order)
-	var drink_info = find_drink_index(order)
-	var sidedish_info = find_sidedish_index(order)
-	var order_info = combine_order_info(order)
+	var combined_order_info = combined_order_info(order)
+	print("ready combined order info: ", combined_order_info(order))
 	display_order(order)
 	
 func tutorial() -> Dictionary:
@@ -408,6 +412,7 @@ func display_order(order: Dictionary):
 			sprite_count = 1  # Reset sprite count
 			
 	var bg_checker = total_sprites
+	print("sprites: ", bg_checker)
 	
 	if bg_checker == 3:
 		add_child(bg_3)
@@ -507,71 +512,25 @@ func find_bowl_index(order: Dictionary) -> int:
 
 	return bowl_index
 
-func get_bowl_item_type(order: Dictionary) -> String:
-	var item_type: String = ""
+func combined_order_info(order: Dictionary) -> Dictionary:
+	var bowl_index = find_bowl_index(order)
+	combined_info["bowl"]["bowl_index"] = bowl_index  
+	
 	if order.has("Bowl"):
 		var bowl_key = order["Bowl"]
 		if bowl.has(bowl_key):
-			return bowl[bowl_key]["item_type"]  # Return the item type of the bowl
-	return item_type
-
-func combine_bowl_info(bowl_index: int, item_type: String) -> Dictionary:
-	return {
-		"item_type": item_type,
-		"bowl_index": bowl_index
-	}
-
-func find_bowl_info(order: Dictionary) -> Dictionary:
-	var bowl_index = find_bowl_index(order)  # Get the bowl index
-	var item_type = get_bowl_item_type(order)  # Get the bowl item type
-
-	# Combine bowl info using the new function
-	return combine_bowl_info(bowl_index, item_type)
-
-func find_drink_index(order: Dictionary) -> Variant:
-	var drink_info = {"item_type": "", "frame": 0}
-	
+			combined_info["bowl"]["item_type"] = bowl[bowl_key]["item_type"]
+			combined_info["bowl"]["required"] = bowl[bowl_key]["required"]
 	if order.has("Drink"):
 		var drinks_key = order["Drink"]
-		drink_info["item_type"] = drinks[drinks_key]["item_type"]  # Assuming there's a "name" key
-		drink_info["frame"] = drinks[drinks_key]["frame"]  
-	else:
-		return null
-
-	return drink_info
-
-func find_sidedish_index(order: Dictionary) -> Variant:
-	var sidedish_info = {"item_type": "", "frame": 0}
-	
+		if drinks.has(drinks_key):
+			combined_info["drink"]["item_type"] = drinks[drinks_key]["item_type"]
+			combined_info["drink"]["frame"] = drinks[drinks_key]["frame"]
+			combined_info["drink"]["required"] = drinks[drinks_key]["required"]
 	if order.has("Sidedish"):
 		var sidedish_key = order["Sidedish"]
-		sidedish_info["item_type"] = sidedish[sidedish_key]["item_type"]  # Assuming there's a "name" key
-		sidedish_info["frame"] = sidedish[sidedish_key]["frame"]  
-	else:
-		return null
-
-	return sidedish_info
-	
-func combine_order_info(order: Dictionary) -> Variant:
-	var combined_info = {
-		"bowl": {"item_type": "", "bowl_index": 0},
-		"drink": {"item_type": "", "frame": 0},
-		"sidedish": {"item_type": "", "frame": 0}
-	}
-
-	# Get bowl info
-	var bowl_info = find_bowl_info(order)
-	if bowl_info:
-		combined_info["bowl"] = bowl_info
-
-	# Get drink info
-	var drink_info = find_drink_index(order)
-	if drink_info:
-		combined_info["drink"] = drink_info
-
-	# Get sidedish info
-	var sidedish_info = find_sidedish_index(order)
-	if sidedish_info:
-		combined_info["sidedish"] = sidedish_info
-
+		if sidedish.has(sidedish_key):
+			combined_info["sidedish"]["item_type"] = sidedish[sidedish_key]["item_type"]
+			combined_info["sidedish"]["frame"] = sidedish[sidedish_key]["frame"]
+			combined_info["sidedish"]["required"] = sidedish[sidedish_key]["required"]
 	return combined_info

@@ -26,7 +26,7 @@ func _ready():
 	var order = order_system.call(order_function_name)
 	
 	order_system.display_order(order)
-	var order_info = order_system.combine_order_info(order)
+	var order_info = order_system.combined_order_info(order)
 	
 	paid = order_system.calculate_total_price(order)
 
