@@ -132,19 +132,21 @@ func interact(input_direction, delta) -> void:
 			debug.global_position = nearest.global_position
 			
 			if nearest.area_type == "item": # if holding an item, sees an item
-				if nearest.get_parent().item_sprite.animation not in ["pot", "bowl"]: exempted_area.push_front(detected_area.pop_front())	
-				else: 
-					var item_type = carried_item.item_sprite # if empty BOWL and detects a POT 
+				var nearest_item = nearest.get_parent().item_sprite
+				# only pot and bowl goes through
+				if nearest_item.animation not in ["pot"]: exempted_area.push_front(detected_area.pop_front())
+				else:  # if empty BOWL and detects a ready POT 
+					var item_type = carried_item.item_sprite
 					var empty_bowl = (item_type.animation == "bowl" and (item_type .frame == 1 or item_type .frame == 70))
-					var finished_pot = nearest.get_parent().item_sprite.animation == "pot" and nearest.get_parent().item_sprite.frame == 3
+					var finished_pot = nearest_item.animation == "pot" and nearest_item.frame == 3
 					var ready = nearest.get_parent().progress_bar.value >= nearest.get_parent().progress_bar.max_value
 					if (empty_bowl and finished_pot) and ready == true:
 						if Input.is_action_just_pressed("interact"):
 							PopSFX(.70)
 							nearest.get_parent().item_interact(carried_item)
-							
-							carried_item.item_sprite.frame = carried_item.get_soup(carried_item)
+							nearest.get_parent().find_bowl(carried_item, false)
 							nearest.get_parent().reset()
+								
 					
 					elif carried_item.item_sprite.animation == "pot" and (carried_item.item_sprite.animation in nearest.get_parent().possible_ingredients): 
 						nearest.get_parent().glow()

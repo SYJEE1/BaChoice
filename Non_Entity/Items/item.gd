@@ -68,19 +68,20 @@ func set_item(animation, frame) -> void:
 	
 	item_glow.sprite_frames = item_sprite.sprite_frames
 	item_glow.animation = item_sprite.animation
-	item_glow.frame = frame - 1
+	if animation != "bowl": item_glow.frame = frame - 1
+	elif frame <= 69: item_glow.frame = 0
+	else: item_glow.frame = 70
 	
 	item_shadow.sprite_frames = item_sprite.sprite_frames
 	item_shadow.animation = item_sprite.animation
 	item_shadow.frame = item_sprite.frame
 
-func glow(time:int = 2) -> void:
+func glow(time:int = 1) -> void:
 	glow_animation.play("glow")
 	if item_sprite.animation == "pot" and pot_array.size() > 0:
 		effects_animation.play("insidepot_enter")
 		await get_tree().create_timer(time).timeout
 		effects_animation.queue("insidepot_exit")
-	
 	glow_animation.queue("unglow")
 	
 func unglow() -> void:
@@ -88,27 +89,25 @@ func unglow() -> void:
 		glow_animation.play("unglow")	
 
 func can_put_in_pot(item_type): 
-	if (item_type in possible_ingredients):
-		if (item_type not in pot_array):
-			return true	
-		else: print(item_type, " is not in: ", pot_array)
-	else: print(item_type, " is not in: ", possible_ingredients)
-
+	if (item_type in possible_ingredients) and (item_type not in pot_array): return true
+	
 func direct_interact(item_type: String) -> void:
-	to_pot_array(item_type) # send to pot_array
+	to_pot_array(item_type) # send to pot_array7
 	
 func item_interact(item_carried) -> void:
 	var item_type = item_carried.item_sprite.animation
-	to_pot_array(item_type) # send to pot_array
 	
-	# item transfer animation start
-	item_carried.item_animation.play("into_pot")
-	set_item("pot", 1)
-	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(item_carried, "global_position", global_position, .5)
-	await get_tree().create_timer(.5).timeout
-	item_carried.queue_free()
-	# item transfer animation end
+	if can_put_in_pot(item_type) == true:
+		# item transfer animation start
+		item_carried.item_animation.play("into_pot")
+		set_item("pot", 1)
+		var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(item_carried, "global1_position", global_position, .5)
+		await get_tree().create_timer(.5).timeout
+		item_carried.queue_free()
+		# item transfer animation end
+		
+		to_pot_array(item_type) # send to pot_array
 	
 func to_pot_array(item_type: String) -> void:
 	if can_put_in_pot(item_type) == true:
@@ -131,12 +130,17 @@ func to_pot_array(item_type: String) -> void:
 		if item_type == "raw_cut_liver": $ItemSprite/InsidePot/Liver.visible = true
 		if item_type == "raw_cut_pork": $ItemSprite/InsidePot/Pork.visible = true
 		if item_type == "egg": $ItemSprite/InsidePot/Egg.visible = true
-		if item_type in noodles: $ItemSprite/InsidePot/Noodle.visible = true
+		if item_type in noodles: 
+			$ItemSprite/InsidePot/Noodle.visible = true
+			$ItemSprite/InsidePot/Noodle.animation = item_type
+			$ItemSprite/InsidePot/Noodle.frame = 1
+		
 		
 		# every item added updates overcook_point = 10 times pot array.size + current value for balancing
 		if progress_bar.value < progress_bar.max_value:
-			progress_bar.max_value = 10 * pot_array.size() + (progress_bar.value / 3)
+			progress_bar.max_value = 10 * pot_array.size() #+ (progress_bar.value / 3)
 		
+		if pot_array.size() > 0: item_sprite.frame = 3
 		print("Pot_array: ",pot_array)
 		update_pot()
 		
@@ -151,10 +155,8 @@ func toggle_onstove():
 
 func update_pot() -> void:
 	# on stove, fire animation
-	for x in noodles:
-		if x in pot_array: pass
-		else: break
-	if (on_stove == true) and ("broth" in pot_array):
+	var noodle_check : bool = ("miswa" in pot_array) or ("bihon" in pot_array) or ("sotanghon" in pot_array) or ("miki" in pot_array)
+	if (on_stove == true) and ("broth" in pot_array) and noodle_check == true:
 		cook_timer.paused = false
 		progress_bar.visible = true
 		fire.get_child(0).play("fire")
@@ -167,13 +169,6 @@ func update_pot() -> void:
 		$SFX/BoiledPot.stop()
 		
 	
-	## Reset Pot Values
-	##print ("pot now contains: ", pot_array)
-	#$ItemSprite/InsidePot/Liver.visible = false
-	#$ItemSprite/InsidePot/Pork.visible = false
-	#$ItemSprite/InsidePot/Egg.visible = false
-	#$ItemSprite/InsidePot/Noodle.visible = false
-	#$ItemSprite/InsidePot.texture.region = Rect2(192,176,48,32)
 		
 	
 		
@@ -191,17 +186,28 @@ func dead() -> void:
 	queue_free()
 
 func reset() -> void:
-	print("resetting")
-	_ready()
-	print(possible_ingredients)
 	progress_bar.value = 0
 	progress_bar.visible = false
 	
 	set_item("pot", 1)
 	pot_array.clear()
 	
+	$ItemSprite/InsidePot/Liver.visible = false
+	$ItemSprite/InsidePot/Pork.visible = false
+	$ItemSprite/InsidePot/Egg.visible = false
+	$ItemSprite/InsidePot/Noodle.visible = false
+	$ItemSprite/InsidePot.texture.region = Rect2(192,176,48,32)
+	
 	$ItemSprite/Fire/Overcooked.emitting = false
 	$ItemSprite/Fire/Burnt.emitting = false
+	update_pot()
+	
+	progress_bar.value = 0 
+	item_glow.play("unglow")
+	fire.get_child(0).play("RESET")
+	effects_animation.play("insidepot_exit")
+	$ItemSprite/InsidePot.visible = true
+	on_stove = false
 	update_pot()
 
 func _on_cook_timer_timeout() -> void:
@@ -212,7 +218,7 @@ func _on_cook_timer_timeout() -> void:
 	elif progress_bar.value <= progress_bar.max_value * 1.60: progress_bar.tint_progress = Color.ORANGE
 	elif progress_bar.value <= progress_bar.max_value * 1.80: progress_bar.tint_progress = Color.RED
 	elif progress_bar.value >= progress_bar.max_value * 2.20: 
-		on_stove = false
+		burnt = true
 		$SFX/Burnt.play()
 		$ItemSprite/Fire/Overcooked.emitting = true
 		$ItemSprite/Fire/Burnt.emitting = true
@@ -220,82 +226,55 @@ func _on_cook_timer_timeout() -> void:
 		update_pot()
 	
 
-func get_soup(carried_item) -> int:
-	var soup : String
-	#["raw_cut_liver", "raw_cut_pork", "egg", "broth", "miswa", "bihon", "sotanghon", "miki"]
-	if carried_item.item_sprite.frame == 1: soup += "S"
-	elif carried_item.item_sprite.frame == 70: soup += "R"
-	soup += "5"
+func find_bowl(item_carried, burnt: bool):
+	var bowl_index = 0
 	
-	var noodle_itemtype = $ItemSprite/InsidePot/Noodle.animation
-	print(noodle_itemtype)
-	if noodle_itemtype == "miswa": soup += "6"
-	elif noodle_itemtype == "bihon": soup += "7"
-	elif noodle_itemtype == "sotanghon": soup += "8" 
-	elif noodle_itemtype == "miki": soup += "9"
+	# Super or Large
+	if item_carried.item_sprite.animation == "bowl": 
+		if item_carried.item_sprite.frame > 69: bowl_index += 70
+		else: bowl_index += 0
+	else: 
+		print("not a bowl, is ", item_carried.item_sprite.animation, " instead" )
+		breakpoint
 	
-	print(pot_array)
+	if burnt == true: bowl_index += 3; return bowl_index
+	else: bowl_index += 5
+	
+	var toppings = []
 	for x in pot_array:
 		print(x)
-		if x == "egg": soup += "E"
-		if x == "pork": soup += "P"
-		if x == "liver": soup += "L"
-		if x == "chicharon": soup += "C"
-	
-	
-	print(soup)
-	return find_bowl_algo(soup)
-	reset()
-	
-func find_bowl_algo(code:String) -> int: 
-	
-	var bowl_index := 0
-	var toppings := ""
-	
-	for x in code:
-		print(x)
-		# if Regular or Super
-		if x == "R": bowl_index += 0
-		elif x == "S": bowl_index += 69
-		
-		#if 1:Empty 2:Broth 3:Overcooked 4:DirtyDishes 5:GourmetNoodles :)
-		if x == "1": bowl_index += 1
-		elif x == "2": bowl_index += 2 
-		elif x == "3": bowl_index += 3
-		elif x == "4": bowl_index += 4
-		elif x == "5": bowl_index += 5
-		
-		#if 6:Miswa 7:Bihon 8:Sotanghon 9:Miki
-		elif x == "6": bowl_index += 0
-		elif x == "7": bowl_index += 16
-		elif x == "8": bowl_index += 32
-		elif x == "9": bowl_index += 48
+		if x == "miswa": bowl_index += 0
+		if x == "bihon": bowl_index += 16
+		if x == "sotanghon": bowl_index += 32
+		if x == "miki": bowl_index += 48
 		
 		# if (E)gg (P)ork (L)iver (C)hicharon
-		if x == "E": toppings += "E"
-		elif x == "P": toppings += "P"
-		elif x == "L": toppings += "L"
-		elif x == "C": toppings += "C"
-		
-	if toppings == "": bowl_index += 0
-	elif toppings == "E": bowl_index += 1
-	elif toppings == "P": bowl_index += 2
-	elif toppings == "L": bowl_index += 3
-	elif toppings == "C": bowl_index += 4
-	elif toppings == "EP": bowl_index += 5
-	elif toppings == "CP": bowl_index += 6
-	elif toppings == "PL": bowl_index += 7
-	elif toppings == "LE": bowl_index += 8
-	elif toppings == "LC": bowl_index += 9
-	elif toppings == "EC": bowl_index += 10
-	elif toppings == "EPL": bowl_index += 11
-	elif toppings == "CPL": bowl_index += 12
-	elif toppings == "CLE": bowl_index += 13
-	elif toppings == "CPE": bowl_index += 14
-	elif toppings == "EPLC": bowl_index += 15 
-	else: print("error bowl code"); breakpoint
+		if x == "egg": toppings.append("E")
+		if x == "raw_cut_pork": toppings.append("P")
+		if x == "raw_cut_liver": toppings.append("L")
+		if x == "chicharon": toppings.append("C")
+	print("toppings: ", toppings)
+	if toppings != []:
+		if toppings == []: bowl_index += 0
+		elif toppings == ["E"]: bowl_index += 1
+		elif toppings == ["P"]: bowl_index += 2
+		elif toppings == ["L"]: bowl_index += 3
+		elif toppings == ["C"]: bowl_index += 4
+		elif toppings == ["E","P"]: bowl_index += 5
+		elif toppings == ["P","C"]: bowl_index += 6
+		elif toppings == ["P","L"]: bowl_index += 7
+		elif toppings == ["E","L"]: bowl_index += 8
+		elif toppings == ["L","C"]: bowl_index += 9
+		elif toppings == ["E","C"]: bowl_index += 10
+		elif toppings == ["E","P","L"]: bowl_index += 11
+		elif toppings == ["P","L","C"]: bowl_index += 12
+		elif toppings == ["E","L","C"]: bowl_index += 13
+		elif toppings == ["E","P","C",]: bowl_index += 14
+		elif toppings == ["E","P","L","C"]: bowl_index += 15 
+		else: print("error bowl code"); breakpoint
+			
+			
 	
-	print(code)
-	print("final bowl index:", bowl_index)
-	
-	return bowl_index
+	print("final bowl index: ", bowl_index)
+	#item_carried.set_item("bowl", bowl_index)
+	item_carried.set_item("bowl", bowl_index)
