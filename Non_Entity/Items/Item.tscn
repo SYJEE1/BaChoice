@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ke3muiiqgpcu"]
+[gd_scene load_steps=35 format=3 uid="uid://ke3muiiqgpcu"]
 
 [ext_resource type="SpriteFrames" uid="uid://bouevinhbka7y" path="res://Non_Entity/Items/Item.tres" id="2_opl75"]
 [ext_resource type="Script" path="res://Non_Entity/Items/item.gd" id="2_uf2dp"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bh20llck6qa1k" path="res://Non_Entity/interactables.png" id="4_tq24j"]
 [ext_resource type="Gradient" uid="uid://c0wg5efxyis55" path="res://Non_Entity/Items/FireColorRamp.tres" id="5_2dl7x"]
 [ext_resource type="Texture2D" uid="uid://dfkava7vrr6yq" path="res://Non_Entity/progressbar1.png" id="5_2n5gf"]
+[ext_resource type="Texture2D" uid="uid://b4m65dxwht2my" path="res://light/circle.png" id="6_2l3vb"]
 [ext_resource type="Texture2D" uid="uid://dgrm3foqvobk" path="res://Non_Entity/progressbar2.png" id="6_4egsj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oumwb"]
@@ -540,7 +541,6 @@ playback_default_blend_time = 10.0
 
 [node name="Fire" type="CPUParticles2D" parent="ItemSprite/Fire"]
 position = Vector2(0, 2)
-emitting = false
 amount = 20
 lifetime = 3.0
 explosiveness = 0.1
@@ -577,22 +577,23 @@ color_ramp = SubResource("Gradient_30ru6")
 hue_variation_max = 0.09
 
 [node name="Overcooked" type="CPUParticles2D" parent="ItemSprite/Fire"]
-position = Vector2(0, 2)
+position = Vector2(0, -0.075)
 emitting = false
-amount = 50
+amount = 40
 lifetime = 6.0
 one_shot = true
 preprocess = 1.0
 explosiveness = 0.89
 randomness = 1.0
 lifetime_randomness = 0.6
+texture = ExtResource("6_2l3vb")
 emission_shape = 3
 emission_rect_extents = Vector2(6, 0)
 spread = 180.0
 gravity = Vector2(0, -5)
 initial_velocity_max = 5.0
 damping_max = 3.0
-scale_amount_max = 2.0
+scale_amount_min = 0.0
 color_ramp = ExtResource("5_2dl7x")
 hue_variation_max = 0.09
 
