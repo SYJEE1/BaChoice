@@ -298,4 +298,3 @@ resource_local_to_scene = true
 physics_layer_0/collision_layer = 2
 physics_layer_0/collision_mask = 2
 sources/0 = SubResource("TileSetAtlasSource_fshp0")
-sources/5 = SubResource("TileSetAtlasSource_fshp0")
