@@ -223,7 +223,7 @@ func get_soup(carried_item) -> int:
 	elif carried_item.item_sprite.frame == 70: soup += "R"
 	soup += "5"
 	
-	var noodle_itemtype : String
+	var noodle_itemtype = $ItemSprite/InsidePot/Noodle.animation
 	if noodle_itemtype == "miswa": soup += "6"
 	elif noodle_itemtype == "bihon": soup += "7"
 	elif noodle_itemtype == "sotanghon": soup += "8" 
