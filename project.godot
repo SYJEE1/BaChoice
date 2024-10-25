@@ -118,10 +118,6 @@ X={
 
 locale/translations_pot_files=PackedStringArray("res://Non_Entity/Dialogue/stage_2.dialogue", "res://Non_Entity/Dialogue/stage_3.dialogue", "res://Non_Entity/Dialogue/stage_4.dialogue", "res://Non_Entity/Dialogue/stage_5.dialogue", "res://Non_Entity/Dialogue/tutorial.dialogue")
 
-[internationalization]
-
-locale/translations_pot_files=PackedStringArray("res://Non_Entity/Dialogue/stage_2.dialogue", "res://Non_Entity/Dialogue/stage_3.dialogue", "res://Non_Entity/Dialogue/stage_4.dialogue", "res://Non_Entity/Dialogue/stage_5.dialogue", "res://Non_Entity/Dialogue/tutorial.dialogue")
-
 [layer_names]
 
 2d_physics/layer_1="BackgroundCollision"
