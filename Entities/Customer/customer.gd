@@ -8,10 +8,11 @@ var timer: Timer
 var nearby_item: RigidBody2D = null
 @onready var area: Area2D = $ReceivingArea
 var paid: float = 0
-@export var order_info: Variant = {}
+@export var order_info: Dictionary
 
 signal removed
 signal order_completed(amount_paid)
+signal order_info_updated(order_info)
 
 var audio_stream_player: AudioStreamPlayer
 var spawn_sound: AudioStream
@@ -26,7 +27,11 @@ func _ready():
 	var order = order_system.call(order_function_name)
 	
 	order_system.display_order(order)
+	
 	var order_info = order_system.combined_order_info(order)
+	print("customer order: ", order_info)
+	emit_signal("order_info_updated", order_info)
+	print("order_info_updated signal")
 	
 	paid = order_system.calculate_total_price(order)
 

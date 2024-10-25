@@ -11,16 +11,24 @@ var collected_items: Dictionary = {
 	"drink": false,
 	"sidedish": false
 }
-var order: Variant = { "bowl": { "item_type": "bowl", "bowl_index": 122, "required": true }, "drink": { "item_type": "", "frame": 0, "required": false }, "sidedish": { "item_type": "", "frame": 0, "required": false } }
+var order: Dictionary
 
 func _ready():
 	connect("body_entered", Callable(self, "_on_body_entered"))
 	Global.connect("item_state_changed", Callable(self, "_on_item_state_changed"))
+	var customer_node = get_parent()
+	customer_node.connect("order_info_updated", Callable(self, "_get_order_info"))  # Connect to the signal
 	
 func interact(carried_item) -> void:
 	pass
-	
-func _on_body_entered(carried_item: RigidBody2D):	
+
+func _get_order_info(order_info) -> Dictionary:
+	order = order_info
+	print("get order info: ", order)
+	return order
+
+func _on_body_entered(carried_item: RigidBody2D):
+	print ("pickup area info: ", order)
 	if carried_item is RigidBody2D:
 		var item_type = carried_item.custom_item_type
 		var item_frame = carried_item.custom_frame

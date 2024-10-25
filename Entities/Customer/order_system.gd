@@ -43,7 +43,6 @@ func _ready():
 	var total_price = calculate_total_price(order)
 	var bowl_info = find_bowl_index(order)
 	var combined_order_info = combined_order_info(order)
-	print("ready combined order info: ", combined_order_info(order))
 	display_order(order)
 	
 func tutorial() -> Dictionary:
