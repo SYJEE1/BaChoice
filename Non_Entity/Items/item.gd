@@ -91,60 +91,70 @@ func can_put_in_pot(item_type):
 	if (item_type in possible_ingredients):
 		if (item_type not in pot_array):
 			return true	
-		else: print(item_type, " is not in: ", pot_array); breakpoint
-	else: print(item_type, " is not in: ", possible_ingredients); breakpoint
+		else: print(item_type, " is not in: ", pot_array)
+	else: print(item_type, " is not in: ", possible_ingredients)
 
-
+func direct_interact(item_type: String) -> void:
+	to_pot_array(item_type) # send to pot_array
+	
 func item_interact(item_carried) -> void:
 	var item_type = item_carried.item_sprite.animation
+	to_pot_array(item_type) # send to pot_array
+	
+	# item transfer animation start
+	item_carried.item_animation.play("into_pot")
+	set_item("pot", 1)
+	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(item_carried, "global_position", global_position, .5)
+	await get_tree().create_timer(.5).timeout
+	item_carried.queue_free()
+	# item transfer animation end
+	
+func to_pot_array(item_type: String) -> void:
 	if can_put_in_pot(item_type) == true:
 		print("putting in pot: ", item_type)
 		
-		# transfer item from possible_ingredients to pot_array
-		pot_array.push_back(item_type)
-		possible_ingredients.erase(item_type)
+		 # transfer said item from possible_ingredients to pot_array
+		var noodles = ["miswa", "bihon", "sotanghon", "miki"]
+		if item_type in noodles:  # erase all possible noodles
+				possible_ingredients.erase("miswa")
+				possible_ingredients.erase("bihon")
+				possible_ingredients.erase("sotanghon")
+				possible_ingredients.erase("miki")
+				pot_array.push_back(item_type)
+		else:
+			pot_array.push_back(item_type)
+			possible_ingredients.erase(item_type)
 		
-		# put animation
-		item_carried.item_animation.play("into_pot")
-		set_item("pot", 1)
-		var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-		tween.tween_property(item_carried, "global_position", global_position, .5)
-		await get_tree().create_timer(.5).timeout
-		item_carried.queue_free()
+		# update InsidePot visibility by item_type
+		if item_type == "broth": $ItemSprite/InsidePot.texture.region = Rect2(240,176,48,32)
+		if item_type == "raw_cut_liver": $ItemSprite/InsidePot/Liver.visible = true
+		if item_type == "raw_cut_pork": $ItemSprite/InsidePot/Pork.visible = true
+		if item_type == "egg": $ItemSprite/InsidePot/Egg.visible = true
+		if item_type in noodles: $ItemSprite/InsidePot/Noodle.visible = true
 		
-		# Checks if pot has an item and puts a lid
-		#if pot_array.size() > 0: set_item("pot", 3)
-		
-		set_item("pot", 3)
-		
+		# every item added updates overcook_point = 10 times pot array.size + current value for balancing
 		if progress_bar.value < progress_bar.max_value:
-			progress_bar.max_value = 10 * pot_array.size()
+			progress_bar.max_value = 10 * pot_array.size() + (progress_bar.value / 3)
 		
 		print("Pot_array: ",pot_array)
 		update_pot()
+		
 	else: 
-		print("cannot put in : ", item_type)
+		print("ERROR. Cannot put ", item_type, "in pot array: ", pot_array)
 		breakpoint
-		
-func holdingpot_interact(item_type) -> void:
-	if can_put_in_pot(item_type) == true:
-		pot_array.push_back(item_type)
-		possible_ingredients.erase(item_type)
-		glow(3)
-		if pot_array.size() > 0: set_item("pot", 3)
-		
-		update_pot()
-		
+
 func toggle_onstove():
 	on_stove = !on_stove
 	await get_tree().create_timer(.5).timeout
 	update_pot()
 
 func update_pot() -> void:
-	progress_bar.max_value = pot_array.size() * 10
-	
 	# on stove, fire animation
-	if (on_stove == true) and ("broth" in pot_array) and (noodles in pot_array):
+	for x in noodles:
+		if x in pot_array: pass
+		else: break
+	if (on_stove == true) and ("broth" in pot_array):
 		cook_timer.paused = false
 		progress_bar.visible = true
 		fire.get_child(0).play("fire")
@@ -157,21 +167,15 @@ func update_pot() -> void:
 		$SFX/BoiledPot.stop()
 		
 	
-	# Reset Pot Values
-	#print ("pot now contains: ", pot_array)
-	$ItemSprite/InsidePot/Liver.visible = false
-	$ItemSprite/InsidePot/Pork.visible = false
-	$ItemSprite/InsidePot/Egg.visible = false
-	$ItemSprite/InsidePot/Noodle.visible = false
-	$ItemSprite/InsidePot.texture.region = Rect2(192,176,48,32)
+	## Reset Pot Values
+	##print ("pot now contains: ", pot_array)
+	#$ItemSprite/InsidePot/Liver.visible = false
+	#$ItemSprite/InsidePot/Pork.visible = false
+	#$ItemSprite/InsidePot/Egg.visible = false
+	#$ItemSprite/InsidePot/Noodle.visible = false
+	#$ItemSprite/InsidePot.texture.region = Rect2(192,176,48,32)
 		
-	# item goes into pot
-	for item_type in pot_array:
-		if item_type == "broth": $ItemSprite/InsidePot.texture.region = Rect2(240,176,48,32)
-		if item_type == "raw_cut_liver": $ItemSprite/InsidePot/Liver.visible = true
-		if item_type == "raw_cut_pork": $ItemSprite/InsidePot/Pork.visible = true
-		if item_type == "egg": $ItemSprite/InsidePot/Egg.visible = true
-		if item_type in noodles: $ItemSprite/InsidePot/Noodle.visible = true
+	
 		
 func pickup() -> void:
 	on_stove = false
