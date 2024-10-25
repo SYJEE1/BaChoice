@@ -258,28 +258,36 @@ func find_bowl(item_carried, burnt: bool):
 		if x == "raw_cut_pork": toppings.append("P")
 		if x == "raw_cut_liver": toppings.append("L")
 		if x == "chicharon": toppings.append("C")
+		toppings.sort()
 	print("toppings: ", toppings)
-	if toppings != []:
-		if toppings == []: bowl_index += 0
-		elif toppings == ["E"]: bowl_index += 1
-		elif toppings == ["P"]: bowl_index += 2
-		elif toppings == ["L"]: bowl_index += 3
-		elif toppings == ["C"]: bowl_index += 4
-		elif toppings == ["E","P"]: bowl_index += 5
-		elif toppings == ["P","C"]: bowl_index += 6
-		elif toppings == ["P","L"]: bowl_index += 7
-		elif toppings == ["E","L"]: bowl_index += 8
-		elif toppings == ["L","C"]: bowl_index += 9
-		elif toppings == ["E","C"]: bowl_index += 10
-		elif toppings == ["E","P","L"]: bowl_index += 11
-		elif toppings == ["P","L","C"]: bowl_index += 12
-		elif toppings == ["E","L","C"]: bowl_index += 13
-		elif toppings == ["E","P","C",]: bowl_index += 14
-		elif toppings == ["E","P","L","C"]: bowl_index += 15 
-		else: print("error bowl code"); breakpoint
-			
-			
-	
+	var toppings_index_mapping = {
+	"": 0,
+	"E": 1,
+	"P": 2,
+	"L": 3,
+	"C": 4,
+	"EP": 5,
+	"CP": 6,
+	"LP": 7,
+	"EL": 8,
+	"CL": 9,
+	"CE": 10,
+	"ELP": 11,
+	"CLP": 12,
+	"CEL": 13,
+	"CEP": 14,
+	"CELP": 15
+}
+	var combined_toppings: String = ""
+	for topping in toppings:
+		combined_toppings += topping
+# Add the topping bowl index to the total bowl index
+	print("combined_toppings: ", combined_toppings)
+	if toppings_index_mapping.has(combined_toppings):
+		bowl_index += toppings_index_mapping[combined_toppings]
+	else:
+		print("Error: Invalid topping combination")
+	bowl_index += 5
 	print("final bowl index: ", bowl_index)
 	#item_carried.set_item("bowl", bowl_index)
 	item_carried.set_item("bowl", bowl_index)
