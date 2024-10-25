@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://vyu2twerlhgs"]
+[gd_scene load_steps=32 format=4 uid="uid://vyu2twerlhgs"]
 
 [ext_resource type="Script" path="res://Non_Entity/Stages/stage_1.gd" id="1_crsol"]
 [ext_resource type="Texture2D" uid="uid://dvg4wt154im0k" path="res://Non_Entity/Main Scene/Background.png" id="1_mux3k"]
@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Non_Entity/Stages/stage1_tilemap.gd" id="4_slm2g"]
 [ext_resource type="PackedScene" uid="uid://dwt7q45hesbr5" path="res://Entities/Player/player_scene.tscn" id="5_scag7"]
 [ext_resource type="Texture2D" uid="uid://be17wps4k0gha" path="res://Non_Entity/Stages/interactables.png" id="6_5gena"]
-[ext_resource type="TileSet" uid="uid://dbdgh2x56eyd6" path="res://Non_Entity/Stages/Stage1.tres" id="6_emv3y"]
+[ext_resource type="TileSet" uid="uid://bjbw24e4jdmsx" path="res://Non_Entity/Stages/Stage1.tres" id="6_emv3y"]
 [ext_resource type="FontFile" uid="uid://brb1w3e1via4m" path="res://Graphics/Fonts/mago2.ttf" id="6_ho5e1"]
 [ext_resource type="PackedScene" uid="uid://ke3muiiqgpcu" path="res://Non_Entity/Items/Item.tscn" id="7_3wnng"]
 [ext_resource type="Script" path="res://Non_Entity/Tutorial/customer_spawning.gd" id="9_w3k5i"]
@@ -2304,20 +2304,29 @@ tile_set = SubResource("TileSet_q5e8s")
 position = Vector2(217, 72)
 custom_item_type = &"pot"
 
+[node name="Item5" parent="." instance=ExtResource("7_3wnng")]
+position = Vector2(101, 71)
+custom_item_type = &"pot"
+
+[node name="Item6" parent="." instance=ExtResource("7_3wnng")]
+position = Vector2(280, 72)
+custom_item_type = &"pot"
+
 [node name="Item2" parent="." instance=ExtResource("7_3wnng")]
 z_index = 1
-position = Vector2(151, 98)
+position = Vector2(292, 87)
 custom_item_type = &"bowl"
-custom_frame = 122
+custom_frame = 106
 
 [node name="Item3" parent="." instance=ExtResource("7_3wnng")]
-position = Vector2(218, 98)
+position = Vector2(295, 80)
 custom_item_type = &"bowl"
 custom_frame = 70
 
 [node name="Item4" parent="." instance=ExtResource("7_3wnng")]
-position = Vector2(197, 92)
+position = Vector2(278, 86)
 custom_item_type = &"bowl"
+custom_frame = 70
 
 [node name="CustomerSpawning" type="Node2D" parent="."]
 script = ExtResource("9_w3k5i")

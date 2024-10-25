@@ -249,8 +249,8 @@ func find_bowl_algo(code:String) -> int:
 	for x in code:
 		print(x)
 		# if Regular or Super
-		if x == "R": bowl_index += 0
-		elif x == "S": bowl_index += 69
+		if x == "S": bowl_index += 0
+		elif x == "R": bowl_index += 69
 		
 		#if 1:Empty 2:Broth 3:Overcooked 4:DirtyDishes 5:GourmetNoodles :)
 		if x == "1": bowl_index += 1
