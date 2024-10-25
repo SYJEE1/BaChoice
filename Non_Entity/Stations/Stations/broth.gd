@@ -17,7 +17,7 @@ func interact(carried_item) -> void:
 	if item.animation == "bowl_super" and item.frame == 1: item.frame = 2
 	if item.animation == "pot" and "broth" in carried_item.possible_ingredients: 
 		print("filling pot with broth!")
-		carried_item.holdingpot_interact("broth")
+		carried_item.direct_interact("broth")
 		
 func glow(carried_item) -> void:
 	var item = carried_item.item_sprite

@@ -1,0 +1,643 @@
+[gd_scene load_steps=37 format=3 uid="uid://ke3muiiqgpcu"]
+
+[ext_resource type="SpriteFrames" uid="uid://bouevinhbka7y" path="res://Non_Entity/Items/Item.tres" id="2_opl75"]
+[ext_resource type="Script" path="res://Non_Entity/Items/item.gd" id="2_uf2dp"]
+[ext_resource type="Script" path="res://Non_Entity/Items/pickup_area.gd" id="3_2h5ff"]
+[ext_resource type="Texture2D" uid="uid://bh20llck6qa1k" path="res://Non_Entity/interactables.png" id="4_tq24j"]
+[ext_resource type="Gradient" uid="uid://c0wg5efxyis55" path="res://Non_Entity/Items/FireColorRamp.tres" id="5_2dl7x"]
+[ext_resource type="Texture2D" uid="uid://dfkava7vrr6yq" path="res://Non_Entity/progressbar1.png" id="5_2n5gf"]
+[ext_resource type="Texture2D" uid="uid://dgrm3foqvobk" path="res://Non_Entity/progressbar2.png" id="6_4egsj"]
+[ext_resource type="AudioStream" uid="uid://7n6jbej0ybhg" path="res://Non_Entity/SFX/Burnt.mp3" id="8_hjded"]
+[ext_resource type="AudioStream" uid="uid://5gn4gyg28otc" path="res://Non_Entity/SFX/BoiledPot.mp3" id="9_h5bdg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oumwb"]
+radius = 7.07107
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y505a"]
+radius = 4.0
+
+[sub_resource type="Animation" id="Animation_mgb0e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemGlow:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xvopq"]
+resource_name = "glow"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemGlow:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fiujq"]
+resource_name = "unglow"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemGlow:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hr6v0"]
+_data = {
+"RESET": SubResource("Animation_mgb0e"),
+"glow": SubResource("Animation_xvopq"),
+"unglow": SubResource("Animation_fiujq")
+}
+
+[sub_resource type="Animation" id="Animation_v80s6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2, 2, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../InsidePot:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_257sj"]
+resource_name = "insidepot_enter"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../InsidePot:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_18laq"]
+resource_name = "insidepot_exit"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../InsidePot:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n0myl"]
+_data = {
+"RESET": SubResource("Animation_v80s6"),
+"insidepot_enter": SubResource("Animation_257sj"),
+"insidepot_exit": SubResource("Animation_18laq")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rnedj"]
+resource_local_to_scene = true
+atlas = ExtResource("4_tq24j")
+region = Rect2(192, 176, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mybll"]
+atlas = ExtResource("4_tq24j")
+region = Rect2(144, 144, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qfp3j"]
+load_path = "res://.godot/imported/interactables.png-6e633ea0bbc29d80b7f3fc651c4e2b05.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntl0s"]
+atlas = SubResource("CompressedTexture2D_qfp3j")
+region = Rect2(128, 144, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdmwg"]
+atlas = ExtResource("4_tq24j")
+region = Rect2(128, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcd6b"]
+resource_local_to_scene = true
+atlas = ExtResource("4_tq24j")
+region = Rect2(256, 160, 16, 16)
+
+[sub_resource type="Animation" id="Animation_lei1j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2, 2, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_yqhdl"]
+resource_name = "fire"
+length = 10.0
+loop_mode = 2
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_tkbly"]
+resource_name = "nofire"
+length = 10.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_edfj3"]
+_data = {
+"RESET": SubResource("Animation_lei1j"),
+"fire": SubResource("Animation_yqhdl"),
+"nofire": SubResource("Animation_tkbly")
+}
+
+[sub_resource type="Gradient" id="Gradient_30ru6"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.896694, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_wk5me"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemShadow:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.001),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ItemGlow:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -3)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ItemSprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -3)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ItemSprite/Fire:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -3)]
+}
+
+[sub_resource type="Animation" id="Animation_k25j3"]
+resource_name = "into_pot"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemSprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(0.258816, 2.46229, 1),
+"update": 0,
+"values": [Vector2(0, -6), Vector2(0, -20), Vector2(0, -6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ItemGlow:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(0.258816, 2.46229, 1),
+"update": 0,
+"values": [Vector2(0, -6), Vector2(0, -20), Vector2(0, -6)]
+}
+
+[sub_resource type="Animation" id="Animation_xjjj5"]
+resource_name = "pickup"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemGlow:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -8), Vector2(0, -6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ItemSprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -8), Vector2(0, -6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ItemSprite/Fire:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -8), Vector2(0, -6)]
+}
+
+[sub_resource type="Animation" id="Animation_e8d4a"]
+resource_name = "putdown"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemGlow:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -10), Vector2(0, -4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ItemSprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -10), Vector2(0, -4)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ItemSprite/Fire:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -10), Vector2(0, -4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m1a6s"]
+_data = {
+"RESET": SubResource("Animation_wk5me"),
+"into_pot": SubResource("Animation_k25j3"),
+"pickup": SubResource("Animation_xjjj5"),
+"putdown": SubResource("Animation_e8d4a")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dluuk"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("8_hjded")
+
+[node name="Item" type="RigidBody2D"]
+y_sort_enabled = true
+collision_layer = 32
+collision_mask = 33
+mass = 10.0
+lock_rotation = true
+linear_damp = 2.0
+script = ExtResource("2_uf2dp")
+custom_item_type = null
+custom_frame = null
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("3_2h5ff")
+
+[node name="PickupCollision" type="CollisionShape2D" parent="PickupArea"]
+modulate = Color(1, 1, 1, 0.788235)
+y_sort_enabled = true
+shape = SubResource("CircleShape2D_oumwb")
+one_way_collision_margin = 3.0
+debug_color = Color(0.0588235, 0.65098, 0, 0.196078)
+
+[node name="ItemCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_y505a")
+
+[node name="ItemShadow" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 0.407843)
+y_sort_enabled = true
+sprite_frames = ExtResource("2_opl75")
+animation = &"raw_liver"
+speed_scale = 0.0
+offset = Vector2(0, -3)
+
+[node name="ItemGlow" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+y_sort_enabled = true
+sprite_frames = ExtResource("2_opl75")
+animation = &"pot"
+autoplay = "bowl"
+speed_scale = 0.0
+offset = Vector2(0, -3)
+
+[node name="GlowAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hr6v0")
+}
+playback_auto_capture_transition_type = 1
+playback_auto_capture_ease_type = 2
+playback_default_blend_time = 0.1
+
+[node name="ItemSprite" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+sprite_frames = ExtResource("2_opl75")
+animation = &"bowl"
+speed_scale = 0.0
+offset = Vector2(0, -3)
+
+[node name="EffectsAnimation" type="AnimationPlayer" parent="ItemSprite"]
+root_node = NodePath("../Fire")
+libraries = {
+"": SubResource("AnimationLibrary_n0myl")
+}
+playback_auto_capture_transition_type = 5
+playback_auto_capture_ease_type = 2
+playback_default_blend_time = 0.3
+
+[node name="InsidePot" type="Sprite2D" parent="ItemSprite"]
+z_index = 1
+position = Vector2(1, -28)
+texture = SubResource("AtlasTexture_rnedj")
+offset = Vector2(-0.5, 0)
+
+[node name="Egg" type="Sprite2D" parent="ItemSprite/InsidePot"]
+visible = false
+position = Vector2(7, -7)
+texture = SubResource("AtlasTexture_mybll")
+
+[node name="Liver" type="Sprite2D" parent="ItemSprite/InsidePot"]
+visible = false
+position = Vector2(-14, -3)
+texture = SubResource("AtlasTexture_ntl0s")
+
+[node name="Pork" type="Sprite2D" parent="ItemSprite/InsidePot"]
+visible = false
+position = Vector2(12, -3)
+texture = SubResource("AtlasTexture_gdmwg")
+
+[node name="Noodle" type="AnimatedSprite2D" parent="ItemSprite/InsidePot"]
+visible = false
+position = Vector2(-4, -8)
+sprite_frames = ExtResource("2_opl75")
+animation = &"sotanghon"
+frame = 1
+
+[node name="CookTimer" type="Timer" parent="ItemSprite/InsidePot"]
+wait_time = 0.25
+autostart = true
+
+[node name="Fire" type="Sprite2D" parent="ItemSprite"]
+self_modulate = Color(2, 2, 1, 1)
+show_behind_parent = true
+z_index = 1
+y_sort_enabled = true
+texture = SubResource("AtlasTexture_rcd6b")
+offset = Vector2(0, -3)
+
+[node name="FireAnimation" type="AnimationPlayer" parent="ItemSprite/Fire"]
+reset_on_save = false
+libraries = {
+"": SubResource("AnimationLibrary_edfj3")
+}
+playback_auto_capture_duration = 0.0
+playback_auto_capture_ease_type = 2
+playback_default_blend_time = 10.0
+
+[node name="Fire" type="CPUParticles2D" parent="ItemSprite/Fire"]
+position = Vector2(0, 2)
+emitting = false
+amount = 20
+lifetime = 3.0
+explosiveness = 0.1
+randomness = 1.0
+lifetime_randomness = 0.15
+emission_shape = 3
+emission_rect_extents = Vector2(6, 0)
+direction = Vector2(0, 1)
+spread = 91.15
+gravity = Vector2(0, -5)
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+damping_max = 1.0
+color_ramp = ExtResource("5_2dl7x")
+hue_variation_max = 0.09
+
+[node name="Burnt" type="CPUParticles2D" parent="ItemSprite/Fire"]
+position = Vector2(0, -3.78)
+emitting = false
+amount = 30
+lifetime = 5.0
+explosiveness = 0.1
+randomness = 1.0
+lifetime_randomness = 0.15
+emission_shape = 3
+emission_rect_extents = Vector2(6, 0)
+direction = Vector2(0, 1)
+spread = 180.0
+gravity = Vector2(0, -5)
+initial_velocity_max = 5.0
+damping_max = 3.0
+scale_amount_max = 3.0
+color_ramp = SubResource("Gradient_30ru6")
+hue_variation_max = 0.09
+
+[node name="Overcooked" type="CPUParticles2D" parent="ItemSprite/Fire"]
+position = Vector2(0, 2)
+emitting = false
+amount = 50
+lifetime = 6.0
+one_shot = true
+preprocess = 1.0
+explosiveness = 0.89
+randomness = 1.0
+lifetime_randomness = 0.6
+emission_shape = 3
+emission_rect_extents = Vector2(6, 0)
+spread = 180.0
+gravity = Vector2(0, -5)
+initial_velocity_max = 5.0
+damping_max = 3.0
+scale_amount_max = 2.0
+color_ramp = ExtResource("5_2dl7x")
+hue_variation_max = 0.09
+
+[node name="ProgressBar" type="TextureProgressBar" parent="ItemSprite"]
+visible = false
+z_index = 1
+offset_left = 6.0
+offset_top = -16.0
+offset_right = 13.0
+offset_bottom = -9.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+max_value = 20.0
+allow_greater = true
+fill_mode = 4
+texture_under = ExtResource("5_2n5gf")
+texture_progress = ExtResource("6_4egsj")
+
+[node name="ItemAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_m1a6s")
+}
+playback_auto_capture_transition_type = 4
+playback_default_blend_time = 0.5
+
+[node name="SFX" type="Node2D" parent="."]
+
+[node name="Burnt" type="AudioStreamPlayer2D" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_dluuk")
+volume_db = -20.0
+
+[node name="BoiledPot" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource("9_h5bdg")
+
+[connection signal="body_entered" from="." to="." method="_oncontact"]
+[connection signal="timeout" from="ItemSprite/InsidePot/CookTimer" to="." method="_on_cook_timer_timeout"]
