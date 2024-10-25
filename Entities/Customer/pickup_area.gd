@@ -32,32 +32,29 @@ func _get_order_info(order_info) -> Dictionary:
 
 func _on_body_entered(carried_item: RigidBody2D):
 	if carried_item is RigidBody2D:
-		var item_type = carried_item.custom_item_type
-		var item_frame = carried_item.custom_frame
 		var item = carried_item.item_sprite
 		var item_anim = item.animation
-		var item_frame1 = item.frame
+		var item_frame = item.frame
 		if not has_item:
-			print("Player is holding the items: ", item_type, "item_anim: ", item_frame, "item_sprite: ", item.animation, "item_frame: ",item.frame)
-			if item_type == order["bowl"]["item_type"] and item_frame == order["bowl"]["bowl_index"]:
+			if item_anim == order["bowl"]["item_type"] and item_frame == order["bowl"]["bowl_index"]:
 				collected_items["bowl"] = true
 				if item.frame > 69:
 					item.frame = 73
 				else:
 					item.frame = 4
-				
-			if item_anim == order["drink"]["item_type"] and  item_frame1 == order["drink"]["frame"]:
+				print("Bowl collected.")
+			if item_anim == order["drink"]["item_type"] and  item_frame == order["drink"]["frame"]:
 				collected_items["drink"] = true
 				print("Drink collected.")
 				
-			if item_anim == order["sidedish"]["item_type"] and item_frame1 == order["sidedish"]["frame"]:
+			if item_anim == order["sidedish"]["item_type"] and item_frame == order["sidedish"]["frame"]:
 				collected_items["Sidedish"] = true
 				print("Side dish collected.")
 				
 			if not (order["bowl"]["required"] or order["drink"]["required"] or order["sidedish"]["required"]):
 				print("No items required for this order.")
-		else:
-			print("Player is holding an incorrect item: ", carried_item.custom_item_type, carried_item.custom_frame)
+			else:
+				print("Player is holding an incorrect item: ", carried_item.custom_item_type, carried_item.custom_frame)
 		if all_items_collected():
 			get_parent().finish_order()
 				

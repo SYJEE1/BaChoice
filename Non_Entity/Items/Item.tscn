@@ -471,7 +471,7 @@ offset = Vector2(0, -3)
 self_modulate = Color(1, 1, 1, 0)
 y_sort_enabled = true
 sprite_frames = ExtResource("2_opl75")
-animation = &"pot"
+animation = &"bowl"
 autoplay = "bowl"
 speed_scale = 0.0
 offset = Vector2(0, -3)
@@ -501,6 +501,7 @@ playback_auto_capture_ease_type = 2
 playback_default_blend_time = 0.3
 
 [node name="InsidePot" type="Sprite2D" parent="ItemSprite"]
+visible = false
 z_index = 1
 position = Vector2(1, -28)
 texture = SubResource("AtlasTexture_rnedj")
@@ -533,6 +534,7 @@ wait_time = 0.25
 autostart = true
 
 [node name="Fire" type="Sprite2D" parent="ItemSprite"]
+visible = false
 self_modulate = Color(2, 2, 1, 1)
 show_behind_parent = true
 z_index = 1

@@ -50,7 +50,7 @@ func finish_order():
 
 		if timer:
 			var elapsed_time = timer.wait_time - timer.time_left
-			if elapsed_time <= 30:
+			if elapsed_time <= 45:
 				price = 1
 			elif elapsed_time <= 60:
 				price = 0.9
