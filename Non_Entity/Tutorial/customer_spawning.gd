@@ -4,8 +4,8 @@ extends Node2D
 @onready var spawn_point_1 = get_node("A")
 @onready var spawn_point_2 = get_node("B")
 @onready var spawn_point_3 = get_node("C")
-@export var min_spawn_interval: float = 3.0
-@export var max_spawn_interval: float = 5.0
+@export var min_spawn_interval: float = 5.0
+@export var max_spawn_interval: float = 10.0
 
 var total_customers_spawned: int = 0
 var timer: Timer = null
@@ -14,7 +14,6 @@ var occupied_points: Dictionary = {}  # Dictionary to keep track of occupied poi
 var audio_stream_player: AudioStreamPlayer
 var spawn_sound: AudioStream
 var spawn_volume_db: float = -25.0
-
 func _ready():
 	spawn_sound = preload("res://Entities/Customer/Store Door Sound Effect.mp3")
 	audio_stream_player = AudioStreamPlayer.new()  

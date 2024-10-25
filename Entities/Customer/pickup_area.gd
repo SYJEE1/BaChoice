@@ -12,7 +12,7 @@ var collected_items: Dictionary = {
 	"sidedish": false
 }
 var order: Dictionary
-
+const ITEM = preload("res://Non_Entity/Items/Item.tscn")
 func _ready():
 	connect("body_entered", Callable(self, "_on_body_entered"))
 	Global.connect("item_state_changed", Callable(self, "_on_item_state_changed"))
@@ -24,22 +24,23 @@ func interact(carried_item) -> void:
 
 func _get_order_info(order_info) -> Dictionary:
 	order = order_info
-	print("get order info: ", order)
 	return order
 
 func _on_body_entered(carried_item: RigidBody2D):
-	print ("pickup area info: ", order)
 	if carried_item is RigidBody2D:
 		var item_type = carried_item.custom_item_type
 		var item_frame = carried_item.custom_frame
 		if not has_item:
 			if item_type == order["bowl"]["item_type"] and item_frame == order["bowl"]["bowl_index"]:
 				collected_items["bowl"] = true
+				var instance = ITEM.instantiate()
+				instance.global_position = global_position
 				if item_frame > 69:
-					carried_item.custom_frame = 73
+					instance.set_item(&"bowl", 73)
 				else:
-					carried_item.custom_frame = 3
-					
+					instance.set_item(&"bowl", 3)
+				return instance
+				carried_item.queue_free()
 				print("Bowl collected.")
 				print("Bowl frame is now: ", carried_item.custom_frame)
 				

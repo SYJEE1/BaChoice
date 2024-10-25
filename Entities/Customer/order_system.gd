@@ -2,7 +2,7 @@ extends Node2D
 
 # Preload assets with their prices
 var bowl = {
-	"Bowl1": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-regular.png"), "price": 40, "item_type": "bowl", "bowl_index": 69, "required" : true},
+	"Bowl1": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-regular.png"), "price": 50, "item_type": "bowl", "bowl_index": 69, "required" : true},
 	"Bowl2": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-super.png"), "price": 60, "item_type": "bowl", "bowl_index": 0, "required" : true}
 }
 var noodles = {
@@ -371,6 +371,8 @@ func display_order(order: Dictionary):
 			topping_sprite.scale = Vector2(1, 1)  # Set size to match the asset
 			topping_sprite.position = Vector2(topping_x, 5)  # Centered in the background
 			total_sprites += 1
+			print("total sprites with toppings: ", total_sprites)
+			
 			if total_sprites < 5:
 				hbox_container.add_child(topping_sprite)
 				sprite_count += 1  # Increment sprite count
@@ -388,6 +390,7 @@ func display_order(order: Dictionary):
 		drink_sprite.scale = Vector2(1, 1)  # Set size to match the asset
 		drink_sprite.position = Vector2(5, 40)  # Position for drink
 		total_sprites += 1
+		print("total sprites with drinks: ", total_sprites)
 		if total_sprites < 5:
 			hbox_container.add_child(drink_sprite)
 			sprite_count += 1  # Increment sprite count
@@ -402,6 +405,7 @@ func display_order(order: Dictionary):
 		sidedish_sprite.texture = sidedish[sidedish_key]["texture"]  # Access the texture
 		sidedish_sprite.scale = Vector2(1, 1)  # Set size to match the asset
 		sidedish_sprite.position = Vector2(5, 40)  # Position for drink
+		total_sprites += 1
 		if total_sprites < 5:
 			hbox_container.add_child(sidedish_sprite)
 			sprite_count += 1  # Increment sprite count

@@ -14,7 +14,9 @@ var new_order: String = ""
 var has_item: bool = false
 var current_item_frame: int = 1
 var current_item_animation: String = ""
+var price: float
 
+signal price_updated(price: float)
 signal item_state_changed(state: bool) 
 signal amount_paid_changed(new_amount: float)
 signal new_stage_number(stage_number: String)
@@ -96,6 +98,14 @@ func set_amount_paid(new_amount_paid: float):
 	emit_signal("amount_paid_changed", amount_paid)  # Notify listeners
 func get_amount_paid() -> float:
 	return amount_paid
+	
+func set_price(new_amount_paid: float):
+	price = new_amount_paid
+	emit_signal("price_updated", price)  # Notify listeners
+
+func get_price() -> float:
+	return price
+	
 # For Giving Orders to Customers
 func update_item_state(state: bool):
 	has_item = state
