@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://vyu2twerlhgs"]
+[gd_scene load_steps=35 format=4 uid="uid://vyu2twerlhgs"]
 
 [ext_resource type="Script" path="res://Non_Entity/Stages/stage_1.gd" id="1_crsol"]
 [ext_resource type="Texture2D" uid="uid://dvg4wt154im0k" path="res://Non_Entity/Main Scene/Background.png" id="1_mux3k"]
@@ -9,15 +9,17 @@
 [ext_resource type="TileSet" uid="uid://buhplg7gd4o0i" path="res://Non_Entity/Stages/Stage1.tres" id="6_emv3y"]
 [ext_resource type="FontFile" uid="uid://brb1w3e1via4m" path="res://Graphics/Fonts/mago2.ttf" id="6_ho5e1"]
 [ext_resource type="PackedScene" uid="uid://ke3muiiqgpcu" path="res://Non_Entity/Items/Item.tscn" id="7_3wnng"]
+[ext_resource type="TileSet" uid="uid://buhplg7gd4o0i" path="res://Non_Entity/Stages/Stage1.tres" id="8_w0kpd"]
 [ext_resource type="Script" path="res://Non_Entity/Tutorial/customer_spawning.gd" id="9_w3k5i"]
 [ext_resource type="PackedScene" uid="uid://c4l5pipqrhfpg" path="res://Non_Entity/Tutorial/score.tscn" id="10_730n8"]
 [ext_resource type="PackedScene" uid="uid://bk0nfo5btjpxm" path="res://Non_Entity/Menu Scene/pause_menu.tscn" id="13_ry0gi"]
+[ext_resource type="Texture2D" uid="uid://destr54ut3ti5" path="res://light/vecteezy_geometric-design-element_21048718.png" id="14_plsv7"]
 
 [sub_resource type="Environment" id="Environment_oupni"]
 background_mode = 3
 glow_enabled = true
 glow_intensity = 1.0
-glow_strength = 0.8
+glow_strength = 0.1
 glow_bloom = 0.1
 glow_blend_mode = 0
 
@@ -2205,6 +2207,9 @@ sources/0 = SubResource("TileSetAtlasSource_3yser")
 
 [sub_resource type="LabelSettings" id="LabelSettings_rw5da"]
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_lmivv"]
+polygon = PackedVector2Array(115.02, -8.47647, 106.02, -8.47647, 106.02, -81.4765, 54.0199, -81.4765, 54.0199, -117.476, 54.0199, -118.476, 473.02, -118.476, 473.02, 58.5235, 410.02, 57.5235, 410.02, 14.5235, 405.02, 14.5235, 411.02, 58.5235, 404.02, 58.5235, 404.02, 13.5235, 404.02, 10.5235, 407.02, 10.5235, 407.02, -69.4765, 119.02, -69.4765, 119.02, -8.47647, 118.02, -8.47647, 118.02, -70.4765, 408.02, -70.4765, 408.02, 11.5235, 405.02, 11.5235, 405.02, 13.5235, 410.02, 13.5235, 410.02, -72.4765, 116.02, -72.4765, 119.02, -8.4765, 115.02, -8.47647, 115.02, -73.4765, 411.02, -73.4765, 411.02, 10.5235, 471.02, 10.5235, 471.02, 11.5235, 411.02, 11.5235, 411.02, 13.5235, 471.02, 13.5235, 471.02, 14.5235, 411.02, 14.5235, 411.02, 57.5235, 471.02, 57.5235, 471.02, -117.476, 55.0199, -117.476, 55.0199, -82.4765, 106.02, -82.4765, 106.02, -117.476, 107.02, -117.476, 107.02, -54.4765, 115.02, -54.4765, 115.02, -53.4765, 107.02, -53.4765, 107.02, -9.47647, 115.02, -9.47647)
+
 [node name="Stage1" type="Node2D"]
 script = ExtResource("1_crsol")
 
@@ -2235,7 +2240,7 @@ tile_set = SubResource("TileSet_rngwv")
 [node name="Countertop" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAADAAQAAAAEAAUAAAAEAAQAAAAFAAUAAAALAAcAAAAEAAUAAAAMAAcAAAAFAAUAAAANAAcAAAAEAAUAAAAJAAcAAAAEAAUAAAAKAAcAAAAFAAUAAAAHAAcAAAAEAAUAAAAIAAcAAAAFAAUAAAAFAAcAAAAFAAUAAAAGAAcAAAAEAAUAAAADAAcAAAAFAAUAAAAEAAcAAAAEAAUAAAACAAcAAAAEAAUAAAAOAAcAAAAFAAUAAAAPAAcAAAAEAAUAAAAQAAcAAAAFAAUAAAARAAcAAAAEAAUAAAASAAcAAAAFAAUAAAARAAQAAAAFAAMAAAARAAUAAAAFAAQAAAASAAQAAAAGAAMAAAASAAUAAAAGAAQAAAAFAAQAAAAEAAUAAAAGAAQAAAAFAAUAAAALAAQAAAAGAAUAAAANAAQAAAAEAAUAAAAOAAQAAAAFAAUAAAA=")
-tile_set = ExtResource("6_emv3y")
+tile_set = ExtResource("8_w0kpd")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Countertop"]
 y_sort_enabled = true
@@ -2243,7 +2248,7 @@ y_sort_enabled = true
 [node name="Broth" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAABAAQAAAABAAYAAAABAAUAAAABAAcAAAACAAQAAAACAAYAAAACAAUAAAACAAcAAAA=")
-tile_set = ExtResource("6_emv3y")
+tile_set = ExtResource("8_w0kpd")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Broth"]
 y_sort_enabled = true
@@ -2253,7 +2258,7 @@ tile_set = SubResource("TileSet_jee58")
 [node name="Trashbin" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAABAAcAAAATAAEAAAA=")
-tile_set = ExtResource("6_emv3y")
+tile_set = ExtResource("8_w0kpd")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Trashbin"]
 y_sort_enabled = true
@@ -2263,7 +2268,7 @@ tile_set = SubResource("TileSet_bhvhp")
 [node name="Cooler" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAPAAQAAAAQAAUAAAA=")
-tile_set = ExtResource("6_emv3y")
+tile_set = ExtResource("8_w0kpd")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Cooler"]
 y_sort_enabled = true
@@ -2273,7 +2278,7 @@ tile_set = SubResource("TileSet_t4dul")
 [node name="Ref" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAMAAMAAAAMAAcAAAAMAAQAAAAMAAgAAAA=")
-tile_set = ExtResource("6_emv3y")
+tile_set = ExtResource("8_w0kpd")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Ref"]
 y_sort_enabled = true
@@ -2283,7 +2288,7 @@ tile_set = SubResource("TileSet_e52uf")
 [node name="CuttingBoard" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAOAAQAAAAJAAoAAAA=")
-tile_set = ExtResource("6_emv3y")
+tile_set = ExtResource("8_w0kpd")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/CuttingBoard"]
 y_sort_enabled = true
@@ -2293,7 +2298,7 @@ tile_set = SubResource("TileSet_7puh7")
 [node name="Stove" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAHAAQAAAAOAAEAAAAIAAQAAAAOAAEAAAAJAAQAAAAOAAEAAAAKAAQAAAAOAAEAAAA=")
-tile_set = ExtResource("6_emv3y")
+tile_set = ExtResource("8_w0kpd")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Stove"]
 y_sort_enabled = true
@@ -2366,3 +2371,17 @@ label_settings = SubResource("LabelSettings_rw5da")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("13_ry0gi")]
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+position = Vector2(-351, 36)
+color = Color(7.56863, 3.78431, 1.62353, 0.407843)
+energy = 0.39
+shadow_enabled = true
+shadow_filter = 1
+texture = ExtResource("14_plsv7")
+height = 1.0
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-103.02, 85.4765)
+occluder = SubResource("OccluderPolygon2D_lmivv")

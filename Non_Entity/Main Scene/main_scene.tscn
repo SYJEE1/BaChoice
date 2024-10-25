@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=4 uid="uid://divwn1b5b3o"]
+[gd_scene load_steps=25 format=4 uid="uid://divwn1b5b3o"]
 
 [ext_resource type="Script" path="res://Non_Entity/Main Scene/main_scene.gd" id="1_qentd"]
 [ext_resource type="Texture2D" uid="uid://bf7uhiy54nagw" path="res://Non_Entity/Main Scene/ReferenceTiles.png" id="2_ujia4"]
 [ext_resource type="Script" path="res://Non_Entity/Main Scene/tile_maps.gd" id="3_i1lbk"]
 [ext_resource type="PackedScene" uid="uid://dwt7q45hesbr5" path="res://Entities/Player/player_scene.tscn" id="4_voske"]
+[ext_resource type="TileSet" uid="uid://buhplg7gd4o0i" path="res://Non_Entity/Stages/Stage1.tres" id="5_oiyln"]
 [ext_resource type="PackedScene" uid="uid://ke3muiiqgpcu" path="res://Non_Entity/Items/Item.tscn" id="5_pryya"]
 [ext_resource type="Texture2D" uid="uid://dvg4wt154im0k" path="res://Non_Entity/Main Scene/Background.png" id="5_q4k1w"]
 [ext_resource type="TileSet" uid="uid://c66g5q3avakk7" path="res://Non_Entity/Stations/Interactables.tres" id="6_72cbv"]
@@ -120,6 +121,21 @@ sources/0 = SubResource("TileSetAtlasSource_5h1bu")
 
 [sub_resource type="LabelSettings" id="LabelSettings_7y825"]
 
+[sub_resource type="Animation" id="Animation_21ax4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(415, -48)]
+}
+
 [sub_resource type="Animation" id="Animation_8a0x1"]
 resource_name = "cycle"
 length = 16.0
@@ -175,21 +191,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(6, 3.8, 2, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_21ax4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(415, -48)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7q70s"]
@@ -271,7 +272,7 @@ tile_set = SubResource("TileSet_6ywnp")
 [node name="Countertop" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAADAAcAAAAEAAMAAAADAAgAAAAEAAQAAAAHAAcAAAAFAAMAAAAHAAgAAAAFAAQAAAAIAAcAAAAGAAMAAAAIAAgAAAAGAAQAAAADAAQAAAAEAAUAAAAEAAQAAAAFAAUAAAAFAAQAAAAGAAUAAAA=")
-tile_set = ExtResource("6_72cbv")
+tile_set = ExtResource("5_oiyln")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Countertop"]
 y_sort_enabled = true
@@ -280,7 +281,7 @@ tile_set = ExtResource("6_72cbv")
 [node name="Broth" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAADAAUAAAABAAYAAAAEAAUAAAACAAYAAAADAAYAAAABAAcAAAAEAAYAAAACAAcAAAA=")
-tile_set = ExtResource("6_72cbv")
+tile_set = ExtResource("5_oiyln")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Broth"]
 y_sort_enabled = true
@@ -290,7 +291,7 @@ tile_set = ExtResource("6_72cbv")
 [node name="Trashbin" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAJAAgAAAATAAEAAAA=")
-tile_set = ExtResource("6_72cbv")
+tile_set = ExtResource("5_oiyln")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Trashbin"]
 y_sort_enabled = true
@@ -300,7 +301,7 @@ tile_set = ExtResource("6_72cbv")
 [node name="Cooler" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAMAAcAAAAQAAUAAAA=")
-tile_set = ExtResource("6_72cbv")
+tile_set = ExtResource("5_oiyln")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Cooler"]
 y_sort_enabled = true
@@ -310,7 +311,7 @@ tile_set = ExtResource("6_72cbv")
 [node name="ColaRef" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAIAAMAAAAMAAMAAAAIAAQAAAAMAAQAAAA=")
-tile_set = ExtResource("6_72cbv")
+tile_set = ExtResource("5_oiyln")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/ColaRef"]
 y_sort_enabled = true
@@ -320,7 +321,7 @@ tile_set = ExtResource("6_72cbv")
 [node name="Ref" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAANAAMAAAAMAAcAAAANAAQAAAAMAAgAAAA=")
-tile_set = ExtResource("6_72cbv")
+tile_set = ExtResource("5_oiyln")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Ref"]
 y_sort_enabled = true
@@ -330,7 +331,7 @@ tile_set = ExtResource("6_72cbv")
 [node name="CuttingBoard" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAFAAQAAAAJAAoAAAA=")
-tile_set = ExtResource("6_72cbv")
+tile_set = ExtResource("5_oiyln")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/CuttingBoard"]
 y_sort_enabled = true
@@ -340,7 +341,7 @@ tile_set = ExtResource("6_72cbv")
 [node name="Stove" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAKAAYAAAAOAAEAAAA=")
-tile_set = ExtResource("6_72cbv")
+tile_set = ExtResource("5_oiyln")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Stove"]
 y_sort_enabled = true
@@ -350,7 +351,7 @@ tile_set = ExtResource("6_72cbv")
 [node name="BasketPandesal" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAPAAQAAAAQAAYAAAAPAAUAAAAQAAcAAAAQAAQAAAARAAYAAAAQAAUAAAARAAcAAAA=")
-tile_set = ExtResource("6_72cbv")
+tile_set = ExtResource("5_oiyln")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/BasketPandesal"]
 y_sort_enabled = true
@@ -360,7 +361,7 @@ tile_set = ExtResource("6_72cbv")
 [node name="BasketPuto" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAPAAYAAAAQAAgAAAAQAAYAAAARAAgAAAA=")
-tile_set = ExtResource("6_72cbv")
+tile_set = ExtResource("5_oiyln")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/BasketPuto"]
 y_sort_enabled = true

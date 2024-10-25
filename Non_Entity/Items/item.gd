@@ -37,9 +37,11 @@ const sprite_frames = preload("res://Non_Entity/Items/Item.tres")
 @export var custom_frame: int = 1
 
 var is_carried := false
-var possible_ingredients = ["raw_cut_liver", "raw_cut_pork", "egg", "noodles", "broth"]
+var noodles = []
+var possible_ingredients = ["raw_cut_liver", "raw_cut_pork", "egg", "broth", "miswa", "bihon", "sotanghon", "miki"]
 var pot_array = []
 var on_stove := false
+var burnt := false
 
 func _ready() -> void:
 	if custom_item_type: item_sprite.animation = custom_item_type
@@ -86,27 +88,23 @@ func unglow() -> void:
 		glow_animation.play("unglow")	
 
 func can_put_in_pot(item_type): 
-	
-	if (item_type in possible_ingredients) and (item_type not in pot_array): 
-		return true
+	if (item_type in possible_ingredients):
+		if (item_type not in pot_array):
+			return true	
+		else: print(item_type, " is not in: ", pot_array); breakpoint
+	else: print(item_type, " is not in: ", possible_ingredients); breakpoint
+
 
 func item_interact(item_carried) -> void:
 	var item_type = item_carried.item_sprite.animation
-	var noodle_type: String
-	
-	if item_type in ["miswa","bihon","sotanghon","miki"]: 
-		noodle_type = item_type
-		item_type = "noodles"
-			
 	if can_put_in_pot(item_type) == true:
-		if item_type == "noodles":
-			$ItemSprite/InsidePot/Noodle.animation = noodle_type
-			$ItemSprite/InsidePot/Noodle.frame = 1
 		print("putting in pot: ", item_type)
+		
+		# transfer item from possible_ingredients to pot_array
 		pot_array.push_back(item_type)
 		possible_ingredients.erase(item_type)
 		
-		# animation
+		# put animation
 		item_carried.item_animation.play("into_pot")
 		set_item("pot", 1)
 		var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -114,10 +112,19 @@ func item_interact(item_carried) -> void:
 		await get_tree().create_timer(.5).timeout
 		item_carried.queue_free()
 		
+		# Checks if pot has an item and puts a lid
+		#if pot_array.size() > 0: set_item("pot", 3)
+		
+		set_item("pot", 3)
+		
 		if progress_bar.value < progress_bar.max_value:
 			progress_bar.max_value = 10 * pot_array.size()
 		
+		print("Pot_array: ",pot_array)
 		update_pot()
+	else: 
+		print("cannot put in : ", item_type)
+		breakpoint
 		
 func holdingpot_interact(item_type) -> void:
 	if can_put_in_pot(item_type) == true:
@@ -134,12 +141,10 @@ func toggle_onstove():
 	update_pot()
 
 func update_pot() -> void:
-	print(pot_array)
-	
 	progress_bar.max_value = pot_array.size() * 10
 	
 	# on stove, fire animation
-	if (on_stove == true) and ("broth" in pot_array) and ("noodles" in pot_array):
+	if (on_stove == true) and ("broth" in pot_array) and (noodles in pot_array):
 		cook_timer.paused = false
 		progress_bar.visible = true
 		fire.get_child(0).play("fire")
@@ -165,12 +170,6 @@ func update_pot() -> void:
 	$ItemSprite/InsidePot/Egg.visible = false
 	$ItemSprite/InsidePot/Noodle.visible = false
 	$ItemSprite/InsidePot.texture.region = Rect2(192,176,48,32)
-	
-	# Checks if pot has an item and puts a lid
-	if pot_array.size() > 0:
-		set_item("pot", 3)
-		
-	else: possible_ingredients = ["raw_cut_liver", "raw_cut_pork", "egg", "noodles", "broth"]
 		
 	# item goes into pot
 	for item_type in pot_array:
@@ -178,8 +177,8 @@ func update_pot() -> void:
 		if item_type == "raw_cut_liver": $ItemSprite/InsidePot/Liver.visible = true
 		if item_type == "raw_cut_pork": $ItemSprite/InsidePot/Pork.visible = true
 		if item_type == "egg": $ItemSprite/InsidePot/Egg.visible = true
-		if item_type == "noodles": $ItemSprite/InsidePot/Noodle.visible = true
-	
+		if item_type in noodles: $ItemSprite/InsidePot/Noodle.visible = true
+		
 func pickup() -> void:
 	on_stove = false
 	update_pot()
@@ -225,13 +224,13 @@ func _on_cook_timer_timeout() -> void:
 
 func get_soup(carried_item) -> int:
 	var soup : String
-	
-	["raw_cut_liver", "raw_cut_pork", "egg", "noodles", "broth"]
+	#["raw_cut_liver", "raw_cut_pork", "egg", "broth", "miswa", "bihon", "sotanghon", "miki"]
 	if carried_item.item_sprite.frame == 1: soup += "S"
 	elif carried_item.item_sprite.frame == 70: soup += "R"
 	soup += "5"
 	
 	var noodle_itemtype = $ItemSprite/InsidePot/Noodle.animation
+	print(noodle_itemtype)
 	if noodle_itemtype == "miswa": soup += "6"
 	elif noodle_itemtype == "bihon": soup += "7"
 	elif noodle_itemtype == "sotanghon": soup += "8" 
@@ -244,6 +243,7 @@ func get_soup(carried_item) -> int:
 		if x == "pork": soup += "P"
 		if x == "liver": soup += "L"
 		if x == "chicharon": soup += "C"
+	
 	
 	print(soup)
 	return find_bowl_algo(soup)

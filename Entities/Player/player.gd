@@ -164,6 +164,7 @@ func interact(input_direction, delta) -> void:
 					var ready = nearest.get_parent().progress_bar.value >= nearest.get_parent().progress_bar.max_value
 					if (empty_bowl and finished_pot) and ready == true:
 						if Input.is_action_just_pressed("interact"):
+							PopSFX(.70)
 							nearest.get_parent().item_interact(carried_item)
 							
 							carried_item.item_sprite.frame = carried_item.get_soup(carried_item)

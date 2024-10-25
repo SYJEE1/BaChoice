@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ke3muiiqgpcu"]
+[gd_scene load_steps=37 format=3 uid="uid://ke3muiiqgpcu"]
 
 [ext_resource type="SpriteFrames" uid="uid://bouevinhbka7y" path="res://Non_Entity/Items/Item.tres" id="2_opl75"]
 [ext_resource type="Script" path="res://Non_Entity/Items/item.gd" id="2_uf2dp"]
