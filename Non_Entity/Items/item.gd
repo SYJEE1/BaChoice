@@ -139,11 +139,14 @@ func update_pot() -> void:
 	progress_bar.max_value = pot_array.size() * 10
 	
 	# on stove, fire animation
-	if on_stove == true and pot_array.size() > 0:
+	if (on_stove == true) and ("broth" in pot_array) and ("noodles" in pot_array):
+		cook_timer.paused = false
 		progress_bar.visible = true
 		fire.get_child(0).play("fire")
 		fire.get_child(1).emitting = true
+		$SFX/BoiledPot.play()
 	else: 
+		cook_timer.paused = true
 		fire.get_child(0).play("nofire")
 		fire.get_child(1).emitting = false
 	
@@ -151,6 +154,8 @@ func update_pot() -> void:
 	if on_stove == true and "broth" in pot_array: 
 		cook_timer.paused = false
 	else: cook_timer.paused = true
+		$SFX/BoiledPot.stop()
+		
 	
 	# Reset Pot Values
 	#print ("pot now contains: ", pot_array)
@@ -196,6 +201,7 @@ func reset() -> void:
 	
 	set_item("pot", 1)
 	pot_array.clear()
+	
 	$ItemSprite/Fire/Overcooked.emitting = false
 	$ItemSprite/Fire/Burnt.emitting = false
 	update_pot()
@@ -209,6 +215,7 @@ func _on_cook_timer_timeout() -> void:
 	elif progress_bar.value <= progress_bar.max_value * 1.80: progress_bar.tint_progress = Color.RED
 	elif progress_bar.value >= progress_bar.max_value * 2.20: 
 		on_stove = false
+		$SFX/Burnt.play()
 		$ItemSprite/Fire/Overcooked.emitting = true
 		$ItemSprite/Fire/Burnt.emitting = true
 		progress_bar.tint_progress = Color.BLACK

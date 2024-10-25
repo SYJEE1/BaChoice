@@ -34,6 +34,7 @@ func _ready () -> void:
 	get_order(new_order)
 	send_order()
 	
+	
 
 func _on_updates_completed() -> void:
 	send_quota()  # Call the function to send the quota

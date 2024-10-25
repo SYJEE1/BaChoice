@@ -104,6 +104,7 @@ func interact(input_direction, delta) -> void:
 					nearest.glow(carried_item)
 					
 					if Input.is_action_just_pressed("interact"):
+						PopSFX(1.30)
 						carried_item = nearest.interact(carried_item)
 						carried_item.pickup()
 						carried_item.is_carried = true
@@ -112,7 +113,8 @@ func interact(input_direction, delta) -> void:
 			if nearest.area_type == "item" and nearest.get_parent().is_carried == false:
 				nearest.get_parent().glow()
 				
-				if Input.is_action_just_pressed("interact"):	
+				if Input.is_action_just_pressed("interact"):
+					PopSFX(1.30)
 					carried_item = nearest.get_parent()
 					carried_item.pickup()
 					carried_item.is_carried = true
@@ -171,6 +173,7 @@ func interact(input_direction, delta) -> void:
 						nearest.get_parent().glow()
 					var item = carried_item.item_sprite.animation
 					if Input.is_action_just_pressed("interact"):
+						PopSFX(.70)
 						nearest.get_parent().item_interact(carried_item)
 						carried_item.is_carried = false
 						carried_item = null 
@@ -180,6 +183,7 @@ func interact(input_direction, delta) -> void:
 				if nearest.has_method("glow"): nearest.glow(carried_item)
 			
 				if Input.is_action_just_pressed("interact"):
+					PopSFX(.70)
 					detected_area.append(carried_item.get_child(0))
 					carried_item.putdown()
 					var distance = carried_item.global_position.distance_to(detected_area[0].global_position) * 22
@@ -210,3 +214,6 @@ func _on_itemexited(area: Area2D) -> void:
 	detected_area.erase(area)
 	if area.has_method("hotbar_peek"): area.hotbar_peek(false)
 	
+func PopSFX(pitch):
+	$SFX/PopSound.pitch_scale = pitch
+	$SFX/PopSound.play()

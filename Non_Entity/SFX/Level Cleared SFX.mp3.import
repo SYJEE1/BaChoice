@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dpfvbyj3ga4tr"
+path="res://.godot/imported/Level Cleared SFX.mp3-1ed97f966e6d80859e3ef3a7eaa3d2c2.mp3str"
+
+[deps]
+
+source_file="res://Non_Entity/SFX/Level Cleared SFX.mp3"
+dest_files=["res://.godot/imported/Level Cleared SFX.mp3-1ed97f966e6d80859e3ef3a7eaa3d2c2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
