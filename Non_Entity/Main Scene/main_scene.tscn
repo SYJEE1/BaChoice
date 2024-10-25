@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://divwn1b5b3o"]
+[gd_scene load_steps=24 format=4 uid="uid://divwn1b5b3o"]
 
 [ext_resource type="Script" path="res://Non_Entity/Main Scene/main_scene.gd" id="1_qentd"]
 [ext_resource type="Texture2D" uid="uid://bf7uhiy54nagw" path="res://Non_Entity/Main Scene/ReferenceTiles.png" id="2_ujia4"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dvg4wt154im0k" path="res://Non_Entity/Main Scene/Background.png" id="5_q4k1w"]
 [ext_resource type="TileSet" uid="uid://c66g5q3avakk7" path="res://Non_Entity/Stations/Interactables.tres" id="6_72cbv"]
 [ext_resource type="FontFile" uid="uid://brb1w3e1via4m" path="res://Graphics/Fonts/mago2.ttf" id="6_dbhs7"]
+[ext_resource type="Texture2D" uid="uid://destr54ut3ti5" path="res://light/vecteezy_geometric-design-element_21048718.png" id="9_ldeoa"]
 
 [sub_resource type="Environment" id="Environment_l4ohr"]
 background_mode = 3
@@ -118,6 +119,126 @@ physics_layer_0/collision_mask = 34
 sources/0 = SubResource("TileSetAtlasSource_5h1bu")
 
 [sub_resource type="LabelSettings" id="LabelSettings_7y825"]
+
+[sub_resource type="Animation" id="Animation_8a0x1"]
+resource_name = "cycle"
+length = 16.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.93333, 5.93333, 8, 9.9, 11.9667, 13.9333, 16),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-93, -50), Vector2(-119, 221), Vector2(420, 255), Vector2(436, -70), Vector2(-141, -74), Vector2(-119, 221), Vector2(420, 255), Vector2(415, -48)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3.9, 5.96667, 6.8, 10.0333, 16),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(7, 3.8, 2, 0.3), Color(5, 5, 5, 0.3), Color(15, 8, 4, 0.0980392), Color(5, 8, 10, 0.3), Color(15.1333, 29.7294, 55.6745, 0.0235294), Color(5.946, 15.135, 100, 0.005)]
+}
+
+[sub_resource type="Animation" id="Animation_pdi7o"]
+resource_name = "cycle2"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4, 5, 6, 7, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-129, -21), Vector2(-129, 256), Vector2(444, 256), Vector2(444, 256), Vector2(444, -21), Vector2(444, -21), Vector2(444, -21), Vector2(444, -21), Vector2(444, -21)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(6, 3.8, 2, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_21ax4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(415, -48)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7q70s"]
+_data = {
+"RESET": SubResource("Animation_21ax4"),
+"cycle": SubResource("Animation_8a0x1"),
+"cycle2": SubResource("Animation_pdi7o")
+}
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mjg3r"]
+polygon = PackedVector2Array(115.02, -8.47647, 106.02, -8.47647, 106.02, -81.4765, 54.0199, -81.4765, 54.0199, -117.476, 54.0199, -118.476, 473.02, -118.476, 473.02, 58.5235, 410.02, 57.5235, 410.02, 14.5235, 405.02, 14.5235, 411.02, 58.5235, 404.02, 58.5235, 404.02, 13.5235, 404.02, 10.5235, 407.02, 10.5235, 407.02, -69.4765, 119.02, -69.4765, 119.02, -8.47647, 118.02, -8.47647, 118.02, -70.4765, 408.02, -70.4765, 408.02, 11.5235, 405.02, 11.5235, 405.02, 13.5235, 410.02, 13.5235, 410.02, -72.4765, 116.02, -72.4765, 119.02, -8.4765, 115.02, -8.47647, 115.02, -73.4765, 411.02, -73.4765, 411.02, 10.5235, 471.02, 10.5235, 471.02, 11.5235, 411.02, 11.5235, 411.02, 13.5235, 471.02, 13.5235, 471.02, 14.5235, 411.02, 14.5235, 411.02, 57.5235, 471.02, 57.5235, 471.02, -117.476, 55.0199, -117.476, 55.0199, -82.4765, 106.02, -82.4765, 106.02, -117.476, 107.02, -117.476, 107.02, -54.4765, 115.02, -54.4765, 115.02, -53.4765, 107.02, -53.4765, 107.02, -9.47647, 115.02, -9.47647)
+
+[sub_resource type="Animation" id="Animation_ty1an"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.811765, 0.72549, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xyk0p"]
+resource_name = "shadowcycle"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.811765, 0.72549, 1), Color(0.94902, 1, 1, 1), Color(0.94902, 1, 1, 1), Color(1, 0.811765, 0.72549, 1), Color(0.37284, 0.469143, 0.659463, 1), Color(0.37284, 0.469143, 0.659463, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kpxpo"]
+_data = {
+"RESET": SubResource("Animation_ty1an"),
+"shadowcycle": SubResource("Animation_xyk0p")
+}
 
 [node name="MainScene" type="Node2D"]
 y_sort_enabled = true
@@ -276,3 +397,32 @@ custom_item_type = &"bowl_regular"
 
 [node name="Item3" parent="." instance=ExtResource("5_pryya")]
 position = Vector2(124, 134)
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+position = Vector2(415, -48)
+color = Color(6, 3.8, 2, 1)
+energy = 0.39
+shadow_enabled = true
+shadow_filter = 2
+texture = ExtResource("9_ldeoa")
+height = 1.0
+
+[node name="LightAnimation" type="AnimationPlayer" parent="PointLight2D2"]
+libraries = {
+"": SubResource("AnimationLibrary_7q70s")
+}
+speed_scale = 0.01
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-103.02, 85.4765)
+occluder = SubResource("OccluderPolygon2D_mjg3r")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(1, 0.811765, 0.72549, 1)
+
+[node name="ShadowAnimation" type="AnimationPlayer" parent="CanvasModulate"]
+libraries = {
+"": SubResource("AnimationLibrary_kpxpo")
+}
+speed_scale = 0.01

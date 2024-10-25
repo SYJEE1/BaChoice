@@ -21,6 +21,7 @@ func _ready() -> void:
 	print(Global.get_total_customers(customers))
 	emit_signal("updates_completed")
 	Global.connect("total_customers_updated", Callable(self, "checking_condition"))
+	
 
 # func _process(delta: float) -> void:
 	# fps_label.text = "FPS: %d" %Engine.get_frames_per_second()
