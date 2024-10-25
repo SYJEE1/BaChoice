@@ -130,7 +130,7 @@ func interact(input_direction, delta) -> void:
 			detected_area.sort_custom(_sort_by_distance_from_player)
 			var nearest : Area2D = detected_area[0]
 			debug.global_position = nearest.global_position
-				
+						
 			if nearest.area_type == "item": # if holding an item, sees an item
 				var nearest_item = nearest.get_parent().item_sprite
 				# only pot and bowl goes through
@@ -158,7 +158,7 @@ func interact(input_direction, delta) -> void:
 						carried_item = null 
 						has_item = false
 							
-			if ((nearest.area_type == "station" or nearest.area_type == "cuttingboard" or nearest.area_type == "stove") and nearest.takes_item == true) or (nearest.area_type == "countertop"):
+			if ((nearest.area_type == "station" or nearest.area_type == "cuttingboard" or nearest.area_type == "stove" or nearest.area_type == "ReceivingArea") and nearest.takes_item == true) or (nearest.area_type == "countertop"):
 				if nearest.has_method("glow"): nearest.glow(carried_item)
 			
 				if Input.is_action_just_pressed("interact"):

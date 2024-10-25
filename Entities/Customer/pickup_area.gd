@@ -1,7 +1,7 @@
 extends Area2D
 
 const area_type := &"ReceivingArea"
-
+var takes_item: bool = true
 var has_item = Global.get_item_state()  # Flag to track if the player is holding an item
 var player_scene: PackedScene
 
@@ -13,41 +13,44 @@ var collected_items: Dictionary = {
 }
 var order: Dictionary
 const ITEM = preload("res://Non_Entity/Items/Item.tscn")
+
 func _ready():
 	connect("body_entered", Callable(self, "_on_body_entered"))
 	Global.connect("item_state_changed", Callable(self, "_on_item_state_changed"))
 	var customer_node = get_parent()
-	customer_node.connect("order_info_updated", Callable(self, "_get_order_info"))  # Connect to the signal
+	customer_node.connect("order_info_updated", Callable(self, "_get_order_info")) 
+	global_position += Vector2(0, -15)
+
 	
 func interact(carried_item) -> void:
 	pass
 
 func _get_order_info(order_info) -> Dictionary:
 	order = order_info
+	print(order)
 	return order
 
 func _on_body_entered(carried_item: RigidBody2D):
 	if carried_item is RigidBody2D:
 		var item_type = carried_item.custom_item_type
 		var item_frame = carried_item.custom_frame
+		var item = carried_item.item_sprite
+		var item_anim = item.animation
+		var item_frame1 = item.frame
 		if not has_item:
+			print("Player is holding the items: ", item_type, "item_anim: ", item_frame, "item_sprite: ", item.animation, "item_frame: ",item.frame)
 			if item_type == order["bowl"]["item_type"] and item_frame == order["bowl"]["bowl_index"]:
 				collected_items["bowl"] = true
-				var instance = ITEM.instantiate()
-				instance.global_position = global_position
-				if item_frame > 69:
-					instance.set_item(&"bowl", 73)
+				if item.frame > 69:
+					item.frame = 73
 				else:
-					instance.set_item(&"bowl", 3)
-				return instance
-				carried_item.queue_free()
-				print("Bowl collected.")
-				print("Bowl frame is now: ", carried_item.custom_frame)
+					item.frame = 4
 				
-			if item_type == order["drink"]["item_type"] and not "" and  item_frame == order["drink"]["frame"]:
+			if item_anim == order["drink"]["item_type"] and  item_frame1 == order["drink"]["frame"]:
 				collected_items["drink"] = true
 				print("Drink collected.")
-			if item_type == order["sidedish"]["item_type"] and not "" and item_frame == order["sidedish"]["frame"]:
+				
+			if item_anim == order["sidedish"]["item_type"] and item_frame1 == order["sidedish"]["frame"]:
 				collected_items["Sidedish"] = true
 				print("Side dish collected.")
 				
@@ -72,5 +75,5 @@ func all_items_collected() -> bool:
 	
 	if order["sidedish"]["required"]:
 		all_collected = all_collected and collected_items["sidedish"]
-
+	
 	return all_collected
