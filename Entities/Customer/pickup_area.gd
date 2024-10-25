@@ -53,10 +53,10 @@ func _on_body_entered(carried_item: RigidBody2D):
 				
 			if not (order["bowl"]["required"] or order["drink"]["required"] or order["sidedish"]["required"]):
 				print("No items required for this order.")
-			else:
-				print("Player is holding an incorrect item: ", carried_item.custom_item_type, carried_item.custom_frame)
-			if all_items_collected():
-				get_parent().finish_order()
+		else:
+			print("Player is holding an incorrect item: ", carried_item.custom_item_type, carried_item.custom_frame)
+		if all_items_collected():
+			get_parent().finish_order()
 				
 func _on_item_state_changed(state: bool):
 	has_item = state  # Update the has_item state based on the player's signal

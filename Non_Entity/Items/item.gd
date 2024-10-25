@@ -237,14 +237,13 @@ func find_bowl(item_carried, burnt: bool):
 	
 	# Super or Large
 	if item_carried.item_sprite.animation == "bowl": 
-		if item_carried.item_sprite.frame > 69: bowl_index += 70
+		if item_carried.item_sprite.frame > 69: bowl_index += 69
 		else: bowl_index += 0
 	else: 
 		print("not a bowl, is ", item_carried.item_sprite.animation, " instead" )
-		breakpoint
+		
 	
 	if burnt == true: bowl_index += 3; return bowl_index
-	else: bowl_index += 5
 	
 	var toppings = []
 	for x in pot_array:

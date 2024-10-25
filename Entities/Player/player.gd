@@ -130,30 +130,6 @@ func interact(input_direction, delta) -> void:
 			detected_area.sort_custom(_sort_by_distance_from_player)
 			var nearest : Area2D = detected_area[0]
 			debug.global_position = nearest.global_position
-			
-			if nearest.area_type == "ReceivingArea":
-		# Check if the carried item is a bowl and set its custom frame based on conditions when dropped
-				if Input.is_action_just_pressed("interact"):
-					print("dropping item in receiving area")
-					carried_item.putdown()  # Drop the item
-					if carried_item.custom_item_type == "bowl":
-						if carried_item.custom_frame != 1 and carried_item.custom_frame < 70:
-							carried_item.custom_frame = 4  # Set to frame 4
-							print("Bowl set to frame 4 on drop in ReceivingArea.")
-					elif carried_item.custom_frame != 70 and carried_item.custom_frame > 69:
-						carried_item.custom_frame = 74  # Set to frame 74
-						print("Bowl set to frame 74 on drop in ReceivingArea.")
-			
-					var distance = carried_item.global_position.distance_to(nearest.global_position) * 22
-					var impulse = carried_item.global_position.direction_to(nearest.global_position) * distance
-					carried_item.apply_impulse(impulse, Vector2(0,0))
-					nearest.interact(carried_item)
-					carried_item.is_carried = false
-					carried_item = null 
-					has_item = false
-				
-				else:
-					print("nearest item is pickup area, no item or item not bowl")
 				
 			if nearest.area_type == "item": # if holding an item, sees an item
 				var nearest_item = nearest.get_parent().item_sprite

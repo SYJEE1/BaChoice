@@ -4,7 +4,7 @@ extends Node2D
 
 var quota: float = 1000
 var stage_num: String = "1"
-var customers: int = 16
+var customers: int = 15
 var order_function = "tutorial"
 
 signal updates_completed
