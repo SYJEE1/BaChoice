@@ -2,7 +2,6 @@
 extends Node
 
 # For Scores
-
 var amount_paid: float = 0.0
 var total_earnings: float = 0.0
 var new_quota: float = 0.0
@@ -23,6 +22,7 @@ signal new_ordersystem(order: String)
 signal total_customers_updated
 
 func _ready () -> void:
+	
 	var stage1 = stage1_scene.instantiate()
 	get_tree().current_scene.add_child(stage1)
 	stage1.connect("updates_completed", Callable (self, "_on_updates_completed"))

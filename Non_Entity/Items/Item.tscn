@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ke3muiiqgpcu"]
+[gd_scene load_steps=37 format=3 uid="uid://ke3muiiqgpcu"]
 
 [ext_resource type="SpriteFrames" uid="uid://bouevinhbka7y" path="res://Non_Entity/Items/Item.tres" id="2_opl75"]
 [ext_resource type="Script" path="res://Non_Entity/Items/item.gd" id="2_uf2dp"]
@@ -7,6 +7,8 @@
 [ext_resource type="Gradient" uid="uid://c0wg5efxyis55" path="res://Non_Entity/Items/FireColorRamp.tres" id="5_2dl7x"]
 [ext_resource type="Texture2D" uid="uid://dfkava7vrr6yq" path="res://Non_Entity/progressbar1.png" id="5_2n5gf"]
 [ext_resource type="Texture2D" uid="uid://dgrm3foqvobk" path="res://Non_Entity/progressbar2.png" id="6_4egsj"]
+[ext_resource type="AudioStream" uid="uid://7n6jbej0ybhg" path="res://Non_Entity/SFX/Burnt.mp3" id="8_hjded"]
+[ext_resource type="AudioStream" uid="uid://5gn4gyg28otc" path="res://Non_Entity/SFX/BoiledPot.mp3" id="9_h5bdg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oumwb"]
 radius = 7.07107
@@ -427,6 +429,11 @@ _data = {
 "putdown": SubResource("Animation_e8d4a")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dluuk"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("8_hjded")
+
 [node name="Item" type="RigidBody2D"]
 y_sort_enabled = true
 collision_layer = 32
@@ -617,6 +624,15 @@ libraries = {
 }
 playback_auto_capture_transition_type = 4
 playback_default_blend_time = 0.5
+
+[node name="SFX" type="Node2D" parent="."]
+
+[node name="Burnt" type="AudioStreamPlayer2D" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_dluuk")
+volume_db = -20.0
+
+[node name="BoiledPot" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource("9_h5bdg")
 
 [connection signal="body_entered" from="." to="." method="_oncontact"]
 [connection signal="timeout" from="ItemSprite/InsidePot/CookTimer" to="." method="_on_cook_timer_timeout"]

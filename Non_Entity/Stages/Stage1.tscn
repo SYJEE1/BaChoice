@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://Non_Entity/Stages/stage1_tilemap.gd" id="4_slm2g"]
 [ext_resource type="PackedScene" uid="uid://dwt7q45hesbr5" path="res://Entities/Player/player_scene.tscn" id="5_scag7"]
 [ext_resource type="Texture2D" uid="uid://be17wps4k0gha" path="res://Non_Entity/Stages/interactables.png" id="6_5gena"]
-[ext_resource type="TileSet" uid="uid://dbdgh2x56eyd6" path="res://Non_Entity/Stages/Stage1.tres" id="6_emv3y"]
+[ext_resource type="TileSet" uid="uid://buhplg7gd4o0i" path="res://Non_Entity/Stages/Stage1.tres" id="6_emv3y"]
 [ext_resource type="FontFile" uid="uid://brb1w3e1via4m" path="res://Graphics/Fonts/mago2.ttf" id="6_ho5e1"]
 [ext_resource type="PackedScene" uid="uid://ke3muiiqgpcu" path="res://Non_Entity/Items/Item.tscn" id="7_3wnng"]
 [ext_resource type="Script" path="res://Non_Entity/Tutorial/customer_spawning.gd" id="9_w3k5i"]

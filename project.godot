@@ -22,6 +22,7 @@ config/icon="res://Graphics/bachoicelogo smol transparent.png"
 [autoload]
 
 Global="*res://Non_Entity/Tutorial/Global.gd"
+Bgm="*res://Non_Entity/SFX/bgm.tscn"
 
 [display]
 
