@@ -2,8 +2,8 @@ extends Node2D
 
 # Preload assets with their prices
 var bowl = {
-	"Bowl1": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-regular.png"), "price": 40, "item_type": "bowl", "bowl_index": 0},
-	"Bowl2": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-super.png"), "price": 60, "item_type": "bowl_large", "bowl_index": 69}
+	"Bowl1": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-regular.png"), "price": 40, "item_type": "bowl", "bowl_index": 69},
+	"Bowl2": {"texture": preload("res://Entities/Customer/Order/ingredients/bowl-super.png"), "price": 60, "item_type": "bowl_large", "bowl_index": 0}
 }
 var noodles = {
 	"NoodleType1": {"texture": preload("res://Entities/Customer/Order/ingredients/miki.png"), "price": 20, "bowl_index": 48},
@@ -15,7 +15,7 @@ var toppings = {
 	"Topping1": {"texture": preload("res://Entities/Customer/Order/ingredients/egg.png"), "price": 10 },
 	"Topping2": {"texture": preload("res://Entities/Customer/Order/ingredients/pork.png"), "price": 10},
 	"Topping3": {"texture": preload("res://Entities/Customer/Order/ingredients/liver.png"), "price": 10},
-	"Topping4": {"texture": preload("res://Entities/Customer/Order/ingredients/chicharon-temp.png"), "price": 10}
+	#"Topping4": {"texture": preload("res://Entities/Customer/Order/ingredients/chicharon-temp.png"), "price": 10}
 }
 var drinks = {
 	"Drink1": {"texture": preload("res://Entities/Customer/Order/ingredients/water.png"), "price": 10, "item_type": "water", "frame": 1},

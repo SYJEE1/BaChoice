@@ -11,11 +11,14 @@ var collected_items: Dictionary = {
 	"drink": false,
 	"sidedish": false
 }
-var order: Variant = { "bowl": { "item_type": "bowl", "bowl_index": 63, "required": true }, "drink": { "item_type": "", "frame": 0, "required": false }, "sidedish": { "item_type": "", "frame": 0, "required": false } }
+var order: Variant = { "bowl": { "item_type": "bowl", "bowl_index": 122, "required": true }, "drink": { "item_type": "", "frame": 0, "required": false }, "sidedish": { "item_type": "", "frame": 0, "required": false } }
 
 func _ready():
 	connect("body_entered", Callable(self, "_on_body_entered"))
 	Global.connect("item_state_changed", Callable(self, "_on_item_state_changed"))
+	
+func interact(carried_item) -> void:
+	pass
 	
 func _on_body_entered(carried_item: RigidBody2D):	
 	if carried_item is RigidBody2D:
@@ -24,7 +27,13 @@ func _on_body_entered(carried_item: RigidBody2D):
 		if not has_item:
 			if item_type == order["bowl"]["item_type"] and item_frame == order["bowl"]["bowl_index"]:
 				collected_items["bowl"] = true
+				if item_frame > 69:
+					carried_item.custom_frame = 73
+				else:
+					carried_item.custom_frame = 3
+					
 				print("Bowl collected.")
+				print("Bowl frame is now: ", carried_item.custom_frame)
 				
 			if item_type == order["drink"]["item_type"] and not "" and  item_frame == order["drink"]["frame"]:
 				collected_items["drink"] = true
@@ -35,8 +44,8 @@ func _on_body_entered(carried_item: RigidBody2D):
 				
 			if not (order["bowl"]["required"] or order["drink"]["required"] or order["sidedish"]["required"]):
 				print("No items required for this order.")
-			#else:
-				#print("Player is holding an incorrect item: ", carried_item.name)
+			else:
+				print("Player is holding an incorrect item: ", carried_item.custom_item_type, carried_item.custom_frame)
 			if all_items_collected():
 				get_parent().finish_order()
 				

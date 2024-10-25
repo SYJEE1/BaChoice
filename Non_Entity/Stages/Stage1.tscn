@@ -1,9 +1,8 @@
-[gd_scene load_steps=47 format=4 uid="uid://vyu2twerlhgs"]
+[gd_scene load_steps=46 format=4 uid="uid://vyu2twerlhgs"]
 
 [ext_resource type="Script" path="res://Non_Entity/Stages/stage_1.gd" id="1_crsol"]
 [ext_resource type="Texture2D" uid="uid://dvg4wt154im0k" path="res://Non_Entity/Main Scene/Background.png" id="1_mux3k"]
 [ext_resource type="Texture2D" uid="uid://bf7uhiy54nagw" path="res://Non_Entity/Main Scene/ReferenceTiles.png" id="3_de256"]
-[ext_resource type="TileSet" uid="uid://c66g5q3avakk7" path="res://Non_Entity/Stations/Interactables.tres" id="4_205t4"]
 [ext_resource type="Script" path="res://Non_Entity/Stages/stage1_tilemap.gd" id="4_slm2g"]
 [ext_resource type="PackedScene" uid="uid://dwt7q45hesbr5" path="res://Entities/Player/player_scene.tscn" id="5_scag7"]
 [ext_resource type="Texture2D" uid="uid://be17wps4k0gha" path="res://Non_Entity/Stages/interactables.png" id="6_5gena"]
@@ -4339,7 +4338,6 @@ tile_set = SubResource("TileSet_muxd1")
 
 [node name="Glow" type="TileMapLayer" parent="TileMaps/Countertop"]
 y_sort_enabled = true
-tile_set = ExtResource("4_205t4")
 
 [node name="Broth" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
@@ -4409,11 +4407,12 @@ custom_item_type = &"pot"
 z_index = 1
 position = Vector2(151, 98)
 custom_item_type = &"bowl"
-custom_frame = 63
+custom_frame = 122
 
 [node name="Item3" parent="." instance=ExtResource("7_3wnng")]
 position = Vector2(218, 98)
 custom_item_type = &"bowl"
+custom_frame = 70
 
 [node name="Item4" parent="." instance=ExtResource("7_3wnng")]
 position = Vector2(197, 92)

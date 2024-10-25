@@ -104,7 +104,7 @@ script = ExtResource("1_iu30c")
 
 [node name="ReceivingArea" type="Area2D" parent="."]
 position = Vector2(0, -2)
-scale = Vector2(0.527021, -0.401581)
+scale = Vector2(0.621618, -0.585965)
 collision_layer = 48
 collision_mask = 33
 script = ExtResource("2_33cp1")

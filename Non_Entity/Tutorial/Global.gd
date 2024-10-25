@@ -61,7 +61,6 @@ func send_quota() -> float:
 func get_max_customers(customers: int):
 	if customers != max_total_customers:  # Only update if there's a change
 		max_total_customers = customers
-		print (max_total_customers)
 		return max_total_customers
 func send_max_customers() -> float:
 	return max_total_customers
@@ -105,7 +104,6 @@ func get_item_state() -> bool:
 # Getting the correct frame for orders
 func get_current_animation(new_animation: String):
 	current_item_animation = new_animation
-	print ("current animation",current_item_animation )
 	return current_item_animation
 
 func send_current_animation() -> String:

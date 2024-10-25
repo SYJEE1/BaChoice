@@ -63,7 +63,6 @@ func finish_order():
 		order_system.queue_free()
 	emit_signal("removed", self)
 	queue_free()
-	print("removed customer")
 
 func _on_timer_timeout():
 	finish_order()
