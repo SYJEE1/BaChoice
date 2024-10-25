@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ke3muiiqgpcu"]
+[gd_scene load_steps=34 format=3 uid="uid://ke3muiiqgpcu"]
 
 [ext_resource type="SpriteFrames" uid="uid://bouevinhbka7y" path="res://Non_Entity/Items/Item.tres" id="2_opl75"]
 [ext_resource type="Script" path="res://Non_Entity/Items/item.gd" id="2_uf2dp"]
@@ -427,11 +427,6 @@ _data = {
 "putdown": SubResource("Animation_e8d4a")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_86djx"]
-resource_local_to_scene = true
-atlas = ExtResource("4_tq24j")
-region = Rect2(336, 16, 16, 16)
-
 [node name="Item" type="RigidBody2D"]
 y_sort_enabled = true
 collision_layer = 32
@@ -523,7 +518,7 @@ animation = &"sotanghon"
 frame = 1
 
 [node name="CookTimer" type="Timer" parent="ItemSprite/InsidePot"]
-wait_time = 0.5
+wait_time = 0.25
 autostart = true
 
 [node name="Fire" type="Sprite2D" parent="ItemSprite"]
@@ -622,10 +617,6 @@ libraries = {
 }
 playback_auto_capture_transition_type = 4
 playback_default_blend_time = 0.5
-
-[node name="FinishedBowl" type="Sprite2D" parent="."]
-visible = false
-texture = SubResource("AtlasTexture_86djx")
 
 [connection signal="body_entered" from="." to="." method="_oncontact"]
 [connection signal="timeout" from="ItemSprite/InsidePot/CookTimer" to="." method="_on_cook_timer_timeout"]
