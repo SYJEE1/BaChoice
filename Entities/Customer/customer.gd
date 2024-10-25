@@ -29,9 +29,7 @@ func _ready():
 	order_system.display_order(order)
 	
 	var order_info = order_system.combined_order_info(order)
-	print("customer order: ", order_info)
 	emit_signal("order_info_updated", order_info)
-	print("order_info_updated signal")
 	
 	paid = order_system.calculate_total_price(order)
 

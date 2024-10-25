@@ -371,11 +371,8 @@ func display_order(order: Dictionary):
 			topping_sprite.scale = Vector2(1, 1)  # Set size to match the asset
 			topping_sprite.position = Vector2(topping_x, 5)  # Centered in the background
 			total_sprites += 1
-			print("total sprites with toppings: ", total_sprites)
-			
 			if total_sprites < 5:
 				hbox_container.add_child(topping_sprite)
-				sprite_count += 1  # Increment sprite count
 			else:
 				# Create a new HBoxContainer for the next row
 				addtl_hbox.add_child(topping_sprite)
@@ -390,14 +387,11 @@ func display_order(order: Dictionary):
 		drink_sprite.scale = Vector2(1, 1)  # Set size to match the asset
 		drink_sprite.position = Vector2(5, 40)  # Position for drink
 		total_sprites += 1
-		print("total sprites with drinks: ", total_sprites)
 		if total_sprites < 5:
 			hbox_container.add_child(drink_sprite)
-			sprite_count += 1  # Increment sprite count
 		else:
 			# Create a new HBoxContainer for the next row
 			addtl_hbox.add_child(drink_sprite)
-			sprite_count = 1  # Reset sprite count
 
 	if order.has("Sidedish"):
 		var sidedish_key = order["Sidedish"]
@@ -415,7 +409,6 @@ func display_order(order: Dictionary):
 			sprite_count = 1  # Reset sprite count
 			
 	var bg_checker = total_sprites
-	print("sprites: ", bg_checker)
 	
 	if bg_checker == 3:
 		add_child(bg_3)
@@ -512,7 +505,7 @@ func find_bowl_index(order: Dictionary) -> int:
 		bowl_index += toppings_index_mapping[combined_toppings]
 	else:
 		print("Error: Invalid topping combination")
-
+	bowl_index += 5
 	return bowl_index
 
 func combined_order_info(order: Dictionary) -> Dictionary:
