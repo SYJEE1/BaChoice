@@ -7,7 +7,6 @@ var tilemap_glow : TileMapLayer
 @onready var interact_collision: CollisionShape2D = $InteractCollision
 
 func _ready() -> void:
-	pass
 	#global_position += Vector2(0,-2)
 	#interact_collision.shape.size = Vector2(14,10)
 	tilemap_glow.modulate = Color(1,1,1,0)
