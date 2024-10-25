@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3n6vt2iwhic5"]
+
+[ext_resource type="Script" path="res://Non_Entity/Loading Screen/loading_screen.gd" id="1_mlxti"]
+[ext_resource type="Texture2D" uid="uid://dujlds1pllniw" path="res://Graphics/menu_background1.png" id="2_h8aae"]
+[ext_resource type="FontFile" uid="uid://ckxxrlmhohpi0" path="res://Graphics/Fonts/mago1.ttf" id="3_7b7d5"]
+
+[node name="loadingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mlxti")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_h8aae")
+
+[node name="countDown" type="Label" parent="."]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 170.0
+offset_right = 371.0
+offset_bottom = 221.0
+theme_override_fonts/font = ExtResource("3_7b7d5")
+theme_override_font_sizes/font_size = 64
+text = "00"

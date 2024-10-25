@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7ffi3v0ae7kc"]
+
+[ext_resource type="Script" path="res://Entities/Customer/customer_timer.gd" id="1_l7fn6"]
+[ext_resource type="Texture2D" uid="uid://dfkava7vrr6yq" path="res://Non_Entity/progressbar1.png" id="2_jywvh"]
+[ext_resource type="Texture2D" uid="uid://dgrm3foqvobk" path="res://Non_Entity/progressbar2.png" id="3_aur62"]
+
+[node name="ProgressBar" type="Node2D"]
+position = Vector2(-3, -23)
+script = ExtResource("1_l7fn6")
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+rounded = true
+allow_greater = true
+fill_mode = 4
+texture_under = ExtResource("2_jywvh")
+texture_progress = ExtResource("3_aur62")
+
+[node name="TimeInterval" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="TimeInterval" to="." method="_onTimeout"]

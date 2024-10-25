@@ -7,7 +7,7 @@ var tilemap_glow : TileMapLayer
 
 
 func _ready() -> void:
-	interact_collision.position += Vector2(0,-2)
+	global_position += Vector2(0,-2)
 	interact_collision.shape.size = Vector2(14,10)
 
 func interact(carried_item) -> void:

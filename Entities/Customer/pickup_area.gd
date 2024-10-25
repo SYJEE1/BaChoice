@@ -1,26 +1,76 @@
 extends Area2D
 
+const area_type := &"ReceivingArea"
+var takes_item: bool = true
 var has_item = Global.get_item_state()  # Flag to track if the player is holding an item
 var player_scene: PackedScene
-var frame = Global.send_current_frame()
-var animation = Global.send_current_animation()
+
+var customer: CharacterBody2D
+var collected_items: Dictionary = {
+	"bowl": false,
+	"drink": false,
+	"sidedish": false
+}
+var order: Dictionary
+const ITEM = preload("res://Non_Entity/Items/Item.tscn")
 
 func _ready():
 	connect("body_entered", Callable(self, "_on_body_entered"))
 	Global.connect("item_state_changed", Callable(self, "_on_item_state_changed"))
+	var customer_node = get_parent()
+	customer_node.connect("order_info_updated", Callable(self, "_get_order_info")) 
+	global_position += Vector2(0, -15)
+
+	
+func interact(carried_item) -> void:
+	pass
+
+func _get_order_info(order_info) -> Dictionary:
+	order = order_info
+	print(order)
+	return order
 
 func _on_body_entered(carried_item: RigidBody2D):
 	if carried_item is RigidBody2D:
 		var item = carried_item.item_sprite
-		if is_item_matching(carried_item):
-			if not has_item:
-				get_parent().finish_order()
-		else:
-			print("Player is holding an incorrect item: ", carried_item.name)
-
+		var item_anim = item.animation
+		var item_frame = item.frame
+		if not has_item:
+			if item_anim == order["bowl"]["item_type"] and item_frame == order["bowl"]["bowl_index"]:
+				collected_items["bowl"] = true
+				if item.frame > 69:
+					item.frame = 73
+				else:
+					item.frame = 4
+				print("Bowl collected.")
+			if item_anim == order["drink"]["item_type"] and  item_frame == order["drink"]["frame"]:
+				collected_items["drink"] = true
+				print("Drink collected.")
+				
+			if item_anim == order["sidedish"]["item_type"] and item_frame == order["sidedish"]["frame"]:
+				collected_items["Sidedish"] = true
+				print("Side dish collected.")
+				
+			if not (order["bowl"]["required"] or order["drink"]["required"] or order["sidedish"]["required"]):
+				print("No items required for this order.")
+			else:
+				print("Player is holding an incorrect item: ", carried_item.custom_item_type, carried_item.custom_frame)
+		if all_items_collected():
+			get_parent().finish_order()
+				
 func _on_item_state_changed(state: bool):
 	has_item = state  # Update the has_item state based on the player's signal
 
-func is_item_matching(match: RigidBody2D) -> bool:
-	print(match.custom_item_type,"animation is: ", animation," frame is: ", frame)
-	return match.custom_item_type == animation and frame == frame
+func all_items_collected() -> bool:
+	var all_collected = true
+
+	if order["bowl"]["required"]:
+		all_collected = all_collected and collected_items["bowl"]
+	
+	if order["drink"]["required"]:
+		all_collected = all_collected and collected_items["drink"]
+	
+	if order["sidedish"]["required"]:
+		all_collected = all_collected and collected_items["sidedish"]
+	
+	return all_collected

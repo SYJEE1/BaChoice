@@ -1,12 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://dwt7q45hesbr5"]
+[gd_scene load_steps=19 format=3 uid="uid://dwt7q45hesbr5"]
 
 [ext_resource type="Script" path="res://Entities/Player/player.gd" id="1_rkf18"]
 [ext_resource type="Texture2D" uid="uid://ccsegplyly1lu" path="res://Entities/Player/Player Sprites.png" id="2_f1tmk"]
 [ext_resource type="Texture2D" uid="uid://cnmofymqepbim" path="res://Entities/Player/debug circle.png" id="3_utlam"]
+[ext_resource type="Texture2D" uid="uid://c137i4csss41g" path="res://Entities/Player/charactershadow.png" id="3_yojs3"]
+[ext_resource type="AudioStream" uid="uid://df8hulhn418rb" path="res://Non_Entity/SFX/pop_sound.mp3" id="5_j6hp6"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ij2xq"]
-radius = 2.5
-height = 5.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_a560j"]
+radius = 2.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x02q5"]
 radius = 9.0
@@ -179,6 +180,11 @@ _data = {
 "walk_up": SubResource("Animation_c2y58")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_w5cr4"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("5_j6hp6")
+
 [node name="PlayerScene" type="CharacterBody2D"]
 y_sort_enabled = true
 collision_layer = 2
@@ -187,7 +193,7 @@ script = ExtResource("1_rkf18")
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_ij2xq")
+shape = SubResource("CircleShape2D_a560j")
 
 [node name="InteractArea" type="Area2D" parent="."]
 collision_layer = 4
@@ -197,6 +203,12 @@ collision_mask = 24
 shape = SubResource("CircleShape2D_x02q5")
 disabled = true
 debug_color = Color(0.578428, 0.384124, 1, 0.42)
+
+[node name="Charactershadow" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 0.447059)
+z_index = -1
+y_sort_enabled = true
+texture = ExtResource("3_yojs3")
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 y_sort_enabled = true
@@ -213,8 +225,16 @@ libraries = {
 
 [node name="DebugCircle" type="Sprite2D" parent="."]
 top_level = true
+z_index = 2
 position = Vector2(0, 1)
 texture = ExtResource("3_utlam")
+
+[node name="SFX" type="Node2D" parent="."]
+
+[node name="PopSound" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_w5cr4")
+volume_db = -20.0
+pitch_scale = 1.3
 
 [connection signal="property_list_changed" from="." to="." method="_on_property_list_changed"]
 [connection signal="area_entered" from="InteractArea" to="." method="_on_itementered"]

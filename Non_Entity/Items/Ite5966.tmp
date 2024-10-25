@@ -1,0 +1,243 @@
+[gd_scene load_steps=16 format=3 uid="uid://ke3muiiqgpcu"]
+
+[ext_resource type="SpriteFrames" uid="uid://bouevinhbka7y" path="res://Non_Entity/Items/Item.tres" id="2_opl75"]
+[ext_resource type="Script" path="res://Non_Entity/Items/item.gd" id="2_uf2dp"]
+[ext_resource type="Script" path="res://Non_Entity/Items/pickup_area.gd" id="3_2h5ff"]
+[ext_resource type="Texture2D" uid="uid://bh20llck6qa1k" path="res://Non_Entity/interactables.png" id="4_tq24j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oumwb"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y505a"]
+radius = 4.0
+
+[sub_resource type="Animation" id="Animation_xvopq"]
+resource_name = "glow"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemGlow:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fiujq"]
+resource_name = "unglow"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemGlow:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mgb0e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemGlow:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hr6v0"]
+_data = {
+"RESET": SubResource("Animation_mgb0e"),
+"glow": SubResource("Animation_xvopq"),
+"unglow": SubResource("Animation_fiujq")
+}
+
+[sub_resource type="Animation" id="Animation_wk5me"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemShadow:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.001),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ItemGlow:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -3)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ItemSprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -3)]
+}
+
+[sub_resource type="Animation" id="Animation_xjjj5"]
+resource_name = "pickup"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemGlow:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -8), Vector2(0, -6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ItemSprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -8), Vector2(0, -6)]
+}
+
+[sub_resource type="Animation" id="Animation_e8d4a"]
+resource_name = "putdown"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemGlow:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -10), Vector2(0, -4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ItemSprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -10), Vector2(0, -4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m1a6s"]
+_data = {
+"RESET": SubResource("Animation_wk5me"),
+"pickup": SubResource("Animation_xjjj5"),
+"putdown": SubResource("Animation_e8d4a")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86djx"]
+atlas = ExtResource("4_tq24j")
+
+[node name="Item" type="RigidBody2D"]
+y_sort_enabled = true
+collision_layer = 32
+collision_mask = 33
+mass = 10.0
+lock_rotation = true
+linear_damp = 2.0
+script = ExtResource("2_uf2dp")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("3_2h5ff")
+
+[node name="PickupCollision" type="CollisionShape2D" parent="PickupArea"]
+modulate = Color(1, 1, 1, 0.788235)
+y_sort_enabled = true
+shape = SubResource("CircleShape2D_oumwb")
+one_way_collision_margin = 3.0
+debug_color = Color(0.0588235, 0.65098, 0, 0.196078)
+
+[node name="ItemCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_y505a")
+
+[node name="ItemShadow" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 0.407843)
+y_sort_enabled = true
+sprite_frames = ExtResource("2_opl75")
+animation = &"raw_liver"
+speed_scale = 0.0
+offset = Vector2(0, -3)
+
+[node name="ItemGlow" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+y_sort_enabled = true
+sprite_frames = ExtResource("2_opl75")
+animation = &"pot"
+autoplay = "bowl_regular"
+speed_scale = 0.0
+offset = Vector2(0, -3)
+
+[node name="GlowAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hr6v0")
+}
+playback_auto_capture_transition_type = 1
+playback_auto_capture_ease_type = 2
+playback_default_blend_time = 0.1
+
+[node name="ItemSprite" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+sprite_frames = ExtResource("2_opl75")
+animation = &"pot"
+speed_scale = 0.0
+offset = Vector2(0, -3)
+
+[node name="ItemAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_m1a6s")
+}
+playback_auto_capture_transition_type = 4
+playback_default_blend_time = 0.5
+
+[node name="FinishedBowl" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("AtlasTexture_86djx")
+
+[node name="Pot" type="Node2D" parent="."]
+visible = false

@@ -1,0 +1,267 @@
+[gd_scene load_steps=17 format=4 uid="uid://vyu2twerlhgs"]
+
+[ext_resource type="Script" path="res://Non_Entity/Stages/stage_1.gd" id="1_crsol"]
+[ext_resource type="Texture2D" uid="uid://dvg4wt154im0k" path="res://Non_Entity/Main Scene/Background.png" id="1_mux3k"]
+[ext_resource type="Texture2D" uid="uid://bf7uhiy54nagw" path="res://Non_Entity/Main Scene/ReferenceTiles.png" id="3_de256"]
+[ext_resource type="TileSet" uid="uid://c66g5q3avakk7" path="res://Non_Entity/Stations/Interactables.tres" id="4_205t4"]
+[ext_resource type="Script" path="res://Non_Entity/Stages/stage1_tilemap.gd" id="4_slm2g"]
+[ext_resource type="PackedScene" uid="uid://dwt7q45hesbr5" path="res://Entities/Player/player_scene.tscn" id="5_scag7"]
+[ext_resource type="FontFile" uid="uid://brb1w3e1via4m" path="res://Graphics/Fonts/mago2.ttf" id="6_ho5e1"]
+[ext_resource type="PackedScene" uid="uid://ke3muiiqgpcu" path="res://Non_Entity/Items/Item.tscn" id="7_3wnng"]
+[ext_resource type="Script" path="res://Non_Entity/Tutorial/customer_spawning.gd" id="9_w3k5i"]
+[ext_resource type="PackedScene" uid="uid://c4l5pipqrhfpg" path="res://Non_Entity/Tutorial/score.tscn" id="10_730n8"]
+
+[sub_resource type="Environment" id="Environment_oupni"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 1.0
+glow_strength = 0.8
+glow_bloom = 0.1
+glow_blend_mode = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dx8ug"]
+texture = ExtResource("3_de256")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+2:1/0 = 0
+4:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_kjood"]
+sources/0 = SubResource("TileSetAtlasSource_dx8ug")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i00if"]
+texture = ExtResource("3_de256")
+0:0/0 = 0
+0:0/0/z_index = 1
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, 4, 8, 4, 8, 8, 4, 8)
+1:0/0 = 0
+1:0/0/y_sort_origin = -11
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 4, 8, 4, 8, 8, -8, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 4, 8, 4, 8, 8, -8, 8)
+0:1/0 = 0
+0:1/0/z_index = 1
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, -8, 8, -8, 8, 8, 4, 8)
+1:1/0 = 0
+2:1/0 = 0
+2:1/0/z_index = -2
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 4, 8, 4, 8, 8, -8, 8)
+4:0/0 = 0
+4:0/0/z_index = 1
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, 4, -4, 8, -8, 8, -8, 4)
+4:1/0 = 0
+4:1/0/z_index = 1
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, 8, -8, 8, -8, -8, -4, -8)
+3:1/0 = 0
+4:2/0 = 0
+4:2/0/z_index = 1
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, 8, -8, 8, -8, -8, -4, -8)
+3:2/0 = 0
+3:2/0/z_index = 1
+2:2/0 = 0
+2:2/0/z_index = -2
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0 = 0
+1:2/0/z_index = 1
+0:2/0 = 0
+0:2/0/z_index = 1
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, -8, 8, -8, 8, 8, 4, 8)
+0:3/0 = 0
+0:3/0/z_index = 1
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, -8, 8, -8, 8, 8, 4, 8)
+1:3/0 = 0
+1:3/0/z_index = 1
+2:3/0 = 0
+3:3/0 = 0
+3:3/0/z_index = 1
+4:3/0 = 0
+4:3/0/z_index = 1
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, 8, -8, 8, -8, -8, -4, -8)
+4:4/0 = 0
+4:4/0/z_index = 1
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, 8, -8, 8, -8, -8, -4, -8)
+3:4/0 = 0
+3:4/0/z_index = 1
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, 9.5, -8, 9.5)
+2:4/0 = 0
+2:4/0/z_index = 1
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, 9.5, -8, 9.5)
+1:4/0 = 0
+1:4/0/z_index = 1
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, 9.5, -8, 9.5)
+0:4/0 = 0
+0:4/0/z_index = 1
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, -8, 8, -8, 8, 8, 4, 8)
+
+[sub_resource type="TileSet" id="TileSet_rngwv"]
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 34
+sources/0 = SubResource("TileSetAtlasSource_i00if")
+
+[sub_resource type="LabelSettings" id="LabelSettings_rw5da"]
+
+[node name="Stage1" type="Node2D"]
+script = ExtResource("1_crsol")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_oupni")
+
+[node name="PlayerScene" parent="." instance=ExtResource("5_scag7")]
+z_index = 1
+position = Vector2(111, 92)
+
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0.996078, 0.694118)
+z_index = -2
+texture = ExtResource("1_mux3k")
+offset = Vector2(160, 89.5)
+
+[node name="TileMaps" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("4_slm2g")
+
+[node name="Floor" type="TileMapLayer" parent="TileMaps"]
+z_index = -2
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAADAAgAAAACAAMAAAAEAAgAAAACAAMAAAAFAAgAAAACAAMAAAAGAAgAAAACAAMAAAAHAAgAAAACAAMAAAAIAAgAAAACAAMAAAAJAAgAAAACAAMAAAAKAAgAAAACAAMAAAALAAgAAAACAAMAAAAMAAgAAAACAAMAAAANAAgAAAACAAMAAAAOAAgAAAACAAMAAAAPAAgAAAACAAMAAAAQAAgAAAACAAMAAAAQAAcAAAACAAMAAAAPAAcAAAACAAMAAAAOAAcAAAACAAMAAAANAAcAAAACAAMAAAAMAAcAAAACAAMAAAALAAcAAAACAAMAAAAKAAcAAAACAAMAAAAJAAcAAAACAAMAAAAIAAcAAAACAAMAAAAHAAcAAAACAAMAAAAGAAcAAAACAAMAAAAGAAYAAAACAAMAAAAFAAYAAAACAAMAAAAFAAcAAAACAAMAAAAEAAcAAAACAAMAAAAEAAYAAAACAAMAAAADAAYAAAACAAMAAAADAAUAAAACAAMAAAADAAcAAAACAAMAAAAEAAUAAAACAAMAAAAFAAUAAAACAAMAAAAGAAUAAAACAAMAAAAHAAUAAAACAAMAAAAJAAUAAAACAAMAAAAIAAYAAAACAAMAAAAHAAYAAAACAAMAAAAJAAYAAAACAAMAAAAKAAYAAAACAAMAAAALAAYAAAACAAMAAAAMAAYAAAACAAMAAAANAAYAAAACAAMAAAAOAAYAAAACAAMAAAAPAAYAAAACAAMAAAAPAAUAAAACAAMAAAAQAAUAAAACAAMAAAAKAAUAAAACAAMAAAALAAUAAAACAAMAAAANAAUAAAACAAMAAAAOAAUAAAACAAMAAAAMAAUAAAACAAMAAAAIAAUAAAACAAMAAAAQAAYAAAACAAMAAAADAAQAAAACAAMAAAAEAAQAAAACAAMAAAAFAAQAAAACAAMAAAAGAAQAAAACAAMAAAAHAAQAAAACAAMAAAAIAAQAAAACAAMAAAAJAAQAAAACAAMAAAAKAAQAAAACAAMAAAALAAQAAAACAAMAAAAMAAQAAAACAAMAAAANAAQAAAACAAMAAAAOAAQAAAACAAMAAAAPAAQAAAACAAMAAAAQAAQAAAACAAMAAAACAAQAAAACAAMAAAABAAQAAAACAAMAAAABAAUAAAACAAMAAAABAAYAAAACAAMAAAABAAcAAAACAAMAAAABAAgAAAACAAMAAAACAAgAAAACAAMAAAACAAcAAAACAAMAAAACAAYAAAACAAMAAAACAAUAAAACAAMAAAARAAQAAAACAAMAAAASAAQAAAACAAMAAAASAAUAAAACAAMAAAARAAUAAAACAAMAAAARAAYAAAACAAMAAAARAAcAAAACAAMAAAARAAgAAAACAAMAAAASAAcAAAACAAMAAAASAAYAAAACAAMAAAASAAgAAAACAAMAAAA=")
+tile_set = SubResource("TileSet_kjood")
+
+[node name="Walls" type="TileMapLayer" parent="TileMaps"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAEAAgAAAACAAQAAAAFAAgAAAACAAQAAAAGAAgAAAACAAQAAAAHAAgAAAACAAQAAAAIAAgAAAACAAQAAAAJAAgAAAACAAQAAAAKAAgAAAACAAQAAAALAAgAAAACAAQAAAAMAAgAAAACAAQAAAANAAgAAAACAAQAAAAOAAgAAAACAAQAAAAPAAgAAAACAAQAAAADAAgAAAACAAQAAAAQAAgAAAACAAQAAAARAAgAAAACAAQAAAACAAgAAAACAAQAAAAFAAEAAAACAAEAAAAGAAEAAAACAAEAAAAHAAEAAAACAAEAAAAIAAEAAAACAAEAAAAJAAEAAAACAAEAAAAKAAEAAAACAAEAAAALAAEAAAACAAEAAAAMAAEAAAACAAEAAAANAAEAAAACAAEAAAAOAAEAAAACAAEAAAAPAAEAAAACAAEAAAAQAAEAAAACAAEAAAADAAIAAAACAAEAAAAEAAIAAAACAAEAAAAEAAMAAAACAAIAAAAFAAMAAAACAAIAAAAGAAMAAAACAAIAAAAHAAMAAAACAAIAAAAIAAMAAAACAAIAAAAJAAMAAAACAAIAAAAKAAMAAAACAAIAAAALAAMAAAACAAIAAAAMAAMAAAACAAIAAAANAAMAAAACAAIAAAAOAAMAAAACAAIAAAAPAAMAAAACAAIAAAAQAAIAAAACAAEAAAAPAAIAAAACAAEAAAAOAAIAAAACAAEAAAANAAIAAAACAAEAAAAMAAIAAAACAAEAAAALAAIAAAACAAEAAAAKAAIAAAACAAEAAAAJAAIAAAACAAEAAAAIAAIAAAACAAEAAAAHAAIAAAACAAEAAAAGAAIAAAACAAEAAAAFAAIAAAACAAEAAAAQAAMAAAACAAIAAAACAAEAAAACAAEAAAAEAAEAAAACAAEAAAADAAEAAAACAAEAAAAAAAUAAAAAAAEAAAAAAAYAAAAAAAIAAAAAAAcAAAAAAAMAAAAAAAgAAAAAAAQAAAABAAUAAAABAAEAAAABAAYAAAABAAIAAAABAAcAAAABAAMAAAABAAgAAAABAAQAAAAAAAQAAAAAAAEAAAABAAQAAAABAAEAAAAAAAMAAAAAAAEAAAABAAMAAAACAAIAAAAAAAIAAAAAAAEAAAABAAIAAAACAAEAAAAAAAEAAAAAAAEAAAARAAEAAAACAAEAAAASAAEAAAACAAEAAAATAAEAAAAEAAEAAAASAAIAAAACAAEAAAATAAIAAAAEAAEAAAATAAMAAAAEAAEAAAASAAQAAAADAAEAAAATAAQAAAAEAAEAAAASAAYAAAADAAIAAAATAAYAAAAEAAIAAAASAAUAAAADAAEAAAATAAUAAAAEAAEAAAASAAcAAAADAAMAAAASAAgAAAADAAQAAAATAAcAAAAEAAMAAAATAAgAAAAEAAQAAAABAAEAAAACAAEAAAABAAAAAAABAAAAAAACAAAAAAABAAAAAAADAAAAAAABAAAAAAAEAAAAAAABAAAAAAAFAAAAAAABAAAAAAAGAAAAAAABAAAAAAAHAAAAAAABAAAAAAAIAAAAAAABAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAMAAAAAAABAAAAAAANAAAAAAABAAAAAAAOAAAAAAABAAAAAAAPAAAAAAABAAAAAAAQAAAAAAABAAAAAAARAAAAAAABAAAAAAASAAAAAAABAAAAAAAAAAAAAAAAAAAAAAARAAIAAAACAAEAAAACAAIAAAACAAEAAAARAAMAAAACAAIAAAASAAMAAAACAAIAAAADAAMAAAACAAIAAAACAAMAAAACAAIAAAATAAAAAAAEAAAAAAA=")
+tile_set = SubResource("TileSet_rngwv")
+
+[node name="Countertop" type="TileMapLayer" parent="TileMaps"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAADAAQAAgAEAAUAAAAEAAQAAgAFAAUAAAANAAQAAgAEAAMAAAANAAUAAgAEAAQAAAALAAcAAgAFAAUAAAAMAAcAAgAGAAUAAAANAAYAAgAEAAMAAAANAAcAAgAEAAQAAAAJAAcAAgAFAAUAAAAKAAcAAgAEAAUAAAAHAAcAAgAFAAUAAAAIAAcAAgAEAAUAAAAFAAcAAgAFAAUAAAAGAAcAAgAEAAUAAAADAAcAAgAFAAUAAAAEAAcAAgAEAAUAAAAJAAQAAgAGAAUAAAALAAQAAgAGAAUAAAACAAcAAgAEAAUAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Glow" type="TileMapLayer" parent="TileMaps/Countertop"]
+y_sort_enabled = true
+tile_set = ExtResource("4_205t4")
+
+[node name="Broth" type="TileMapLayer" parent="TileMaps"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAABAAQAAgABAAYAAAABAAUAAgABAAcAAAACAAQAAgACAAYAAAACAAUAAgACAAcAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Glow" type="TileMapLayer" parent="TileMaps/Broth"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAAAAQAAgAAAAMAAAAAAAUAAgAAAAQAAAABAAQAAgABAAMAAAABAAUAAgABAAQAAAACAAQAAgACAAMAAAACAAUAAgACAAQAAAADAAQAAgADAAMAAAADAAUAAgADAAQAAAABAAYAAgABAAUAAAACAAYAAgACAAUAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Trashbin" type="TileMapLayer" parent="TileMaps"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAABAAcAAgATAAEAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Glow" type="TileMapLayer" parent="TileMaps/Trashbin"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAABAAYAAgAUAAAAAAABAAcAAgAUAAEAAAABAAgAAgAUAAIAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Cooler" type="TileMapLayer" parent="TileMaps"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAKAAQAAgAQAAUAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Glow" type="TileMapLayer" parent="TileMaps/Cooler"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAJAAQAAgARAAUAAAAKAAQAAgASAAUAAAALAAQAAgATAAUAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Ref" type="TileMapLayer" parent="TileMaps"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAIAAMAAgAMAAcAAAAIAAQAAgAMAAgAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Glow" type="TileMapLayer" parent="TileMaps/Ref"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAHAAIAAgANAAYAAAAHAAMAAgANAAcAAAAHAAQAAgANAAgAAAAHAAUAAgANAAkAAAAIAAIAAgAOAAYAAAAIAAMAAgAOAAcAAAAIAAQAAgAOAAgAAAAIAAUAAgAOAAkAAAAJAAIAAgAPAAYAAAAJAAMAAgAPAAcAAAAJAAQAAgAPAAgAAAAJAAUAAgAPAAkAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="CuttingBoard" type="TileMapLayer" parent="TileMaps"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAEAAQAAgAJAAoAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Glow" type="TileMapLayer" parent="TileMaps/CuttingBoard"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAEAAQAAgAKAAoAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Stove" type="TileMapLayer" parent="TileMaps"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAFAAQAAgAOAAEAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Glow" type="TileMapLayer" parent="TileMaps/Stove"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAEAAMAAgAQAAAAAAAEAAQAAgAQAAEAAAAEAAUAAgAQAAIAAAAFAAMAAgARAAAAAAAFAAQAAgARAAEAAAAFAAUAAgARAAIAAAAGAAMAAgASAAAAAAAGAAQAAgASAAEAAAAGAAUAAgASAAIAAAA=")
+tile_set = ExtResource("4_205t4")
+
+[node name="Item" parent="." instance=ExtResource("7_3wnng")]
+position = Vector2(217, 72)
+custom_item_type = &"pot"
+
+[node name="Item2" parent="." instance=ExtResource("7_3wnng")]
+z_index = 1
+position = Vector2(217, 86)
+custom_item_type = &"bowl"
+
+[node name="Item3" parent="." instance=ExtResource("7_3wnng")]
+position = Vector2(216, 103)
+custom_item_type = &"pot"
+
+[node name="CustomerSpawning" type="Node2D" parent="."]
+script = ExtResource("9_w3k5i")
+
+[node name="A" type="Node2D" parent="CustomerSpawning"]
+position = Vector2(48, 131)
+
+[node name="B" type="Node2D" parent="CustomerSpawning"]
+position = Vector2(110, 131)
+
+[node name="C" type="Node2D" parent="CustomerSpawning"]
+position = Vector2(172, 131)
+
+[node name="Score" parent="." instance=ExtResource("10_730n8")]
+z_index = 3
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(160, 90)
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+
+[node name="FPSLabel" type="Label" parent="Camera2D"]
+visible = false
+z_index = 1
+offset_left = -111.0
+offset_top = -79.0
+offset_right = -36.0
+offset_bottom = -56.0
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("6_ho5e1")
+text = "FPS: 120 batchoys"
+label_settings = SubResource("LabelSettings_rw5da")

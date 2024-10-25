@@ -1,12 +1,98 @@
-[gd_scene load_steps=7 format=3 uid="uid://bgm41kbouiwk"]
+[gd_scene load_steps=14 format=3 uid="uid://bgm41kbouiwk"]
 
-[ext_resource type="Texture2D" uid="uid://da8p5csv55ued" path="res://Entities/Customer/customer.png" id="1_c3uye"]
 [ext_resource type="Script" path="res://Entities/Customer/Customer.gd" id="1_iu30c"]
 [ext_resource type="Script" path="res://Entities/Customer/pickup_area.gd" id="2_33cp1"]
+[ext_resource type="Texture2D" uid="uid://bakglh0jaqrre" path="res://Entities/Customer/Customers.png" id="3_ujyma"]
 [ext_resource type="AudioStream" uid="uid://c7uc456nxwbcn" path="res://Entities/Customer/Store Door Sound Effect.mp3" id="4_bhq7k"]
+[ext_resource type="Texture2D" uid="uid://c137i4csss41g" path="res://Entities/Player/charactershadow.png" id="5_mlahp"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8yu4d"]
-radius = 21.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fp7i4"]
+size = Vector2(33.2055, 34.8622)
+
+[sub_resource type="Animation" id="Animation_fsolr"]
+resource_name = "1"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3, 2]
+}
+
+[sub_resource type="Animation" id="Animation_fei7a"]
+resource_name = "2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [5, 6, 7, 8, 7]
+}
+
+[sub_resource type="Animation" id="Animation_v6bjp"]
+resource_name = "3"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [10, 11, 12, 13, 12]
+}
+
+[sub_resource type="Animation" id="Animation_8ffo4"]
+resource_name = "4"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [15, 16, 17, 18, 17]
+}
+
+[sub_resource type="Animation" id="Animation_a5how"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e512v"]
+_data = {
+"1": SubResource("Animation_fsolr"),
+"2": SubResource("Animation_fei7a"),
+"3": SubResource("Animation_v6bjp"),
+"4": SubResource("Animation_8ffo4"),
+"RESET": SubResource("Animation_a5how")
+}
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vbco0"]
 radius = 4.0
@@ -17,23 +103,37 @@ input_pickable = true
 script = ExtResource("1_iu30c")
 
 [node name="ReceivingArea" type="Area2D" parent="."]
-position = Vector2(0, -4)
-scale = Vector2(0.527021, -0.401581)
+position = Vector2(0, 2)
+scale = Vector2(1.00053, -0.817375)
 collision_layer = 48
 collision_mask = 33
 script = ExtResource("2_33cp1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ReceivingArea"]
-shape = SubResource("CircleShape2D_8yu4d")
+position = Vector2(0, 12.4508)
+shape = SubResource("RectangleShape2D_fp7i4")
 
 [node name="Customer" type="Sprite2D" parent="."]
-texture = ExtResource("1_c3uye")
-hframes = 4
+position = Vector2(0, -8)
+texture = ExtResource("3_ujyma")
+hframes = 5
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Customer"]
+libraries = {
+"": SubResource("AnimationLibrary_e512v")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_vbco0")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_bhq7k")
 volume_db = -30.0
+
+[node name="Charactershadow" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 0.447059)
+z_index = -1
+y_sort_enabled = true
+texture = ExtResource("5_mlahp")

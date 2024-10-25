@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dme0pfmmujy1"]
+
+[ext_resource type="Texture2D" uid="uid://dfkava7vrr6yq" path="res://Non_Entity/progressbar1.png" id="1_a80t4"]
+[ext_resource type="Script" path="res://Non_Entity/progress_bar.gd" id="1_injg8"]
+[ext_resource type="Texture2D" uid="uid://dgrm3foqvobk" path="res://Non_Entity/progressbar2.png" id="2_yta2i"]
+
+[node name="ProgressBar" type="Node2D"]
+script = ExtResource("1_injg8")
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+rounded = true
+allow_greater = true
+fill_mode = 4
+texture_under = ExtResource("1_a80t4")
+texture_progress = ExtResource("2_yta2i")
+
+[node name="TimeInterval" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="TimeInterval" to="." method="_onTimeout"]

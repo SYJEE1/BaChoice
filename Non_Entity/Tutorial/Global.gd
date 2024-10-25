@@ -9,12 +9,14 @@ var new_quota: float = 0.0
 var stage_number: String = ""
 var max_total_customers: int = 0
 var total_spawned_customers: int = 0
-var tutorial_scene = preload("res://Non_Entity/Tutorial/Tutorial.tscn")
+var stage1_scene = preload("res://Non_Entity/Stages/Stage1.tscn")
 var new_order: String = ""
 var has_item: bool = false
 var current_item_frame: int = 1
 var current_item_animation: String = ""
+var price: float
 
+signal price_updated(price: float)
 signal item_state_changed(state: bool) 
 signal amount_paid_changed(new_amount: float)
 signal new_stage_number(stage_number: String)
@@ -23,16 +25,17 @@ signal new_ordersystem(order: String)
 signal total_customers_updated
 
 func _ready () -> void:
-	var tutorial = tutorial_scene.instantiate()
-	get_tree().current_scene.add_child(tutorial)
-	tutorial.connect("updates_completed", Callable (self, "_on_updates_completed"))
-	tutorial.queue_free()  
+	var stage1 = stage1_scene.instantiate()
+	get_tree().current_scene.add_child(stage1)
+	stage1.connect("updates_completed", Callable (self, "_on_updates_completed"))
+	stage1.queue_free()  
 	get_quota(new_quota)
 	send_quota()
 	send_max_customers()
 	get_max_customers(max_total_customers)
 	get_order(new_order)
 	send_order()
+	
 	
 
 func _on_updates_completed() -> void:
@@ -42,11 +45,13 @@ func _on_updates_completed() -> void:
 func checking_condition():
 	var total = send_total_customers()
 	var max = send_max_customers()
+	var total_earnings = get_amount_paid()
+	var total_max_earnings = 1500
 	if total >= max:
-		print("Level Finished")
-		get_tree().change_scene_to_file("res://Non_Entity/Main Scene/main_scene.tscn")
-	else:
-		print("Level Not Finished")
+		if new_quota < total_earnings or total_earnings == max_total_customers:
+			get_tree().change_scene_to_file("res://Non_Entity/Next And Fail Scene/next.tscn")
+		elif new_quota > total_earnings:
+			get_tree().change_scene_to_file("res://Non_Entity/Next And Fail Scene/Fail.tscn")
 
 # Quota
 func get_quota(quota: float):
@@ -59,7 +64,6 @@ func send_quota() -> float:
 func get_max_customers(customers: int):
 	if customers != max_total_customers:  # Only update if there's a change
 		max_total_customers = customers
-		print (max_total_customers)
 		return max_total_customers
 func send_max_customers() -> float:
 	return max_total_customers
@@ -94,6 +98,14 @@ func set_amount_paid(new_amount_paid: float):
 	emit_signal("amount_paid_changed", amount_paid)  # Notify listeners
 func get_amount_paid() -> float:
 	return amount_paid
+	
+func set_price(new_amount_paid: float):
+	price = new_amount_paid
+	emit_signal("price_updated", price)  # Notify listeners
+
+func get_price() -> float:
+	return price
+	
 # For Giving Orders to Customers
 func update_item_state(state: bool):
 	has_item = state
@@ -103,7 +115,6 @@ func get_item_state() -> bool:
 # Getting the correct frame for orders
 func get_current_animation(new_animation: String):
 	current_item_animation = new_animation
-	print ("current animation",current_item_animation )
 	return current_item_animation
 
 func send_current_animation() -> String:

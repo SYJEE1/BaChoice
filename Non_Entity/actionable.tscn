@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceyeyddx1ppfv"]
+
+[ext_resource type="Script" path="res://Non_Entity/actionable.gd" id="1_jlbix"]
+
+[node name="Actionable" type="Area2D"]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("1_jlbix")

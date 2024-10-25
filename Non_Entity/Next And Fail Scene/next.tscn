@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://uv8ffon84pxw"]
+
+[ext_resource type="Script" path="res://Non_Entity/Next And Fail Scene/next.gd" id="1_8u1ns"]
+[ext_resource type="Texture2D" uid="uid://dujlds1pllniw" path="res://Graphics/menu_background1.png" id="2_1ma26"]
+[ext_resource type="Shader" path="res://Non_Entity/Next And Fail Scene/FailScene.gdshader" id="2_vj4ir"]
+[ext_resource type="FontFile" uid="uid://brb1w3e1via4m" path="res://Graphics/Fonts/mago2.ttf" id="3_lty0k"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2gept"]
+shader = ExtResource("2_vj4ir")
+shader_parameter/speed = 0.1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iur0g"]
+bg_color = Color(0.338936, 0.255969, 0.172342, 1)
+
+[node name="Next" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8u1ns")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_2gept")
+layout_mode = 0
+offset_right = 639.0
+offset_bottom = 363.0
+texture = ExtResource("2_1ma26")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -66.0
+offset_top = -20.0
+offset_right = 63.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_lty0k")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_iur0g")
+text = "Yay! Quota achieved! How about another round?"
+
+[node name="Next Stage" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_lty0k")
+theme_override_font_sizes/font_size = 32
+text = "Next Stage"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_lty0k")
+theme_override_font_sizes/font_size = 32
+text = "QUIT, why"
+
+[node name="Prev Stage" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_lty0k")
+theme_override_font_sizes/font_size = 32
+text = "PREV STAGE"
+
+[connection signal="pressed" from="VBoxContainer/Next Stage" to="." method="_on_next_stage_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="VBoxContainer/Prev Stage" to="." method="_on_prev_stage_pressed"]

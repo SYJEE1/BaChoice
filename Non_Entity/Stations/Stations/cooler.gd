@@ -8,7 +8,7 @@ var tilemap_glow : TileMapLayer
 const ITEM = preload("res://Non_Entity/Items/Item.tscn")
 
 func _ready() -> void:
-	interact_collision.position += Vector2(0,-1)
+	global_position += Vector2(0,-1)
 	interact_collision.shape.size = Vector2(12,8)
 	tilemap_glow.modulate = Color(1,1,1,0)
 
