@@ -534,7 +534,6 @@ wait_time = 0.25
 autostart = true
 
 [node name="Fire" type="Sprite2D" parent="ItemSprite"]
-visible = false
 self_modulate = Color(2, 2, 1, 1)
 show_behind_parent = true
 z_index = 1

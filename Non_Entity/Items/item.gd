@@ -96,7 +96,7 @@ func direct_interact(item_type: String) -> void:
 	
 func item_interact(item_carried) -> void:
 	var item_type = item_carried.item_sprite.animation
-	
+	update_pot()
 	if can_put_in_pot(item_type) == true:
 		# item transfer animation start
 		item_carried.item_animation.play("into_pot")
@@ -156,7 +156,7 @@ func toggle_onstove():
 func update_pot() -> void:
 	# on stove, fire animation
 	var noodle_check : bool = ("miswa" in pot_array) or ("bihon" in pot_array) or ("sotanghon" in pot_array) or ("miki" in pot_array)
-	if (on_stove == true) and ("broth" in pot_array) and noodle_check == true:
+	if ((on_stove == true) and ("broth" in pot_array)) and noodle_check == true and burnt == false:
 		cook_timer.paused = false
 		progress_bar.visible = true
 		fire.get_child(0).play("fire")
@@ -166,14 +166,9 @@ func update_pot() -> void:
 		cook_timer.paused = true
 		fire.get_child(0).play("nofire")
 		fire.get_child(1).emitting = false
-	
-	# Cook Timer runs when on stove
-	if on_stove == true and "broth" in pot_array: 
-		cook_timer.paused = false
-	else: 
-		cook_timer.paused = true
 		$SFX/BoiledPot.stop()
-		
+	
+	
 	
 		
 	
@@ -217,19 +212,21 @@ func reset() -> void:
 	update_pot()
 
 func _on_cook_timer_timeout() -> void:
-	progress_bar.value += 1
-	if progress_bar.value < progress_bar.max_value * 1.00: progress_bar.tint_progress = Color.LIGHT_GRAY
-	elif progress_bar.value <= progress_bar.max_value * 1.20: progress_bar.tint_progress = Color.GREEN
-	elif progress_bar.value <= progress_bar.max_value * 1.40: progress_bar.tint_progress = Color.YELLOW
-	elif progress_bar.value <= progress_bar.max_value * 1.60: progress_bar.tint_progress = Color.ORANGE
-	elif progress_bar.value <= progress_bar.max_value * 1.80: progress_bar.tint_progress = Color.RED
-	elif progress_bar.value >= progress_bar.max_value * 2.20: 
-		burnt = true
-		$SFX/Burnt.play()
-		$ItemSprite/Fire/Overcooked.emitting = true
-		$ItemSprite/Fire/Burnt.emitting = true
-		progress_bar.tint_progress = Color.BLACK
-		update_pot()
+	if burnt == false:
+		progress_bar.value += 1
+		if progress_bar.value < progress_bar.max_value * 1.00: progress_bar.tint_progress = Color.LIGHT_GRAY
+		elif progress_bar.value <= progress_bar.max_value * 1.20: progress_bar.tint_progress = Color.GREEN
+		elif progress_bar.value <= progress_bar.max_value * 1.40: progress_bar.tint_progress = Color.YELLOW
+		elif progress_bar.value <= progress_bar.max_value * 1.60: progress_bar.tint_progress = Color.ORANGE
+		elif progress_bar.value <= progress_bar.max_value * 1.80: progress_bar.tint_progress = Color.RED
+		elif progress_bar.value >= progress_bar.max_value * 2.20: 
+			burnt = true
+			$SFX/Burnt.play()
+			$ItemSprite/Fire/Overcooked.emitting = true
+			$ItemSprite/Fire/Burnt.emitting = true
+			progress_bar.tint_progress = Color.BLACK
+			$ItemSprite/InsidePot.texture.region = Rect2(288,176,48,32)
+			update_pot()
 	
 
 func find_bowl(item_carried, burnt: bool):

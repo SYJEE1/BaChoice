@@ -28,7 +28,7 @@ func _ready() -> void:
 	instantiate(stove, preload("res://Non_Entity/Stations/Stations/stove.gd"))
 	instantiate(sink, preload("res://Non_Entity/Stations/Stations/sink.gd"))
 	#instantiate(basket_pandesal, preload("res://Non_Entity/Stations/Stations/basketpandesal.gd"))
-	#instantiate(basket_puto, preload("res://Non_Entity/Stations/Stations/basketputo.gd"))
+	#instantiate(basket_puto, preload("res://Non_Entity/Stations/Stations/basketput o.gd"))
 	
 		
 func instantiate(tilemaplayer: TileMapLayer, script) -> void:

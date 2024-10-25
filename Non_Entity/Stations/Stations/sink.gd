@@ -7,10 +7,9 @@ var tilemap_glow : TileMapLayer
 @onready var interact_collision: CollisionShape2D = $InteractCollision
 
 func _ready() -> void:
-	pass
 	#global_position += Vector2(0,-2)
 	#interact_collision.shape.size = Vector2(14,10)
-	#tilemap_glow.modulate = Color(1,1,1,0)
+	tilemap_glow.modulate = Color(1,1,1,0)
 
 func interact(carried_item) -> void:
 	print("interact")
@@ -23,9 +22,9 @@ func interact(carried_item) -> void:
 func glow(carried_item) -> void:
 	var item = carried_item.item_sprite
 	if item.animation == "bowl" and (item.frame == 4 or item.frame == 73):
-			var glow_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
-			glow_tween.tween_property(tilemap_glow, "modulate", Color(1,1,1,1), .1)
-			unglow(glow_tween)
+		var glow_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		glow_tween.tween_property(tilemap_glow, "modulate", Color(1,1,1,1), .1)
+		unglow(glow_tween)
 	
 func unglow(glow_tween) -> void:
 	if glow_tween.finished:
