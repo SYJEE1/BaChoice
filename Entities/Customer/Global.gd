@@ -8,12 +8,20 @@ var new_quota: float = 0.0
 var stage_number: String = ""
 var max_total_customers: int = 0
 var total_spawned_customers: int = 0
-var stage1_scene = preload("res://Non_Entity/Stages/Stage1.tscn")
+@onready var stage1_scene = preload("res://Non_Entity/Stages/Stage1.tscn")
+@onready var stage1_dialogue = preload("res://Non_Entity/Dialogue/tutorial.dialogue")
+#var stage2_scene = preload("res://Non_Entity/Stages/Stage2.tscn")
+var stage2_dialogue = "res://Non_Entity/Dialogue/Stage1.dialogue"
+#var stage3_scene = preload("res://Non_Entity/Stages/Stage1.tscn")
+#var stage3_dialogue = "res://Non_Entity/Dialogue/tutorial.dialogue"
+
 var new_order: String = ""
 var has_item: bool = false
 var current_item_frame: int = 1
 var current_item_animation: String = ""
+var dialogue: String
 
+signal new_dialogue (dialogue)
 signal item_state_changed(state: bool) 
 signal amount_paid_changed(new_amount: float)
 signal new_stage_number(stage_number: String)
@@ -33,7 +41,16 @@ func _ready () -> void:
 	get_max_customers(max_total_customers)
 	get_order(new_order)
 	send_order()
+	get_dialogue(dialogue)
+	send_dialogue()
 	
+func get_dialogue(new_dialogue: String):
+	dialogue = new_dialogue
+	emit_signal("new_dialogue", dialogue)
+	return dialogue
+	
+func send_dialogue() -> String:
+	return dialogue
 
 func _on_updates_completed() -> void:
 	send_quota()  # Call the function to send the quota

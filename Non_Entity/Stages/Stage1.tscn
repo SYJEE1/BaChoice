@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://vyu2twerlhgs"]
+[gd_scene load_steps=35 format=4 uid="uid://vyu2twerlhgs"]
 
 [ext_resource type="Script" path="res://Non_Entity/Stages/stage_1.gd" id="1_crsol"]
 [ext_resource type="Texture2D" uid="uid://dvg4wt154im0k" path="res://Non_Entity/Main Scene/Background.png" id="1_mux3k"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://c4l5pipqrhfpg" path="res://Non_Entity/Tutorial/score.tscn" id="10_730n8"]
 [ext_resource type="PackedScene" uid="uid://bk0nfo5btjpxm" path="res://Non_Entity/Menu Scene/pause_menu.tscn" id="13_ry0gi"]
 [ext_resource type="Texture2D" uid="uid://destr54ut3ti5" path="res://light/vecteezy_geometric-design-element_21048718.png" id="14_plsv7"]
+[ext_resource type="PackedScene" uid="uid://kvfqkdrsky2s" path="res://Non_Entity/hud.tscn" id="14_yuvis"]
 
 [sub_resource type="Environment" id="Environment_oupni"]
 background_mode = 3
@@ -2384,3 +2385,5 @@ height = 1.0
 modulate = Color(0, 0, 0, 1)
 position = Vector2(-103.02, 85.4765)
 occluder = SubResource("OccluderPolygon2D_lmivv")
+
+[node name="HUD" parent="." instance=ExtResource("14_yuvis")]

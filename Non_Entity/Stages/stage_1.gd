@@ -9,6 +9,8 @@ var order_function = "tutorial"
 
 signal updates_completed
 
+var dialogue = "res://Non_Entity/Dialogue/tutorial.dialogue"
+
 
 func _ready() -> void:
 	Engine.max_fps = 60
@@ -21,6 +23,7 @@ func _ready() -> void:
 	print(Global.get_total_customers(customers))
 	emit_signal("updates_completed")
 	Global.connect("total_customers_updated", Callable(self, "checking_condition"))
+	#Global.get_dialogue(dialogue)
 	
 
 # func _process(delta: float) -> void:

@@ -7,7 +7,7 @@ var detected_area = []
 var exempted_area = []
 #var detected_station = []
 #var detected_item = []
-
+var game_running : bool
 # node paths
 @onready var player_sprite: Sprite2D = $PlayerSprite
 @onready var animation_player: AnimationPlayer = $PlayerSprite/AnimationPlayer
@@ -27,7 +27,8 @@ func _ready() -> void:
 	else: 
 		has_item = true
 		interact_collision.disabled = true
-	
+		#Global.connect("new_dialogue", Callable(self, "get_dialogue"))
+		#Global.send_dialogue
 # this functions runs every frame
 func _physics_process(delta: float) -> void:
 	
@@ -45,38 +46,42 @@ func _physics_process(delta: float) -> void:
 	
 	
 func movement(input_direction, delta) -> void:
-	
-	# movement smoothness formula
-	velocity = lerp(velocity, input_direction * speed, delta * accel)
+	if game_running:
+		# movement smoothness formula
+		velocity = lerp(velocity, input_direction * speed, delta * accel)
 
-	# do this if player stops moving
-	if input_direction == Vector2.ZERO:
-		velocity = lerp(velocity, Vector2.ZERO, delta * accel) # apply friction
-		animation_player.speed_scale = lerp(animation_player.speed_scale, 1.0, delta* accel)
-		if animation_player.current_animation == "walk_left": animation_player.play("idle_left")
-		elif animation_player.current_animation == "walk_right": animation_player.play("idle_right")
-		elif animation_player.current_animation == "walk_up": animation_player.play("idle_up")
-		elif animation_player.current_animation == "walk_down": animation_player.play("idle_down")
+		# do this if player stops moving
+		if input_direction == Vector2.ZERO:
+			velocity = lerp(velocity, Vector2.ZERO, delta * accel) # apply friction
+			animation_player.speed_scale = lerp(animation_player.speed_scale, 1.0, delta* accel)
+			if animation_player.current_animation == "walk_left": animation_player.play("idle_left")
+			elif animation_player.current_animation == "walk_right": animation_player.play("idle_right")
+			elif animation_player.current_animation == "walk_up": animation_player.play("idle_up")
+			elif animation_player.current_animation == "walk_down": animation_player.play("idle_down")
 
-	else: # if player is moving
-		if abs(input_direction.x) > abs(input_direction.y):
-			if input_direction.x > 0: animation_player.play("walk_right")
-			else: animation_player.play("walk_left")
-		elif abs(input_direction.x) < abs(input_direction.y):
-			if input_direction.y > 0: animation_player.play("walk_down") 
-			else: animation_player.play("walk_up")
-		
-		# speeds animation via velocity
-		animation_player.speed_scale = (( abs(velocity.x) + abs(velocity.y)) /30)
-		
-		# moves interact_collision (purple thing) based on movement
-		if (input_direction.x > .5 or input_direction.x < -.5) or (input_direction.y > .5 or input_direction.y < -.5): 
-			interact_collision.position = lerp(interact_collision.position, Vector2(
-			input_direction.x * 6, 
-			input_direction.y * 4), 
-			delta * accel * 5)
-		
-				
+		else: # if player is moving
+			if abs(input_direction.x) > abs(input_direction.y):
+				if input_direction.x > 0: animation_player.play("walk_right")
+				else: animation_player.play("walk_left")
+			elif abs(input_direction.x) < abs(input_direction.y):
+				if input_direction.y > 0: animation_player.play("walk_down") 
+				else: animation_player.play("walk_up")
+			
+			# speeds animation via velocity
+			animation_player.speed_scale = (( abs(velocity.x) + abs(velocity.y)) /30)
+			
+			# moves interact_collision (purple thing) based on movement
+			if (input_direction.x > .5 or input_direction.x < -.5) or (input_direction.y > .5 or input_direction.y < -.5): 
+				interact_collision.position = lerp(interact_collision.position, Vector2(
+				input_direction.x * 6, 
+				input_direction.y * 4), 
+				delta * accel * 5)
+	else:
+		if Input.is_action_just_pressed("interact"):
+			var dialogue_path = Global.stage1_dialogue
+			DialogueManager.show_example_dialogue_balloon(load(dialogue_path), "start")
+			game_running = true
+			$"../HUD".get_node("Start").hide()
 func interact(input_direction, delta) -> void:
 	# print("detected Area:", detected_area)
 	# print("exempted Area:", exempted_area)
