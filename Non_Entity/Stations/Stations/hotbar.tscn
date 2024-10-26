@@ -1126,7 +1126,8 @@ animation = &"cora"
 frame = 1
 
 [node name="Select" type="Sprite2D" parent="."]
-self_modulate = Color(1.6657, 1.6657, 1.6657, 1)
+self_modulate = Color(2, 2, 2, 1)
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("4_3bjtc")
 
 [node name="DrinkName" type="Label" parent="."]

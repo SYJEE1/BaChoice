@@ -2275,6 +2275,16 @@ y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAOAAQAAAARAAUAAAAPAAQAAAASAAUAAAAQAAQAAAATAAUAAAA=")
 tile_set = SubResource("TileSet_t4dul")
 
+[node name="Colaref" type="TileMapLayer" parent="TileMaps"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAQAAMAAAAMAAMAAAAQAAQAAAAMAAQAAAA=")
+tile_set = ExtResource("8_w0kpd")
+
+[node name="Glow" type="TileMapLayer" parent="TileMaps/Colaref"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAALAAUAAAANAAkAAAANAAIAAAAPAAYAAAAPAAIAAAANAAIAAAAPAAMAAAANAAMAAAAPAAQAAAANAAQAAAAPAAUAAAANAAUAAAAQAAIAAAAOAAIAAAAQAAMAAAAOAAMAAAAQAAQAAAAOAAQAAAAQAAUAAAAOAAUAAAARAAIAAAAPAAIAAAARAAMAAAAPAAMAAAARAAQAAAAPAAQAAAARAAUAAAAPAAUAAAA=")
+tile_set = SubResource("TileSet_e52uf")
+
 [node name="Ref" type="TileMapLayer" parent="TileMaps"]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAMAAMAAAAMAAcAAAAMAAQAAAAMAAgAAAA=")
