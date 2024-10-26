@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c0ca3tkmj1ijs"
+path="res://.godot/imported/Cash Register (Kaching) - Sound Effect (HD).mp3-d75781369c18e625fc758623c1733443.mp3str"
+
+[deps]
+
+source_file="res://Non_Entity/SFX/Cash Register (Kaching) - Sound Effect (HD).mp3"
+dest_files=["res://.godot/imported/Cash Register (Kaching) - Sound Effect (HD).mp3-d75781369c18e625fc758623c1733443.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
