@@ -21,3 +21,8 @@ func update_labels():
 	$Quota.text = "%.2f" % Global.send_quota() # Display the Global quota
 	$Earnings.text = "%.2f" % Global.get_amount_paid()  # Display the current earnings
 	$Stage.text = "Stage " + str(Global.send_stage_num())  # Display the current earnings
+	var recently_paid = Global.recent_amount
+	$"../Earn".text = str(recently_paid)
+	$"../Earn/downearn".play("kaching")
+	
+	

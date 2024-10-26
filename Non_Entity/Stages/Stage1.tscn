@@ -2398,13 +2398,15 @@ label_settings = SubResource("LabelSettings_rw5da")
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("13_ry0gi")]
 
 [node name="PointLight2D2" type="PointLight2D" parent="."]
-position = Vector2(-351, 36)
+position = Vector2(-312, 21)
 color = Color(7.56863, 3.78431, 1.62353, 0.407843)
 energy = 0.39
 shadow_enabled = true
-shadow_filter = 1
 texture = ExtResource("14_plsv7")
 height = 1.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+position = Vector2(146, 39)
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 modulate = Color(0, 0, 0, 1)

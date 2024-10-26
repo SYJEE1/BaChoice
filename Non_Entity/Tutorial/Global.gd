@@ -15,6 +15,7 @@ var has_item: bool = false
 var current_item_frame: int = 1
 var current_item_animation: String = ""
 var price: float
+var recent_amount: float = 0
 
 signal price_updated(price: float)
 signal item_state_changed(state: bool) 
@@ -94,6 +95,7 @@ func send_stage_num() -> String:
 	return stage_number
 # Earnings
 func set_amount_paid(new_amount_paid: float):
+	recent_amount = new_amount_paid
 	amount_paid += new_amount_paid
 	emit_signal("amount_paid_changed", amount_paid)  # Notify listeners
 func get_amount_paid() -> float:

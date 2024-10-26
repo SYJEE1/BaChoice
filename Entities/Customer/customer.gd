@@ -63,6 +63,7 @@ func finish_order():
 
 			# Set the amount paid in the global script
 			Global.set_amount_paid(amount_paid)
+			
 		order_system.queue_free()
 	emit_signal("removed", self)
 	queue_free()
