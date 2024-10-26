@@ -1,4 +1,4 @@
-[gd_scene load_steps=198 format=4 uid="uid://divwn1b5b3o"]
+[gd_scene load_steps=199 format=4 uid="uid://divwn1b5b3o"]
 
 [ext_resource type="Script" path="res://Non_Entity/Main Scene/main_scene.gd" id="1_qentd"]
 [ext_resource type="Texture2D" uid="uid://bf7uhiy54nagw" path="res://Non_Entity/Main Scene/ReferenceTiles.png" id="2_ujia4"]
@@ -11,6 +11,7 @@
 [ext_resource type="FontFile" uid="uid://brb1w3e1via4m" path="res://Graphics/Fonts/mago2.ttf" id="6_dbhs7"]
 [ext_resource type="Texture2D" uid="uid://destr54ut3ti5" path="res://light/vecteezy_geometric-design-element_21048718.png" id="9_ldeoa"]
 [ext_resource type="Texture2D" uid="uid://bh20llck6qa1k" path="res://Non_Entity/interactables.png" id="10_yxuj0"]
+[ext_resource type="Texture2D" uid="uid://bo4v82il7tabt" path="res://Non_Entity/Stages/decoration1.png" id="12_sue6r"]
 
 [sub_resource type="Environment" id="Environment_l4ohr"]
 background_mode = 3
@@ -1724,5 +1725,10 @@ libraries = {
 "": SubResource("AnimationLibrary_kpxpo")
 }
 speed_scale = 0.01
+
+[node name="Decoration1" type="Sprite2D" parent="."]
+position = Vector2(169, 39)
+texture = ExtResource("12_sue6r")
+offset = Vector2(-14, -3)
 
 [editable path="Item"]
