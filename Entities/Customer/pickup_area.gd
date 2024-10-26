@@ -21,16 +21,12 @@ func _ready():
 	customer_node.connect("order_info_updated", Callable(self, "_get_order_info")) 
 	global_position += Vector2(0, -15)
 
-	
-func interact(carried_item) -> void:
-	pass
-
 func _get_order_info(order_info) -> Dictionary:
 	order = order_info
 	print(order)
 	return order
 
-func _on_body_entered(carried_item: RigidBody2D):
+func interact(carried_item) -> void:
 	if carried_item is RigidBody2D:
 		var item = carried_item.item_sprite
 		var item_anim = item.animation
@@ -46,11 +42,11 @@ func _on_body_entered(carried_item: RigidBody2D):
 			if item_anim == order["drink"]["item_type"] and  item_frame == order["drink"]["frame"]:
 				collected_items["drink"] = true
 				print("Drink collected.")
-				
+				carried_item.dead()
 			if item_anim == order["sidedish"]["item_type"] and item_frame == order["sidedish"]["frame"]:
 				collected_items["Sidedish"] = true
 				print("Side dish collected.")
-				
+				carried_item.dead()
 			if not (order["bowl"]["required"] or order["drink"]["required"] or order["sidedish"]["required"]):
 				print("No items required for this order.")
 			else:

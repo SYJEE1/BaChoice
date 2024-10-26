@@ -13,14 +13,11 @@ func _process(delta: float) -> void:
 
 func _on_next_stage_pressed() -> void:
 #add the next scene to the ""
-	get_tree().change_scene_to_file("res://Non_Entity/Stages/Stage1.tscn")
-
-
+	Global.load_next_stage()
 
 func _on_quit_pressed() -> void:
 	get_tree().change_scene_to_file("res://Non_Entity/Menu Scene/menu.tscn")
 
-
 func _on_prev_stage_pressed() -> void:
 #add the previous scene to the ""
-	get_tree().change_scene_to_file("res://Non_Entity/Stages/Stage1.tscn")
+	Global.load_previous_stage()

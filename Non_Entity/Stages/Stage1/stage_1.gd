@@ -2,28 +2,19 @@ extends Node2D
 
 @onready var fps_label: Label = $Camera2D/FPSLabel
 
-var quota: float = 700
+var quota: float = 1000.0
+var earnings: float = 0.0
 var stage_num: String = "1"
 var customers: int = 10
-var order_function = "tutorial"
+var order_function = "stage1_order"
+var dialogue = "res://Non_Entity/Dialogue/tutorial.dialogue"
 
 signal updates_completed
 
-var dialogue = "res://Non_Entity/Dialogue/tutorial.dialogue"
-
-
 func _ready() -> void:
 	Engine.max_fps = 60
-	Global.get_max_customers(customers)
-	Global.get_quota(quota)
-	Global.get_stage_num(stage_num)
-	Global.get_order(order_function)
-	Global.get_total_customers(customers)
-	print(Global.get_max_customers(customers))
-	print(Global.get_total_customers(customers))
-	emit_signal("updates_completed")
+	emit_signal("updates_completed", quota, stage_num, customers, order_function, earnings)
 	Global.connect("total_customers_updated", Callable(self, "checking_condition"))
-	#Global.get_dialogue(dialogue)
 	
 
 # func _process(delta: float) -> void:

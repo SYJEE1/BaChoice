@@ -24,10 +24,8 @@ func _on_quit_pressed():
 	get_tree().quit
 
 func _on_restart_pressed():
-	resume()
-	var earnings: float = 0.0
-	Global.set_amount_paid(earnings)
-	get_tree().change_scene_to_file("res://Non_Entity/Stages/Stage1.tscn")
+	get_tree().paused = false
+	Global.reload_stage()
 	
 	
 func _process(delta):

@@ -342,8 +342,6 @@ func display_order(order: Dictionary):
 		var bowl_key = order["Bowl"]
 		var bowl_sprite = TextureRect.new()
 		bowl_sprite.texture = bowl[bowl_key]["texture"]  # Access the texture
-		bowl_sprite.scale = Vector2(1, 1)  # Set size to match the asset
-		bowl_sprite.position = Vector2(5, 5)  # Position for bowl
 		hbox_container.add_child(bowl_sprite)
 		sprite_count += 1  # Increment sprite count
 		total_sprites += 1
@@ -353,8 +351,6 @@ func display_order(order: Dictionary):
 		var noodle_key = order["Noodle"]
 		var noodle_sprite = TextureRect.new()
 		noodle_sprite.texture = noodles[noodle_key]["texture"]  # Access the texture
-		noodle_sprite.scale = Vector2(1, 1)  # Set size to match the asset
-		noodle_sprite.position = Vector2(16, 0)  # Position for noodle
 		hbox_container.add_child(noodle_sprite)
 		sprite_count += 1  # Increment sprite count
 		total_sprites += 1
@@ -362,14 +358,10 @@ func display_order(order: Dictionary):
 	# Display each topping
 	for topping in order.keys():
 		if topping.begins_with("Topping"):
-			var topping_x = 32  # Starting x position for toppings
 			var topping_count = 0  # Count the number of toppings
 			topping_count += 1 
-			topping_x += (topping_count - 1) * 16 
 			var topping_sprite = TextureRect.new()
-			topping_sprite.texture = toppings[topping]["texture"]  # Access the texture
-			topping_sprite.scale = Vector2(1, 1)  # Set size to match the asset
-			topping_sprite.position = Vector2(topping_x, 5)  # Centered in the background
+			topping_sprite.texture = toppings[topping]["texture"] 
 			total_sprites += 1
 			if total_sprites < 5:
 				hbox_container.add_child(topping_sprite)
@@ -377,15 +369,12 @@ func display_order(order: Dictionary):
 				# Create a new HBoxContainer for the next row
 				addtl_hbox.add_child(topping_sprite)
 				sprite_count = 1  # Reset sprite count
-			topping_x -= 20  # Decrement x position for next topping (20 for spacing)
 
 	# Display drink
 	if order.has("Drink"):
 		var drink_key = order["Drink"]
 		var drink_sprite = TextureRect.new()
 		drink_sprite.texture = drinks[drink_key]["texture"]  # Access the texture
-		drink_sprite.scale = Vector2(1, 1)  # Set size to match the asset
-		drink_sprite.position = Vector2(5, 40)  # Position for drink
 		total_sprites += 1
 		if total_sprites < 5:
 			hbox_container.add_child(drink_sprite)
@@ -397,8 +386,6 @@ func display_order(order: Dictionary):
 		var sidedish_key = order["Sidedish"]
 		var sidedish_sprite = TextureRect.new()
 		sidedish_sprite.texture = sidedish[sidedish_key]["texture"]  # Access the texture
-		sidedish_sprite.scale = Vector2(1, 1)  # Set size to match the asset
-		sidedish_sprite.position = Vector2(5, 40)  # Position for drink
 		total_sprites += 1
 		if total_sprites < 5:
 			hbox_container.add_child(sidedish_sprite)

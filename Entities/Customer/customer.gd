@@ -38,7 +38,7 @@ func _ready():
 	add_child(progress_bar)
 
 	timer = Timer.new()
-	timer.wait_time = 90
+	timer.wait_time = 120
 	timer.one_shot = true
 	timer.connect("timeout", Callable(self, "_on_timer_timeout"))
 	add_child(timer)
@@ -50,13 +50,13 @@ func finish_order():
 
 		if timer:
 			var elapsed_time = timer.wait_time - timer.time_left
-			if elapsed_time <= 45:
+			if elapsed_time <= 75:
 				price = 1
-			elif elapsed_time <= 60:
+			elif elapsed_time <= 90:
 				price = 0.9
-			elif elapsed_time <= 75:
+			elif elapsed_time <= 105:
 				price = 0.8
-			elif elapsed_time == 90:
+			elif elapsed_time == 120:
 				price = 0.0
 
 			var amount_paid = paid * price

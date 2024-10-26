@@ -3,9 +3,9 @@ extends Node2D
 @onready var progress_bar: TextureProgressBar = $ProgressBar
 
 # Define the total duration for the progress bar
-const TOTAL_DURATION: float = 90.0  # 15 + 15 + 15 + 15 seconds
-const GREEN_DURATION: float = 30.0
-const YELLOW_DURATION: float = 30.0
+const TOTAL_DURATION: float = 120.0  # 15 + 15 + 15 + 15 seconds
+const GREEN_DURATION: float = 75.0
+const YELLOW_DURATION: float = 15.0
 const ORANGE_DURATION: float = 15.0
 const RED_DURATION: float = 15.0
 
