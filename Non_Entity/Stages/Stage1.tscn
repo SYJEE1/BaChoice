@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://vyu2twerlhgs"]
+[gd_scene load_steps=36 format=4 uid="uid://vyu2twerlhgs"]
 
 [ext_resource type="Script" path="res://Non_Entity/Stages/stage_1.gd" id="1_crsol"]
 [ext_resource type="Texture2D" uid="uid://dvg4wt154im0k" path="res://Non_Entity/Main Scene/Background.png" id="1_mux3k"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bk0nfo5btjpxm" path="res://Non_Entity/Menu Scene/pause_menu.tscn" id="13_ry0gi"]
 [ext_resource type="Texture2D" uid="uid://bo4v82il7tabt" path="res://Non_Entity/Stages/decoration1.png" id="14_kuk8o"]
 [ext_resource type="Texture2D" uid="uid://destr54ut3ti5" path="res://light/vecteezy_geometric-design-element_21048718.png" id="14_plsv7"]
+[ext_resource type="PackedScene" uid="uid://kvfqkdrsky2s" path="res://Non_Entity/hud.tscn" id="15_6mhdb"]
 
 [sub_resource type="Environment" id="Environment_oupni"]
 background_mode = 3
@@ -2413,3 +2414,5 @@ occluder = SubResource("OccluderPolygon2D_lmivv")
 [node name="Decoration1" type="Sprite2D" parent="."]
 position = Vector2(146, 39)
 texture = ExtResource("14_kuk8o")
+
+[node name="HUD" parent="." instance=ExtResource("15_6mhdb")]

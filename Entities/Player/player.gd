@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 func movement(input_direction, delta) -> void:
-	#if game_running:
+	if game_running:
 		# movement smoothness formula
 		velocity = lerp(velocity, input_direction * speed, delta * accel)
 
@@ -76,12 +76,12 @@ func movement(input_direction, delta) -> void:
 				input_direction.x * 6, 
 				input_direction.y * 4), 
 				delta * accel * 5)
-	# else:
-		#if Input.is_action_just_pressed("interact"):
+	else:
+		if Input.is_action_just_pressed("interact"):
 			#var dialogue_path = Global.stage1_dialogue
-			#DialogueManager.show_example_dialogue_balloon(load(dialogue_path), "start")
-			#game_running = true
-			#$"../HUD".get_node("Start").hide()
+			DialogueManager.show_example_dialogue_balloon(load("res://Non_Entity/Dialogue/tutorial.dialogue"), "start")
+			game_running = true
+			$"../HUD".get_node("Start").hide()
 func interact(input_direction, delta) -> void:
 	# print("detected Area:", detected_area)
 	# print("exempted Area:", exempted_area)
