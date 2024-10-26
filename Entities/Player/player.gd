@@ -79,7 +79,7 @@ func movement(input_direction, delta) -> void:
 	else:
 		if Input.is_action_just_pressed("interact"):
 			#var dialogue_path = Global.stage1_dialogue
-			DialogueManager.show_example_dialogue_balloon(load("res://Non_Entity/Dialogue/tutorial.dialogue"), "start")
+			#DialogueManager.show_example_dialogue_balloon(load("res://Non_Entity/Dialogue/tutorial.dialogue"), "start")
 			game_running = true
 			$"../HUD".get_node("Start").hide()
 func interact(input_direction, delta) -> void:

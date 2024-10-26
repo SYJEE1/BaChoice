@@ -2,9 +2,9 @@ extends Node2D
 
 @onready var fps_label: Label = $Camera2D/FPSLabel
 
-var quota: float = 1000
+var quota: float = 700
 var stage_num: String = "1"
-var customers: int = 15
+var customers: int = 10
 var order_function = "tutorial"
 
 signal updates_completed
