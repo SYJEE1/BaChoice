@@ -2330,7 +2330,7 @@ custom_item_type = &"pot"
 z_index = 1
 position = Vector2(292, 87)
 custom_item_type = &"bowl"
-custom_frame = 133
+custom_frame = 70
 
 [node name="Item3" parent="." instance=ExtResource("7_lx12j")]
 position = Vector2(215, 72)
