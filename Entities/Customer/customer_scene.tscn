@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c137i4csss41g" path="res://Entities/Player/charactershadow.png" id="5_mlahp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fp7i4"]
-size = Vector2(33.2055, 34.8622)
+size = Vector2(33.2055, 26.2077)
 
 [sub_resource type="Animation" id="Animation_fsolr"]
 resource_name = "1"
@@ -110,7 +110,8 @@ collision_mask = 33
 script = ExtResource("2_33cp1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ReceivingArea"]
-position = Vector2(0, 12.4508)
+position = Vector2(0, 8.12354)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_fp7i4")
 
 [node name="Customer" type="Sprite2D" parent="."]

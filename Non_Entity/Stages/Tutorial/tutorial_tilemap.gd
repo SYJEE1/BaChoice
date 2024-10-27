@@ -4,7 +4,6 @@ const INTERACT_AREA_SCENE = preload("res://Non_Entity/Stations/InteractArea.tscn
 @onready var countertop: TileMapLayer = $Countertop
 @onready var broth: TileMapLayer = $Broth
 @onready var trashbin: TileMapLayer = $Trashbin
-@onready var cooler: TileMapLayer = $Cooler
 @onready var ref: TileMapLayer = $Ref
 @onready var cutting_board: TileMapLayer = $CuttingBoard
 @onready var stove: TileMapLayer = $Stove
@@ -18,7 +17,6 @@ func _ready() -> void:
 	instantiate(countertop, preload("res://Non_Entity/Stations/Stations/countertop.gd"))
 	instantiate(broth, preload("res://Non_Entity/Stations/Stations/broth.gd"))
 	instantiate(trashbin, preload("res://Non_Entity/Stations/Stations/trashbin.gd"))
-	instantiate(cooler, preload("res://Non_Entity/Stations/Stations/cooler.gd"))
 	instantiate(ref, preload("res://Non_Entity/Stations/Stations/ref.gd"))
 	instantiate(cutting_board, preload("res://Non_Entity/Stations/Stations/cuttingboard.gd"))
 	instantiate(stove, preload("res://Non_Entity/Stations/Stations/stove.gd"))

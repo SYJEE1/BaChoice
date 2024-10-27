@@ -13,7 +13,8 @@ func _ready():
 
 # Function to update earnings from Global
 func update_earnings(new_amount: float):
-	total = new_amount  # Retrieve the latest amount paid from Global
+	total += new_amount  # Retrieve the latest amount paid from Global
+	print("updated earnings: ", total)
 	update_labels()
 	
 func reset_earnings(total: float):

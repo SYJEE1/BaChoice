@@ -2,10 +2,10 @@ extends Node2D
 
 @onready var fps_label: Label = $Camera2D/FPSLabel
 
-var quota: float = 1500
+var quota: float = 250 # original is 630
 var earnings: float = 0.0
 var stage_num: String = "2"
-var customers: int = 10
+var customers: int = 3 # original is 10
 var order_function = "stage2_order"
 var dialogue = "res://Non_Entity/Dialogue/tutorial.dialogue"
 

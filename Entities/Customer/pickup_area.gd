@@ -32,6 +32,7 @@ func interact(carried_item) -> void:
 		var item_anim = item.animation
 		var item_frame = item.frame
 		if not has_item:
+			print(item_frame, item_anim)
 			if item_anim == order["bowl"]["item_type"] and item_frame == order["bowl"]["bowl_index"]:
 				collected_items["bowl"] = true
 				if item.frame > 69:
@@ -50,7 +51,7 @@ func interact(carried_item) -> void:
 			if not (order["bowl"]["required"] or order["drink"]["required"] or order["sidedish"]["required"]):
 				print("No items required for this order.")
 			else:
-				print("Player is holding an incorrect item: ", carried_item.custom_item_type, carried_item.custom_frame)
+				print("Player is holding an incorrect item: ", item_anim, item_frame)
 		if all_items_collected():
 			get_parent().finish_order()
 				

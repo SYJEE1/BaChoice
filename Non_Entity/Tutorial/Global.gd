@@ -1,4 +1,4 @@
-# In Global.gd
+ 	# In Global.gd
 extends Node
 
 # For Scores
@@ -151,7 +151,7 @@ func checking_condition():
 	print(total)
 	var max = send_max_customers()
 	print(max)
-	var total_earnings = get_amount_paid()
+	total_earnings += get_amount_paid()
 	print(new_quota)
 	print(total_earnings)
 	print(amount_paid)
@@ -244,7 +244,7 @@ func send_stage_num() -> String:
 	
 # Earnings
 func set_amount_paid(new_amount_paid: float):
-	amount_paid += new_amount_paid
+	amount_paid = new_amount_paid
 	emit_signal("amount_paid_changed", amount_paid)  # Notify listeners
 	checking_condition()
 	
