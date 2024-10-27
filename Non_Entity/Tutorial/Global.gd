@@ -151,6 +151,7 @@ func checking_condition():
 	print(total)
 	var max = send_max_customers()
 	print(max)
+	total_earnings = 0
 	total_earnings += get_amount_paid()
 	print(new_quota)
 	print(total_earnings)
