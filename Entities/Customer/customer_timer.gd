@@ -3,11 +3,13 @@ extends Node2D
 @onready var progress_bar: TextureProgressBar = $ProgressBar
 
 # Define the total duration for the progress bar
-const TOTAL_DURATION: float = 90.0  # 15 + 15 + 15 + 15 seconds
-const GREEN_DURATION: float = 30.0
-const YELLOW_DURATION: float = 30.0
-const ORANGE_DURATION: float = 15.0
-const RED_DURATION: float = 15.0
+# The bar ticks once per second and fills over the customer's whole wait (see PATIENCE in customer.gd).
+# The colours follow the pay tiers: green = full pay, yellow = 90%, orange = 80%, red = 70%.
+const TOTAL_DURATION: float = 150.0
+const GREEN_DURATION: float = 75.0
+const YELLOW_DURATION: float = 25.0
+const ORANGE_DURATION: float = 25.0
+const RED_DURATION: float = 25.0
 
 func _ready() -> void:
 	# Set the maximum value of the progress bar

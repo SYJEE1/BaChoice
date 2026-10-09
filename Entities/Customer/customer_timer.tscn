@@ -18,7 +18,6 @@ texture_under = ExtResource("2_jywvh")
 texture_progress = ExtResource("3_aur62")
 
 [node name="TimeInterval" type="Timer" parent="."]
-wait_time = 0.5
 autostart = true
 
 [connection signal="timeout" from="TimeInterval" to="." method="_onTimeout"]

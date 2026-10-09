@@ -75,5 +75,6 @@ func _on_customer_removed(customer: Node2D):
 		occupied_points[customer.spawn_point] = false  # Mark the customer's spawn point as unoccupied
 	# The stage is over once the last customer has been served or has left
 	if total_customers_spawned >= Global.send_max_customers() and get_available_spawn_points().size() == spawn_points.size():
-		Global.checking_condition()
+		# deferred: a served customer is removed from inside a physics callback, and the scene must not change there
+		Global.checking_condition.call_deferred()
 		

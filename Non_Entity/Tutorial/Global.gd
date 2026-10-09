@@ -15,6 +15,7 @@ var has_item: bool = false
 var current_item_frame: int = 1
 var current_item_animation: String = ""
 var price: float
+var fixed_payout: float = 0.0 # set by the stage; above 0, every served order pays exactly this much
 var game_running: bool = false # true once the player has pressed start on the current stage
 
 signal price_updated(price: float)
