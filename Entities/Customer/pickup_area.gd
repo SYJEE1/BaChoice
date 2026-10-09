@@ -27,10 +27,9 @@ func interact(carried_item) -> void:
 
 func _get_order_info(order_info) -> Dictionary:
 	order = order_info
-	print(order)
 	return order
 
-func _on_body_entered(carried_item: RigidBody2D):
+func _on_body_entered(carried_item: Node2D):
 	if carried_item is RigidBody2D:
 		var item = carried_item.item_sprite
 		var item_anim = item.animation
@@ -42,19 +41,12 @@ func _on_body_entered(carried_item: RigidBody2D):
 					item.frame = 73
 				else:
 					item.frame = 4
-				print("Bowl collected.")
 			if item_anim == order["drink"]["item_type"] and  item_frame == order["drink"]["frame"]:
 				collected_items["drink"] = true
-				print("Drink collected.")
 				
 			if item_anim == order["sidedish"]["item_type"] and item_frame == order["sidedish"]["frame"]:
-				collected_items["Sidedish"] = true
-				print("Side dish collected.")
+				collected_items["sidedish"] = true
 				
-			if not (order["bowl"]["required"] or order["drink"]["required"] or order["sidedish"]["required"]):
-				print("No items required for this order.")
-			else:
-				print("Player is holding an incorrect item: ", carried_item.custom_item_type, carried_item.custom_frame)
 		if all_items_collected():
 			get_parent().finish_order()
 				

@@ -33,6 +33,7 @@ func _ready() -> void:
 	bars = hotbar_instance.get_child(2)
 	drink_name = hotbar_instance.get_child(4)
 	hotbar_peek_anim.play("RESET")
+	drink_name.text = "Egg"
 	
 	bars.get_child(0).visible = true
 	
@@ -46,7 +47,7 @@ func interact(carried_item):
 	elif selection == 5: new_item.set_item(&"bihon", 1)
 	elif selection == 6: new_item.set_item(&"sotanghon", 1)
 	elif selection == 7: new_item.set_item(&"miki", 1)
-	get_tree().root.add_child(new_item)
+	get_tree().current_scene.add_child(new_item)
 	return new_item
 	
 	

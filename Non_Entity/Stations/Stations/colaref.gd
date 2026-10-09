@@ -34,6 +34,7 @@ func _ready() -> void:
 	bars = hotbar_instance.get_child(2)
 	drink_name = hotbar_instance.get_child(4)
 	hotbar_peek_anim.play("RESET")
+	drink_name.text = "C3"
 	
 	bars.get_child(1).visible = true
 	
@@ -45,7 +46,7 @@ func interact(carried_item):
 	if selection == 3: new_item.set_item(&"loyal", 1)
 	if selection == 4: new_item.set_item(&"sprike", 1)
 	if selection == 5: new_item.set_item(&"cora", 1)
-	get_tree().root.add_child(new_item)
+	get_tree().current_scene.add_child(new_item)
 	hotbar_peek_anim.play("exit")
 	return new_item
 	
@@ -68,11 +69,11 @@ func _input(event: InputEvent) -> void:
 		if selection == 0: selection = 5
 		elif selection == 6: selection = 1
 			
-		if selection == 1: hotbar_select_anim.play("1"); drink_name.text = "Cora"
+		if selection == 1: hotbar_select_anim.play("1"); drink_name.text = "C3"
 		elif selection == 2: hotbar_select_anim.play("2"); drink_name.text = "Water"
 		elif selection == 3: hotbar_select_anim.play("3"); drink_name.text = "Loyal"
 		elif selection == 4: hotbar_select_anim.play("4"); drink_name.text = "Sprike"
-		elif selection == 5: hotbar_select_anim.play("5"); drink_name.text = "C3"
+		elif selection == 5: hotbar_select_anim.play("5"); drink_name.text = "Cora"
 
 func glow(carried_item) -> void:
 	var glow_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)

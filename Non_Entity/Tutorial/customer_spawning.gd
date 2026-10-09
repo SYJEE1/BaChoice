@@ -27,8 +27,13 @@ func _ready():
 	spawn_points = [spawn_point_1, spawn_point_2, spawn_point_3]
 	for point in spawn_points:
 		occupied_points[point] = false  # Initialize all points as unoccupied
-	timer.start(randf_range(min_spawn_interval, max_spawn_interval))
 	Global.connect("max_customers", Callable (self, "spawn_customer"))
+
+func _process(_delta: float) -> void:
+	# the first customer is only scheduled once the player has pressed start
+	if Global.game_running:
+		timer.start(randf_range(min_spawn_interval, max_spawn_interval))
+		set_process(false)
 
 func spawn_customer():
 	var max_total_customers = Global.send_max_customers()
@@ -49,7 +54,6 @@ func spawn_customer():
 		occupied_points[point] = true  # Mark the point as occupied
 		total_customers_spawned += 1  # Increment total customers spawned
 		Global.get_total_customers(total_customers_spawned)
-		Global.checking_condition()
 
 	timer.start(randf_range(min_spawn_interval, max_spawn_interval))
 
@@ -69,4 +73,7 @@ func get_available_spawn_points() -> Array:
 func _on_customer_removed(customer: Node2D):
 	if customer.spawn_point:  # Check if the spawn point is set
 		occupied_points[customer.spawn_point] = false  # Mark the customer's spawn point as unoccupied
+	# The stage is over once the last customer has been served or has left
+	if total_customers_spawned >= Global.send_max_customers() and get_available_spawn_points().size() == spawn_points.size():
+		Global.checking_condition()
 		

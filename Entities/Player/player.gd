@@ -4,9 +4,6 @@ extends CharacterBody2D
 var speed := 75
 var accel := 5 
 var detected_area = []
-var exempted_area = []
-#var detected_station = []
-#var detected_item = []
 var game_running : bool
 # node paths
 @onready var player_sprite: Sprite2D = $PlayerSprite
@@ -81,123 +78,118 @@ func movement(input_direction, delta) -> void:
 			#var dialogue_path = Global.stage1_dialogue
 			#DialogueManager.show_example_dialogue_balloon(load("res://Non_Entity/Dialogue/tutorial.dialogue"), "start")
 			game_running = true
+			Global.game_running = true
 			$"../HUD".get_node("Start").hide()
 func interact(input_direction, delta) -> void:
-	# print("detected Area:", detected_area)
-	# print("exempted Area:", exempted_area)
-	
-	var debug = $DebugCircle
-	debug.global_position = global_position
-	
-	
-	#if detected_area.size() > 0 and detected_area[0].area_type == "station" == true and detected_area[0].takes_item == true: exempted_area.push_front(detected_area.pop_front())
+	# forget anything that has been freed since last frame (items put in a pot or in the trash)
+	detected_area = detected_area.filter(func(area): return is_instance_valid(area))
+	if has_item and not is_instance_valid(carried_item):
+		carried_item = null
+		has_item = false
 
 	if has_item == false: # if no item
 		speed = 70
-		
-		if detected_area.size() > 0:
-			detected_area.sort_custom(_sort_by_distance_from_player)
-			var nearest : Area2D = detected_area[0]
-			debug.global_position = nearest.global_position
-				
-			if nearest.area_type == "countertop" or nearest.area_type == "stove" or nearest.area_type == "cuttingboard" or nearest.area_type == "ReceivingArea": 
-				exempted_area.push_front(detected_area.pop_front())
-				
-			if nearest.area_type == "station":
-				
-				if nearest.has_method("glow") and nearest.takes_item == false: 
-					nearest.glow(carried_item)
-					
-					if Input.is_action_just_pressed("interact"):
-						PopSFX(1.30)
-						carried_item = nearest.interact(carried_item)
-						carried_item.pickup()
-						carried_item.is_carried = true
-						has_item = true
-				
-			if nearest.area_type == "item" and nearest.get_parent().is_carried == false:
-				nearest.get_parent().glow()
-				
-				if Input.is_action_just_pressed("interact"):
-					PopSFX(1.30)
-					carried_item = nearest.get_parent()
-					carried_item.pickup()
-					carried_item.is_carried = true
-					has_item = true
-					detected_area.erase(nearest)
-		
+		var target : Area2D = _nearest_area(_usable_empty_handed)
+		if target == null: return
 
-	else: # if has item 
+		if target.area_type == "item":
+			var item = target.get_parent()
+			item.glow()
+			if Input.is_action_just_pressed("interact"):
+				PopSFX(1.30)
+				_hold(item)
+		else: # a station that hands out items
+			target.glow(carried_item)
+			if Input.is_action_just_pressed("interact"):
+				PopSFX(1.30)
+				_hold(target.interact(carried_item))
+
+	else: # if has item
 		carried_item.global_position = lerp(carried_item.global_position, interact_collision.global_position, delta * accel * 3)
 		speed = 50
-		
-		if detected_area.size() > 0:
-			detected_area.sort_custom(_sort_by_distance_from_player)
-			var nearest : Area2D = detected_area[0]
-			debug.global_position = nearest.global_position
-						
-			if nearest.area_type == "item": # if holding an item, sees an item
-				var nearest_item = nearest.get_parent().item_sprite
-				# only pot and bowl goes through
-				if nearest_item.animation not in ["pot"]: exempted_area.push_front(detected_area.pop_front())
-				else:  # if empty BOWL and detects a ready POT 
-					var item_type = carried_item.item_sprite
-					var empty_bowl = (item_type.animation == "bowl" and (item_type .frame == 1 or item_type .frame == 70))
-					var finished_pot = nearest_item.animation == "pot" and nearest_item.frame == 3
-					var ready = nearest.get_parent().progress_bar.value >= nearest.get_parent().progress_bar.max_value
-					if (empty_bowl and finished_pot) and ready == true:
-						if Input.is_action_just_pressed("interact"):
-							PopSFX(.70)
-							nearest.get_parent().item_interact(carried_item)
-							nearest.get_parent().find_bowl(carried_item, false)
-							nearest.get_parent().reset()
-								
-					
-					elif carried_item.item_sprite.animation == "pot" and (carried_item.item_sprite.animation in nearest.get_parent().possible_ingredients): 
-						nearest.get_parent().glow()
-					var item = carried_item.item_sprite.animation
-					if Input.is_action_just_pressed("interact"):
-						PopSFX(.70)
-						nearest.get_parent().item_interact(carried_item)
-						carried_item.is_carried = false
-						carried_item = null 
-						has_item = false
-							
-			if ((nearest.area_type == "station" or nearest.area_type == "cuttingboard" or nearest.area_type == "stove" or nearest.area_type == "ReceivingArea") and nearest.takes_item == true) or (nearest.area_type == "countertop"):
-				if nearest.has_method("glow"): nearest.glow(carried_item)
-			
+		var target : Area2D = _nearest_area(_usable_with_item)
+		if target == null: return
+
+		if target.area_type == "item": # the only items that matter while carrying are pots
+			var pot = target.get_parent()
+			if _can_scoop_from(pot): # empty BOWL and a ready POT: fill the bowl and keep holding it
 				if Input.is_action_just_pressed("interact"):
 					PopSFX(.70)
-					detected_area.append(carried_item.get_child(0))
-					carried_item.putdown()
-					var distance = carried_item.global_position.distance_to(detected_area[0].global_position) * 20
-					var impulse = carried_item.global_position.direction_to(detected_area[0].global_position) * distance
-					carried_item.apply_impulse(impulse, Vector2(0,0))
-					nearest.interact(carried_item)
-					if carried_item.item_sprite.animation == "pot" and nearest.area_type == "stove":
-						carried_item.toggle_onstove()
-					
-					carried_item.is_carried = false
-					carried_item = null 
-					has_item = false
-					
+					pot.find_bowl(carried_item, pot.burnt)
+					pot.reset()
+			else: # an ingredient this pot can still take
+				pot.glow()
+				if Input.is_action_just_pressed("interact"):
+					PopSFX(.70)
+					pot.item_interact(carried_item)
+					_let_go()
+		else: # a station or countertop to put the item on
+			if target.has_method("glow"): target.glow(carried_item)
+			if Input.is_action_just_pressed("interact"):
+				PopSFX(.70)
+				carried_item.putdown()
+				var distance = carried_item.global_position.distance_to(target.global_position) * 20
+				var impulse = carried_item.global_position.direction_to(target.global_position) * distance
+				carried_item.apply_impulse(impulse, Vector2(0,0))
+				target.interact(carried_item)
+				if carried_item.item_sprite.animation == "pot" and target.area_type == "stove":
+					carried_item.toggle_onstove()
+				_let_go()
 
-func _sort_by_distance_from_player(area1, area2):
-	var area1_to_player = interact_collision.global_position.distance_to(area1.global_position)
-	var area2_to_player = interact_collision.global_position.distance_to(area2.global_position)
-	return area1_to_player < area2_to_player
+func _hold(item) -> void:
+	carried_item = item
+	carried_item.pickup()
+	carried_item.is_carried = true
+	has_item = true
 
-func _on_itementered(area: Area2D) -> void: 
-	if area in exempted_area: pass
-	else: detected_area.push_back(area)
-	
+func _let_go() -> void:
+	carried_item.is_carried = false
+	carried_item = null
+	has_item = false
+
+# what the player can use with empty hands: loose items, and stations that hand out items
+func _usable_empty_handed(area) -> bool:
+	if area.area_type == "item":
+		return area.get_parent().is_carried == false
+	return area.area_type == "station" and area.takes_item == false and area.has_method("glow")
+
+# what the player can use while carrying: a pot that wants the item (or can fill the bowl),
+# stations that take items, and countertops
+func _usable_with_item(area) -> bool:
+	if area.area_type == "item":
+		var item = area.get_parent()
+		if item == carried_item or item.item_sprite.animation != "pot": return false
+		return _can_scoop_from(item) or item.can_put_in_pot(carried_item.item_sprite.animation) == true
+	if area.area_type == "countertop": return true
+	var takes_items = area.area_type == "station" or area.area_type == "cuttingboard" or area.area_type == "stove" or area.area_type == "ReceivingArea"
+	return takes_items and area.takes_item == true
+
+func _can_scoop_from(pot) -> bool:
+	var bowl = carried_item.item_sprite
+	var empty_bowl = bowl.animation == "bowl" and (bowl.frame == 1 or bowl.frame == 70)
+	var finished_pot = pot.item_sprite.animation == "pot" and pot.item_sprite.frame == 3
+	var ready = pot.progress_bar.value >= pot.progress_bar.max_value
+	return empty_bowl and finished_pot and ready
+
+func _nearest_area(usable: Callable) -> Area2D:
+	var nearest : Area2D = null
+	var nearest_distance := INF
+	for area in detected_area:
+		if not usable.call(area): continue
+		var distance = interact_collision.global_position.distance_to(area.global_position)
+		if distance < nearest_distance:
+			nearest = area
+			nearest_distance = distance
+	return nearest
+
+func _on_itementered(area: Area2D) -> void:
+	if area not in detected_area: detected_area.push_back(area)
 	if area.has_method("hotbar_peek"): area.hotbar_peek(true)
 
-func _on_itemexited(area: Area2D) -> void: 
-	if area in exempted_area: exempted_area.erase(area)
+func _on_itemexited(area: Area2D) -> void:
 	detected_area.erase(area)
 	if area.has_method("hotbar_peek"): area.hotbar_peek(false)
-	
+
 func PopSFX(pitch):
 	$SFX/PopSound.pitch_scale = pitch
 	$SFX/PopSound.play()

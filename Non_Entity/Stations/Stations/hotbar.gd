@@ -15,5 +15,4 @@ func _input(event: InputEvent):
 
 
 func _on_animation_finished(anim_name: StringName) -> void:
-	print(anim_name)
 	if anim_name == "exit": queue_free()

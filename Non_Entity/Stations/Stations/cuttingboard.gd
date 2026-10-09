@@ -13,7 +13,6 @@ func _ready() -> void:
 	
 func interact(carried_item) -> void:
 	var item = carried_item.item_sprite
-	print(item.animation)
 	if item.animation == "raw_pork": item.animation = "raw_cut_pork"
 	if item.animation == "raw_liver": item.animation = "raw_cut_liver"
 	item.frame = 1

@@ -1,6 +1,7 @@
 [remap]
 
-importer="dialogue_manager_compiler_12"
+importer="dialogue_manager"
+importer_version=18
 type="Resource"
 uid="uid://bfsbfqcobchyp"
 path="res://.godot/imported/stage_5.dialogue-064f238fb1abc9af963e953c88570a68.tres"

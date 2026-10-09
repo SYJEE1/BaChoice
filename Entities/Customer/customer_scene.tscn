@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://bgm41kbouiwk"]
 
-[ext_resource type="Script" path="res://Entities/Customer/Customer.gd" id="1_iu30c"]
+[ext_resource type="Script" path="res://Entities/Customer/customer.gd" id="1_iu30c"]
 [ext_resource type="Script" path="res://Entities/Customer/pickup_area.gd" id="2_33cp1"]
 [ext_resource type="Texture2D" uid="uid://bakglh0jaqrre" path="res://Entities/Customer/Customers.png" id="3_ujyma"]
 [ext_resource type="AudioStream" uid="uid://c7uc456nxwbcn" path="res://Entities/Customer/Store Door Sound Effect.mp3" id="4_bhq7k"]

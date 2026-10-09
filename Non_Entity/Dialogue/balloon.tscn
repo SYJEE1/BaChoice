@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://6u3en8w8w6ty"]
 
-[ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="2_a8ve6"]
+[ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/nodes/dialogue_label/dialogue_label.tscn" id="2_a8ve6"]
 [ext_resource type="FontFile" uid="uid://ckxxrlmhohpi0" path="res://Graphics/Fonts/mago1.ttf" id="2_vx4u3"]
-[ext_resource type="Script" path="res://addons/dialogue_manager/dialogue_reponses_menu.gd" id="3_72ixx"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/nodes/responses_menu/dialogue_responses_menu.gd" id="3_72ixx"]
 
 [sub_resource type="GDScript" id="GDScript_ocwet"]
 script/source = "extends CanvasLayer
@@ -53,7 +53,7 @@ var dialogue_line: DialogueLine:
 		dialogue_label.dialogue_line = dialogue_line
 
 		responses_menu.hide()
-		responses_menu.set_responses(dialogue_line.responses)
+		responses_menu.responses = dialogue_line.responses
 
 		# Show our balloon
 		balloon.show()
@@ -111,7 +111,7 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and _locale != TranslationServer.get_locale() and is_instance_valid(dialogue_label):
 		_locale = TranslationServer.get_locale()
 		var visible_ratio = dialogue_label.visible_ratio
-		self.dialogue_line = await resource.get_next_dialogue_line(dialogue_line.id)
+		await dialogue_line.refresh()
 		if visible_ratio < 1:
 			dialogue_label.skip_typing()
 
@@ -132,7 +132,8 @@ func next(next_id: String) -> void:
 #region Signals
 
 
-func _on_mutated(_mutation: Dictionary) -> void:
+func _on_mutated(mutation: Dictionary) -> void:
+	if mutation.is_inline: return
 	is_waiting_for_input = false
 	will_hide_balloon = true
 	get_tree().create_timer(0.1).timeout.connect(func():

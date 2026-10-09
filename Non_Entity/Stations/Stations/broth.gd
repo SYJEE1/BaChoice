@@ -13,17 +13,12 @@ func _ready() -> void:
 	
 func interact(carried_item) -> void:
 	var item = carried_item.item_sprite
-	if item.animation == "bowl_regular" and item.frame == 1: item.frame = 2
-	if item.animation == "bowl_super" and item.frame == 1: item.frame = 2
 	if item.animation == "pot" and "broth" in carried_item.possible_ingredients: 
-		print("filling pot with broth!")
 		carried_item.direct_interact("broth")
 		
 func glow(carried_item) -> void:
 	var item = carried_item.item_sprite
-	if item.animation == "bowl_regular" and item.frame == 1: item.frame = 2
-	if item.animation == "bowl_super" and item.frame == 1: item.frame = 2
-	if (item.animation == "pot") and ("broth" in carried_item.pot_array):
+	if (item.animation == "pot") and ("broth" in carried_item.possible_ingredients):
 		var glow_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 		glow_tween.tween_property(tilemap_glow, "modulate", Color(1,1,1,1), .1)
 		unglow(glow_tween)

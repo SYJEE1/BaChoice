@@ -23,7 +23,6 @@ extends RigidBody2D
 @onready var glow_animation: AnimationPlayer = $GlowAnimation
 @onready var item_sprite: AnimatedSprite2D = $ItemSprite
 @onready var item_animation: AnimationPlayer = $ItemAnimation
-@onready var effects: Sprite2D = $ItemSprite/Effects
 @onready var progress_bar: TextureProgressBar = $ItemSprite/ProgressBar
 @onready var cook_timer: Timer = $ItemSprite/InsidePot/CookTimer
 @onready var inside_pot: Sprite2D = $ItemSprite/InsidePot
@@ -38,7 +37,8 @@ const sprite_frames = preload("res://Non_Entity/Items/Item.tres")
 
 var is_carried := false
 var noodles = []
-var possible_ingredients = ["raw_cut_liver", "raw_cut_pork", "egg", "broth", "miswa", "bihon", "sotanghon", "miki"]
+const ALL_INGREDIENTS = ["raw_cut_liver", "raw_cut_pork", "egg", "broth", "miswa", "bihon", "sotanghon", "miki"]
+var possible_ingredients = ALL_INGREDIENTS.duplicate()
 var pot_array = []
 var on_stove := false
 var burnt := false
@@ -49,7 +49,7 @@ func _ready() -> void:
 	set_item(item_sprite.animation, item_sprite.frame)
 	
 	progress_bar.value = 0 
-	item_glow.play("unglow")
+	glow_animation.play("unglow")
 	fire.get_child(0).play("RESET")
 	effects_animation.play("insidepot_exit")
 	$ItemSprite/InsidePot.visible = true
@@ -69,8 +69,8 @@ func set_item(animation, frame) -> void:
 	item_glow.sprite_frames = item_sprite.sprite_frames
 	item_glow.animation = item_sprite.animation
 	if animation != "bowl": item_glow.frame = frame - 1
-	elif frame <= 69: item_glow.frame = 0
-	else: item_glow.frame = 70
+	elif frame < 69: item_glow.frame = 0
+	else: item_glow.frame = 69
 	
 	item_shadow.sprite_frames = item_sprite.sprite_frames
 	item_shadow.animation = item_sprite.animation
@@ -102,7 +102,7 @@ func item_interact(item_carried) -> void:
 		item_carried.item_animation.play("into_pot")
 		set_item("pot", 1)
 		var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-		tween.tween_property(item_carried, "global1_position", global_position, .5)
+		tween.tween_property(item_carried, "global_position", global_position, .5)
 		await get_tree().create_timer(.5).timeout
 		item_carried.queue_free()
 		# item transfer animation end
@@ -111,7 +111,6 @@ func item_interact(item_carried) -> void:
 	
 func to_pot_array(item_type: String) -> void:
 	if can_put_in_pot(item_type) == true:
-		print("putting in pot: ", item_type)
 		
 		 # transfer said item from possible_ingredients to pot_array
 		var noodles = ["miswa", "bihon", "sotanghon", "miki"]
@@ -141,12 +140,10 @@ func to_pot_array(item_type: String) -> void:
 			progress_bar.max_value = 10 * pot_array.size() #+ (progress_bar.value / 3)
 		
 		if pot_array.size() > 0: item_sprite.frame = 3
-		print("Pot_array: ",pot_array)
 		update_pot()
 		
 	else: 
-		print("ERROR. Cannot put ", item_type, "in pot array: ", pot_array)
-		breakpoint
+		push_warning("Cannot put ", item_type, " in pot array: ", pot_array)
 
 func toggle_onstove():
 	on_stove = !on_stove
@@ -192,6 +189,9 @@ func reset() -> void:
 	
 	set_item("pot", 1)
 	pot_array.clear()
+	possible_ingredients = ALL_INGREDIENTS.duplicate() # an emptied pot can be cooked in again
+	burnt = false
+	progress_bar.tint_progress = Color.LIGHT_GRAY
 	
 	$ItemSprite/InsidePot/Liver.visible = false
 	$ItemSprite/InsidePot/Pork.visible = false
@@ -204,7 +204,7 @@ func reset() -> void:
 	update_pot()
 	
 	progress_bar.value = 0 
-	item_glow.play("unglow")
+	glow_animation.play("unglow")
 	fire.get_child(0).play("RESET")
 	effects_animation.play("insidepot_exit")
 	$ItemSprite/InsidePot.visible = true
@@ -237,14 +237,15 @@ func find_bowl(item_carried, burnt: bool):
 		if item_carried.item_sprite.frame > 69: bowl_index += 69
 		else: bowl_index += 0
 	else: 
-		print("not a bowl, is ", item_carried.item_sprite.animation, " instead" )
+		push_warning("not a bowl, is ", item_carried.item_sprite.animation, " instead")
 		
 	
-	if burnt == true: bowl_index += 3; return bowl_index
+	if burnt == true: # a burnt pot only gives an overcooked bowl
+		item_carried.set_item("bowl", bowl_index + 3)
+		return
 	
 	var toppings = []
 	for x in pot_array:
-		print(x)
 		if x == "miswa": bowl_index += 0
 		if x == "bihon": bowl_index += 16
 		if x == "sotanghon": bowl_index += 32
@@ -256,7 +257,6 @@ func find_bowl(item_carried, burnt: bool):
 		if x == "raw_cut_liver": toppings.append("L")
 		if x == "chicharon": toppings.append("C")
 		toppings.sort()
-	print("toppings: ", toppings)
 	var toppings_index_mapping = {
 	"": 0,
 	"E": 1,
@@ -279,12 +279,10 @@ func find_bowl(item_carried, burnt: bool):
 	for topping in toppings:
 		combined_toppings += topping
 # Add the topping bowl index to the total bowl index
-	print("combined_toppings: ", combined_toppings)
 	if toppings_index_mapping.has(combined_toppings):
 		bowl_index += toppings_index_mapping[combined_toppings]
 	else:
-		print("Error: Invalid topping combination")
+		push_error("Invalid topping combination: ", combined_toppings)
 	bowl_index += 5
-	print("final bowl index: ", bowl_index)
 	#item_carried.set_item("bowl", bowl_index)
 	item_carried.set_item("bowl", bowl_index)

@@ -21,12 +21,11 @@ func _on_resume_pressed():
 	resume()
 
 func _on_quit_pressed():
-	get_tree().quit
+	get_tree().quit()
 
 func _on_restart_pressed():
 	resume()
-	var earnings: float = 0.0
-	Global.set_amount_paid(earnings)
+	Global.reset_amount_paid()
 	get_tree().change_scene_to_file("res://Non_Entity/Stages/Stage1.tscn")
 	
 	

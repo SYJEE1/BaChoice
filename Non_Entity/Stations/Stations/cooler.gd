@@ -13,11 +13,10 @@ func _ready() -> void:
 	tilemap_glow.modulate = Color(1,1,1,0)
 
 func interact(carried_item):
-	print("adding water item!")
 	var instance = ITEM.instantiate()
 	instance.global_position = global_position
 	instance.set_item(&"water", 1)
-	get_tree().root.add_child(instance)
+	get_tree().current_scene.add_child(instance)
 	return instance
 		
 func glow(carried_item) -> void:

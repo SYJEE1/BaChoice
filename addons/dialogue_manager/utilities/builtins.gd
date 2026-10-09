@@ -1,12 +1,11 @@
-extends Object
+class_name DMBuiltins extends RefCounted
 
 
-const DialogueConstants = preload("../constants.gd")
-
-const SUPPORTED_BUILTIN_TYPES = [
+const SUPPORTED_BUILTIN_TYPES: Array = [
 	TYPE_STRING,
 	TYPE_STRING_NAME,
 	TYPE_ARRAY,
+	TYPE_PACKED_STRING_ARRAY,
 	TYPE_VECTOR2,
 	TYPE_VECTOR3,
 	TYPE_VECTOR4,
@@ -21,13 +20,64 @@ const SUPPORTED_BUILTIN_TYPES = [
 static var resolve_method_error: Error = OK
 
 
-static func is_supported(thing) -> bool:
-	return typeof(thing) in SUPPORTED_BUILTIN_TYPES
+static func is_supported(thing: Variant, with_method: String = "") -> bool:
+	if not typeof(thing) in SUPPORTED_BUILTIN_TYPES: return false
+
+	# If given a Dictionary and a method then make sure it's a known Dictionary method.
+	if typeof(thing) == TYPE_DICTIONARY and with_method != "":
+		return with_method in [
+			&"clear",
+			&"duplicate",
+			&"erase",
+			&"find_key",
+			&"get",
+			&"get_or_add",
+			&"has",
+			&"has_all",
+			&"hash",
+			&"is_empty",
+			&"is_read_only",
+			&"keys",
+			&"make_read_only",
+			&"merge",
+			&"merged",
+			&"recursive_equal",
+			&"size",
+			&"values"]
+
+	return true
 
 
-static func resolve_property(builtin, property: String):
+static func resolve_property(builtin: Variant, property: String) -> Variant:
 	match typeof(builtin):
-		TYPE_ARRAY, TYPE_DICTIONARY, TYPE_QUATERNION, TYPE_STRING, TYPE_STRING_NAME:
+		TYPE_DICTIONARY:
+			if not builtin.has(property):
+				match property:
+					"Count", "Length":
+						return builtin.size()
+					"IsEmpty":
+						return builtin.is_empty()
+			return builtin.get(property)
+
+		TYPE_ARRAY, TYPE_PACKED_STRING_ARRAY:
+			match property:
+				"Count", "Length":
+					return builtin.size()
+				"IsEmpty":
+					return builtin.is_empty()
+				_:
+					return builtin[property]
+
+		TYPE_STRING:
+			match property:
+				"Length", "Count":
+					return builtin.length()
+				"IsEmpty":
+					return builtin.is_empty()
+				_:
+					return builtin[property]
+
+		TYPE_STRING_NAME, TYPE_QUATERNION:
 			return builtin[property]
 
 		# Some types have constants that we need to manually resolve
@@ -41,8 +91,10 @@ static func resolve_property(builtin, property: String):
 		TYPE_COLOR:
 			return resolve_color_property(builtin, property)
 
+	return null
 
-static func resolve_method(thing, method_name: String, args: Array):
+
+static func resolve_method(thing: Variant, method_name: String, args: Array) -> Variant:
 	resolve_method_error = OK
 
 	# Resolve static methods manually
@@ -70,12 +122,12 @@ static func resolve_method(thing, method_name: String, args: Array):
 
 	# Anything else can be evaulatated automatically
 	var references: Array = ["thing"]
-	for i in range(0, args.size()):
+	for i: int in range(0, args.size()):
 		references.append("arg%d" % i)
-	var expression = Expression.new()
+	var expression: Expression = Expression.new()
 	if expression.parse("thing.%s(%s)" % [method_name, ",".join(references.slice(1))], references) != OK:
 		assert(false, expression.get_error_text())
-	var result = expression.execute([thing] + args, null, false)
+	var result: Variant = await expression.execute([thing] + args, null, false)
 	if expression.has_execute_failed():
 		resolve_method_error = ERR_CANT_RESOLVE
 		return null
@@ -87,7 +139,7 @@ static func has_resolve_method_failed() -> bool:
 	return resolve_method_error != OK
 
 
-static func resolve_color_property(color: Color, property: String):
+static func resolve_color_property(color: Color, property: String) -> Variant:
 	match property:
 		"ALICE_BLUE":
 			return Color.ALICE_BLUE
@@ -385,7 +437,7 @@ static func resolve_color_property(color: Color, property: String):
 	return color[property]
 
 
-static func resolve_vector2_property(vector: Vector2, property: String):
+static func resolve_vector2_property(vector: Vector2, property: String) -> Variant:
 	match property:
 		"AXIS_X":
 			return Vector2.AXIS_X
@@ -406,10 +458,19 @@ static func resolve_vector2_property(vector: Vector2, property: String):
 		"DOWN":
 			return Vector2.DOWN
 
+		"DOWN_LEFT":
+			return Vector2(-1, 1)
+		"DOWN_RIGHT":
+			return Vector2(1, 1)
+		"UP_LEFT":
+			return Vector2(-1, -1)
+		"UP_RIGHT":
+			return Vector2(1, -1)
+
 	return vector[property]
 
 
-static func resolve_vector3_property(vector: Vector3, property: String):
+static func resolve_vector3_property(vector: Vector3, property: String) -> Variant:
 	match property:
 		"AXIS_X":
 			return Vector3.AXIS_X
@@ -451,7 +512,7 @@ static func resolve_vector3_property(vector: Vector3, property: String):
 	return vector[property]
 
 
-static func resolve_vector4_property(vector: Vector4, property: String):
+static func resolve_vector4_property(vector: Vector4, property: String) -> Variant:
 	match property:
 		"AXIS_X":
 			return Vector4.AXIS_X

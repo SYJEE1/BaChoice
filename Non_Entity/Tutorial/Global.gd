@@ -15,6 +15,7 @@ var has_item: bool = false
 var current_item_frame: int = 1
 var current_item_animation: String = ""
 var price: float
+var game_running: bool = false # true once the player has pressed start on the current stage
 
 signal price_updated(price: float)
 signal item_state_changed(state: bool) 
@@ -43,15 +44,14 @@ func _on_updates_completed() -> void:
 	send_stage_num()  # Call the function to send the stage number
 
 func checking_condition():
-	var total = send_total_customers()
-	var max = send_max_customers()
-	var total_earnings = get_amount_paid()
-	var total_max_earnings = 1500
-	if total >= max:
-		if new_quota < total_earnings or total_earnings == max_total_customers:
-			get_tree().change_scene_to_file("res://Non_Entity/Next And Fail Scene/next.tscn")
-		elif new_quota > total_earnings:
-			get_tree().change_scene_to_file("res://Non_Entity/Next And Fail Scene/Fail.tscn")
+	# Called when the last customer has been served or has left.
+	# Meeting or beating the quota clears the stage; anything less fails it.
+	if send_total_customers() < send_max_customers():
+		return
+	if get_amount_paid() >= new_quota:
+		get_tree().change_scene_to_file("res://Non_Entity/Next And Fail Scene/next.tscn")
+	else:
+		get_tree().change_scene_to_file("res://Non_Entity/Next And Fail Scene/Fail.tscn")
 
 # Quota
 func get_quota(quota: float):
@@ -71,8 +71,8 @@ func send_max_customers() -> float:
 func get_total_customers(customers: int):
 	if customers != total_spawned_customers:  # Only update if there's a change
 		total_spawned_customers = customers
-		return total_spawned_customers
 		emit_signal("total_customers_updated")
+		return total_spawned_customers
 func send_total_customers() -> float:
 	return total_spawned_customers
 
@@ -95,6 +95,9 @@ func send_stage_num() -> String:
 # Earnings
 func set_amount_paid(new_amount_paid: float):
 	amount_paid += new_amount_paid
+	emit_signal("amount_paid_changed", amount_paid)  # Notify listeners
+func reset_amount_paid():
+	amount_paid = 0.0
 	emit_signal("amount_paid_changed", amount_paid)  # Notify listeners
 func get_amount_paid() -> float:
 	return amount_paid

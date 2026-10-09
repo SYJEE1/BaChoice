@@ -14,15 +14,14 @@ var dialogue = "res://Non_Entity/Dialogue/tutorial.dialogue"
 
 func _ready() -> void:
 	Engine.max_fps = 60
+	Global.reset_amount_paid()
+	Global.game_running = false
 	Global.get_max_customers(customers)
 	Global.get_quota(quota)
 	Global.get_stage_num(stage_num)
 	Global.get_order(order_function)
-	Global.get_total_customers(customers)
-	print(Global.get_max_customers(customers))
-	print(Global.get_total_customers(customers))
+	Global.get_total_customers(0)  # no customers have arrived yet
 	emit_signal("updates_completed")
-	Global.connect("total_customers_updated", Callable(self, "checking_condition"))
 	#Global.get_dialogue(dialogue)
 	
 

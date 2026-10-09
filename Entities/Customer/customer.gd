@@ -56,7 +56,9 @@ func finish_order():
 				price = 0.9
 			elif elapsed_time <= 75:
 				price = 0.8
-			elif elapsed_time == 90:
+			elif elapsed_time < timer.wait_time:
+				price = 0.7
+			else:
 				price = 0.0
 
 			var amount_paid = paid * price

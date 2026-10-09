@@ -12,7 +12,6 @@ func _ready() -> void:
 	tilemap_glow.modulate = Color(1,1,1,0)
 
 func interact(carried_item) -> void:
-	print("interact")
 	var item = carried_item.item_sprite
 	if item.animation == "bowl":
 		if item.frame == 4: item.frame = 1

@@ -6,7 +6,7 @@ var TUTORIAL_load_status = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	TUTORIAL = "res://Non_Entity/Tutorial/Tutorial.tscn"
+	TUTORIAL = "res://Non_Entity/Stages/Stage1.tscn"
 	ResourceLoader.load_threaded_request(TUTORIAL)
 	
 func _process(delta):
@@ -19,7 +19,7 @@ func _process(delta):
 			if newScene:
 				get_tree().change_scene_to_file(TUTORIAL)
 			else:
-				print("Failed to load the tutorial scene.")
+				push_error("Failed to load the stage scene.")
 		
 		ResourceLoader.THREAD_LOAD_FAILED:
-			print("Loading failed. Please check the tutorial path or resource.")
+			push_error("Loading failed. Please check the stage path or resource.")

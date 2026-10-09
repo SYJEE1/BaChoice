@@ -28,8 +28,8 @@ DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [dialogue_manager]
 
-general/custom_test_scene_path="res://Non_Entity/Dialogue/Testdialogue.tscn"
-general/balloon_path="res://Non_Entity/Dialogue/balloon.tscn"
+editor/advanced/custom_test_scene_path="res://Non_Entity/Dialogue/Testdialogue.tscn"
+runtime/balloon_path="res://Non_Entity/Dialogue/balloon.tscn"
 
 [display]
 

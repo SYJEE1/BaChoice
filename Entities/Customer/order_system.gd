@@ -504,7 +504,7 @@ func find_bowl_index(order: Dictionary) -> int:
 	if toppings_index_mapping.has(combined_toppings):
 		bowl_index += toppings_index_mapping[combined_toppings]
 	else:
-		print("Error: Invalid topping combination")
+		push_error("Invalid topping combination: ", combined_toppings)
 	bowl_index += 5
 	return bowl_index
 
