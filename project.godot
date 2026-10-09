@@ -11,12 +11,13 @@ config_version=5
 [animation]
 
 warnings/check_invalid_track_paths=false
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
 config/name="Batchoyan"
 run/main_scene="res://Non_Entity/Menu Scene/menu.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://Graphics/bachoicelogo smol transparent.png"
 
 [autoload]

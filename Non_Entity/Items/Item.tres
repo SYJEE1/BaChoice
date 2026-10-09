@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=171 format=3 uid="uid://bouevinhbka7y"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://bouevinhbka7y"]
 
 [ext_resource type="Texture2D" uid="uid://bh20llck6qa1k" path="res://Non_Entity/interactables.png" id="1_7ced7"]
 
@@ -688,7 +688,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tm3gh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"bihon",
 "speed": 5.0
 }, {
@@ -1107,7 +1107,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1vhjx")
 }],
-"loop": false,
+"loop": 0,
 "name": &"bowl",
 "speed": 1.0
 }, {
@@ -1118,7 +1118,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ogbqv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"c3",
 "speed": 5.0
 }, {
@@ -1129,7 +1129,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mn1pl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"cora",
 "speed": 5.0
 }, {
@@ -1137,7 +1137,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_c0ymx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"egg",
 "speed": 5.0
 }, {
@@ -1148,7 +1148,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hhld0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"loyal",
 "speed": 5.0
 }, {
@@ -1159,7 +1159,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dru1u")
 }],
-"loop": true,
+"loop": 1,
 "name": &"miki",
 "speed": 5.0
 }, {
@@ -1170,7 +1170,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wrmwx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"miswa",
 "speed": 5.0
 }, {
@@ -1187,7 +1187,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ssfv0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"pot",
 "speed": 5.0
 }, {
@@ -1198,7 +1198,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aq8jy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"raw_cut_liver",
 "speed": 5.0
 }, {
@@ -1209,7 +1209,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t13hq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"raw_cut_pork",
 "speed": 5.0
 }, {
@@ -1220,7 +1220,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wpixo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"raw_liver",
 "speed": 5.0
 }, {
@@ -1231,7 +1231,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i08ng")
 }],
-"loop": false,
+"loop": 0,
 "name": &"raw_pork",
 "speed": 0.0
 }, {
@@ -1242,7 +1242,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mtgrv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"sotanghon",
 "speed": 5.0
 }, {
@@ -1253,7 +1253,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nta7x")
 }],
-"loop": true,
+"loop": 1,
 "name": &"sprike",
 "speed": 5.0
 }, {
@@ -1264,7 +1264,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2nh3g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"water",
 "speed": 5.0
 }]
